@@ -1,0 +1,141 @@
+{
+	"emulators": {
+		"default": {
+			"port": 3569,
+			"serviceAccount": "emulator-account"
+		}
+	},
+	"contracts": {
+        "FLOASISItems": {
+            "source": "./contracts/FLOASISItems.cdc",
+            "aliases": {
+                "emulator": "f8d6e0586b0a20c7",
+                "testnet": "[YOUR-TESTNET-ACCOUNT-ADDRESS]",
+                "mainnet": "[YOUR-MAINNET-ACCOUNT-ADDRESS]"
+            }
+        },
+        "FLOASISItemsStore": {
+            "source": "./contracts/FLOASISItemsStore.cdc",
+            "aliases": {
+                "emulator": "f8d6e0586b0a20c7",
+                "testnet": "[YOUR-TESTNET-ACCOUNT-ADDRESS]",
+                "mainnet": "[YOUR-MAINNET-ACCOUNT-ADDRESS]"
+            }
+        },
+        "FLOASISNFT": {
+            "source": "./contracts/FLOASISNFT.cdc",
+            "aliases": {
+                "emulator": "f8d6e0586b0a20c7",
+                "testnet": "[YOUR-TESTNET-ACCOUNT-ADDRESS]",
+                "mainnet": "[FLOASIS-MAINNET-ACCOUNT]"
+            }
+        },
+        "FLOASISPrimitives": {
+            "source": "./contracts/FLOASISPrimitives.cdc",
+            "aliases": {
+                "emulator": "f8d6e0586b0a20c7",
+                "testnet": "[YOUR-TESTNET-ACCOUNT-ADDRESS]",
+                "mainnet": "[FLOASIS-MAINNET-ACCOUNT]"
+            }
+        },
+        "FlowToken": {
+            "source": "./contracts/core/FlowToken.cdc",
+            "aliases": {
+                "emulator": "0ae53cb6e3f42a79",
+                "testnet": "7e60df042a9c0868",
+                "mainnet": "1654653399040a61"
+            }
+        },
+        "FungibleToken": {
+            "source": "./contracts/core/FungibleToken.cdc",
+            "aliases": {
+                "emulator": "ee82856bf20e2aa6",
+                "testnet": "9a0766d93b6608b7",
+                "mainnet": "f233dcee88fe0abe"
+            }
+        },
+        "IaNFTAnalogs": {
+            "source": "./contracts/IaNFTAnalogs.cdc",
+            "aliases": {
+                "emulator": "f8d6e0586b0a20c7",
+                "testnet": "[YOUR-TESTNET-ACCOUNT-ADDRESS]",
+                "mainnet": "[FLOASIS-MAINNET-ACCOUNT]"
+            }
+        },
+        "MetadataViews": {
+            "source": "./contracts/core/MetadataViews.cdc",
+            "aliases": {
+                "emulator": "f8d6e0586b0a20c7",
+                "testnet": "631e88ae7f1d7c20",
+                "mainnet": "1d7e57aa55817448"
+            }
+        },
+        "NonFungibleToken": {
+            "source": "./contracts/core/NonFungibleToken.cdc",
+            "aliases": {
+                "emulator": "f8d6e0586b0a20c7",
+                "testnet": "631e88ae7f1d7c20",
+                "mainnet": "1d7e57aa55817448"
+            }
+        }
+    },
+	"networks": {
+		"emulator": "127.0.0.1:3569",
+		"mainnet": "access.mainnet.nodes.onflow.org:9000",
+		"testnet": "access.devnet.nodes.onflow.org:9000"
+	},
+	"accounts": {
+		"emulator-account": {
+			"address": "f8d6e0586b0a20c7",
+            "key": "f8e188e8af0b8b414be59c4a1a15cc666c898fb34d94156e9b51e18bfde754a5"
+		},
+        "testnet-account": {
+            "address": "[YOUR-TESTNET-ACCOUNT-ADDRESS]",
+            "key":{
+                "type": "hex",
+                "index": 0,
+                "signatureAlgorithm": "ECDSA_P256",
+                "hashAlgorithm": "SHA3_256",
+                "privateKey": "[YOUR-TESTNET-ACCOUNT-PRIVATE-KEY]"
+            }
+        },
+        "mainnet-account": {
+            "address": "[YOUR-MAINNET-ACCOUNT-ADDRESS]",
+            "key":{
+                "type": "hex",
+                "index": 0,
+                "signatureAlgorithm": "ECDSA_P256",
+                "hashAlgorithm": "SHA3_256",
+                "privateKey": "[YOUR-MAINNET-ACCOUNT-PRIVATE-KEY]"
+            }
+        }
+	},
+	"deployments": {
+        "emulator": {
+            "emulator-account": [
+                "FLOASISItems",
+                "FLOASISItemsStore",
+                "FLOASISNFT",
+                "FLOASISPrimitives",
+                "IaNFTAnalogs",
+                "MetadataViews",
+                "NonFungibleToken"
+            ]
+        },
+        "testnet": {
+            "testnet-account": [
+                "FLOASISItems",
+                "FLOASISItemsStore",
+                "FLOASISNFT",
+                "FLOASISPrimitives",
+                "IaNFTAnalogs"
+            ]
+        },
+        "mainnet": {
+            "mainnet-account": [
+                "FLOASISItems",
+                "FLOASISItemsStore"
+            ]
+        }
+    }
+}
