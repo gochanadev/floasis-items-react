@@ -129,7 +129,7 @@ Credentials for your Flow accounts will live in flow.json. This repo contains a 
     - each contract to be deployed has the testnet address added in aliases section 
 
 MORE NOTES ABOUT THE FLOW.JSON file
-- the following contract deployment addresses point to the FLOASIS testnet account address (cefdeb5f6fb3269b) as the deployment address:
+- the following contract deployment addresses point to the FLOASIS mainnet account address (???) as the deployment address:
     - FLOASISNFT
     - FLOASISPrimitives
     - IaNFTAnalogs
@@ -137,6 +137,9 @@ MORE NOTES ABOUT THE FLOW.JSON file
 
 ### Set up .env
 In the root of this project, find the '.env.example' file and change it to just be '.env'. Now open the .env file and add the 'TESTNET_DEPLOYER_ADDRESS' env var value as your testnet account address. Note, this file is also excluded from version control. You should securely back this one up elsewhere as well.
+
+- note, deployer address in .env should NOT have 0x prefix
+- make sure deployer addresses in .env match from flow.json
 
 ### Set up constants.ts
 This is a file where we keep some more data that establishes your unique project variables.
@@ -165,6 +168,16 @@ https://www.piskelapp.com/
 
 ### Getting ready to deploy
 - change the NFT `Type<MetadataViews.NFTCollectionDisplay>` with you IPFS CID, etc.
+
+## Running on Flow Emulator
+go run ./overflow/setup_web/setup_web.go
+
+## Testnet setup
+- setup testnet-user1 with demo FLOASIS NFTs
+    - go run ./overflow/testnet/setup_demo_floasis_nfts/main.go
+
+### Worklfow notes
+You must first get the dapp working on emulator, then testnet, then mainnet. It's not just best practice, it's going to get everything set up correctly, like converting the artwork from PNG to SVG.
 
 ---
 

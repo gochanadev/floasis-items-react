@@ -15,7 +15,7 @@ import (
 
 func PrepareArt(artRepoPath string, artIndexFileName string, flowNetwork string) (cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array) {
 
-	err := godotenv.Load()
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
@@ -67,11 +67,11 @@ func PrepareArt(artRepoPath string, artIndexFileName string, flowNetwork string)
 
 		art_descriptions_cadence = append(art_descriptions_cadence, cadence.String(art_description))
 
-		art_thumbnail_file_path := fmt.Sprintf("%s/art/%s.png", artRepoPath, art_thumbnail_file_name)
+		art_thumbnail_file_path := fmt.Sprintf("%s/png/%s.png", artRepoPath, art_thumbnail_file_name)
+		fmt.Println("art_thumbnail_file_path ", art_thumbnail_file_path)
 
 		if flowNetwork == "emulator" || flowNetwork == "embedded" {
 			art_thumbnails_cadence = append(art_thumbnails_cadence, cadence.String(placeholder_demo_floasis_nft_artwork_cid))
-			fmt.Println("Placeholder IPFS CID created: bafybeigy7cpgakfxdabjb2gxcri3fdojeyvalwq5estarwwjy6qvolzgeu")
 		} else {
 			f, _ := os.Open(art_thumbnail_file_path)
 			cid, _ := c.Put(context.Background(), f)
