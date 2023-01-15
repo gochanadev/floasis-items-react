@@ -175,6 +175,8 @@ go run ./overflow/setup_web/setup_web.go
 ## Testnet setup
 - setup testnet-user1 with demo FLOASIS NFTs
     - go run ./overflow/testnet/setup_demo_floasis_nfts/main.go
+- setup store
+    - go run ./overflow/testnet/setup_store/main.go
 
 ### Worklfow notes
 You must first get the dapp working on emulator, then testnet, then mainnet. It's not just best practice, it's going to get everything set up correctly, like converting the artwork from PNG to SVG.

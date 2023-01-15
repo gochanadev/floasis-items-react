@@ -66,7 +66,7 @@ func PrepareInventory(inventoryCSVPath string, artRepoPath string, flowNetwork s
 		item_art_names_cadence = append(item_art_names_cadence, cadence.String(item_art_name))
 		item_art_categories_cadence = append(item_art_categories_cadence, cadence.String(item_art_category))
 
-		item_thumbnail_file_path := fmt.Sprintf("%s/art/%s.png", artRepoPath, item_thumbnail_file_name)
+		item_thumbnail_file_path := fmt.Sprintf("%s/png/%s.png", artRepoPath, item_thumbnail_file_name)
 
 		if flowNetwork == "emulator" || flowNetwork == "embedded" {
 			item_thumbnails_cadence = append(item_thumbnails_cadence, cadence.String(placeholder_inventory_item_cid))

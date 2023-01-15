@@ -80,7 +80,7 @@ func PrepareArt(
 
 		art_descriptions_cadence = append(art_descriptions_cadence, cadence.String(art_description))
 
-		art_thumbnail_file_path := fmt.Sprintf("%s/thumbnails/%s.png", artRepoPath, art_thumbnail_file_name)
+		art_thumbnail_file_path := fmt.Sprintf("%s/png/%s.png", artRepoPath, art_thumbnail_file_name)
 
 		if flowNetwork == "emulator" || flowNetwork == "embedded" {
 			art_thumbnails_cadence = append(art_thumbnails_cadence, cadence.String(placeholder_artwork_cid))

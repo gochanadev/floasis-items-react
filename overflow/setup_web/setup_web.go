@@ -74,7 +74,6 @@ func main() {
 		Print()
 
 	// upload on-chain artwork to art library
-	// TODO: investigate why helper script here requires no trailing slash after dir name and the demo floasis nfts script does
 	artNamesItems, planetNamesItems, baseArtworkItems, cardArtworkItems, artDescriptionsItems, artThumbnailsItems := art_prep.PrepareArt("./art/accessories", "art_list.csv", flow_network)
 	c.Tx(
 		"FLOASISItemsStore/batch_add_art_to_artLibrary",
