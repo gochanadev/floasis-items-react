@@ -1,15 +1,52 @@
 import { config } from "@onflow/fcl";
+import { APP_DETAIL_TITLE } from "../lib/constants";
 
-config({
-    "app.detail.title": "FLOASIS Accessories!!!",
-    "accessNode.api": process.env.NEXT_PUBLIC_ACCESS_NODE_API,
-    "discovery.wallet": process.env.NEXT_PUBLIC_DISCOVERY_WALLET,
-    "0xProfile": process.env.NEXT_PUBLIC_CONTRACT_PROFILE, // The account address where the smart contract lives
-    "0xNonFungibleToken": process.env.NEXT_PUBLIC_CONTRACT_PROFILE,
-    "0xIaNFTAnalogs": process.env.NEXT_PUBLIC_CONTRACT_PROFILE,
-    "0xFLOASISNFT": process.env.NEXT_PUBLIC_CONTRACT_PROFILE,
-    "0xFLOASISItemsStore": process.env.NEXT_PUBLIC_CONTRACT_PROFILE, // fcl has an error if this alias is created after '0xFLOASISItems', so keep this one first
-    "0xFLOASISItems": process.env.NEXT_PUBLIC_CONTRACT_PROFILE,
-    "0xFLOASISPrimitives": process.env.NEXT_PUBLIC_CONTRACT_PROFILE,
-    "0xFlowToken": process.env.NEXT_PUBLIC_FLOW_TOKEN_ADDRESS_EMULATOR,
-});
+if (process.env.NEXT_PUBLIC_FLOW_ENV === "emulator") {
+    console.log("Emulator env loaded in fcl config");
+    config({
+        "flow.network": "emulator",
+        "app.detail.title": APP_DETAIL_TITLE,
+        "accessNode.api": "http://localhost:8080",
+        "discovery.wallet": "http://localhost:8701/fcl/authn",
+        "0xNonFungibleToken": "0xf8d6e0586b0a20c7",
+        "0xFlowToken": "0ae53cb6e3f42a79",
+        "0xIaNFTAnalogs": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_EMULATOR,
+        "0xFLOASISNFT": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_EMULATOR,
+        "0xFLOASISItemsStore": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_EMULATOR, // fcl has an error if this alias is created after '0xFLOASISItems', so keep this one first
+        "0xFLOASISItems": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_EMULATOR,
+        "0xFLOASISPrimitives": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_EMULATOR,
+    });
+
+} else if (process.env.NEXT_PUBLIC_FLOW_ENV === "testnet") {
+    console.log("Testnet env loaded in fcl config");
+    config({
+        "flow.network": "testnet",
+        "app.detail.title": APP_DETAIL_TITLE,
+        "accessNode.api": "https://rest-testnet.onflow.org",
+        "discovery.wallet": "https://fcl-discovery.onflow.org/testnet/authn",
+        "0xNonFungibleToken": "0x631e88ae7f1d7c20",
+        "0xFlowToken": "0x7e60df042a9c0868",
+        "0xIaNFTAnalogs": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_TESTNET,
+        "0xFLOASISNFT": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_TESTNET,
+        "0xFLOASISItemsStore": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_TESTNET, // fcl has an error if this alias is created after '0xFLOASISItems', so keep this one first
+        "0xFLOASISItems": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_TESTNET,
+        "0xFLOASISPrimitives": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_TESTNET,
+    });
+
+} else {
+    console.log("Mainnet env loaded in fcl config");
+    config({
+        "flow.network": "mainnet",
+        "app.detail.title": APP_DETAIL_TITLE,
+        "accessNode.api": "https://rest-mainnet.onflow.org",
+        "discovery.wallet": "https://fcl-discovery.onflow.org/authn",
+        "0xNonFungibleToken": "1d7e57aa55817448",
+        "0xFlowToken": "1654653399040a61",
+        "0xIaNFTAnalogs": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_MAINNET,
+        "0xFLOASISNFT": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_MAINNET,
+        "0xFLOASISItemsStore": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_MAINNET, // fcl has an error if this alias is created after '0xFLOASISItems', so keep this one first
+        "0xFLOASISItems": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_MAINNET,
+        "0xFLOASISPrimitives": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_MAINNET,
+    });
+
+}

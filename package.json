@@ -2,7 +2,8 @@
   "name": "fcl-quickstart",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "devE": "NEXT_PUBLIC_FLOW_ENV=emulator next dev",
+    "devT": "NEXT_PUBLIC_FLOW_ENV=testnet next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -11,7 +12,7 @@
   "dependencies": {
     "@dnd-kit/core": "^6.0.5",
     "@dnd-kit/sortable": "^7.0.1",
-    "@onflow/fcl": "^0.0.77",
+    "@onflow/fcl": "^1.3.2",
     "@picocss/pico": "^1.4.1",
     "next": "12.0.7",
     "react": "17.0.2",

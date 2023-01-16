@@ -15,9 +15,9 @@ import (
 
 func PrepareArt(artRepoPath string, artIndexFileName string, flowNetwork string) (cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array) {
 
-	err := godotenv.Load(".env")
+	err := godotenv.Load(".env.local")
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal("Error in demo_floasis_nfts_pre.go when loading .env.local file")
 	}
 	web3_storage_api_key := os.Getenv("WEB3_STORAGE_API_KEY")
 	placeholder_demo_floasis_nft_artwork_cid := os.Getenv("PLACEHOLDER_DEMO_FLOASIS_NFT_ARTWORK_CID")

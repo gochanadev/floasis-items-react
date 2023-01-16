@@ -116,19 +116,22 @@ func getRectAttributesStruct(deployer_address string, x string, y string, width 
 func GetSvgStruct(svgString string, flowNetwork string) cadence.Struct {
 	// fmt.Println("META DAT STRING FROM GET SNVG STRUC:", metaDataString)
 
-	err := godotenv.Load()
+	err := godotenv.Load(".env.local")
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal("Error in svg_prep.go when loading .env.local file")
 	}
 
 	var deployer_address string
 
 	if flowNetwork == "emulator" || flowNetwork == "embedded" {
-		deployer_address = os.Getenv("EMULATOR_DEPLOYER_ADDRESS")
+		full_deployer_address := os.Getenv("NEXT_PUBLIC_DEPLOYER_ADDRESS_EMULATOR")
+		deployer_address = full_deployer_address[2:]
 	} else if flowNetwork == "testnet" {
-		deployer_address = os.Getenv("TESTNET_DEPLOYER_ADDRESS")
+		full_deployer_address := os.Getenv("NEXT_PUBLIC_DEPLOYER_ADDRESS_TESTNET")
+		deployer_address = full_deployer_address[2:]
 	} else {
-		deployer_address = os.Getenv("MAINNET_DEPLOYER_ADDRESS")
+		full_deployer_address := os.Getenv("NEXT_PUBLIC_DEPLOYER_ADDRESS_MAINNET")
+		deployer_address = full_deployer_address[2:]
 	}
 
 	// CREATE READER FOR THE SVG STRING

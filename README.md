@@ -160,6 +160,9 @@ The default project here has some placeholder art so that you can immediately ru
 - Piskel instructions
 https://www.piskelapp.com/
 
+### Run emulator
+go run ./overflow/setup_web/setup_web.go
+
 ### Deploy to testnet
 `flow project deploy --network=testnet`
 

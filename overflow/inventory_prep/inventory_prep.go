@@ -15,9 +15,9 @@ import (
 
 func PrepareInventory(inventoryCSVPath string, artRepoPath string, flowNetwork string) (cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array) {
 
-	err := godotenv.Load()
+	err := godotenv.Load(".env.local")
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal("Error in inventory_prep.go when loading .env.local file")
 	}
 	web3_storage_api_key := os.Getenv("WEB3_STORAGE_API_KEY")
 	placeholder_inventory_item_cid := os.Getenv("PLACEHOLDER_INVENTORY_ITEM_CID")
