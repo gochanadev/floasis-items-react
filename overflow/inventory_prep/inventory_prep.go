@@ -70,7 +70,7 @@ func PrepareInventory(inventoryCSVPath string, artRepoPath string, flowNetwork s
 
 		if flowNetwork == "emulator" || flowNetwork == "embedded" {
 			item_thumbnails_cadence = append(item_thumbnails_cadence, cadence.String(placeholder_inventory_item_cid))
-			fmt.Println("Placeholder IPFS CID created: bafybeigy7cpgakfxdabjb2gxcri3fdojeyvalwq5estarwwjy6qvolzgeu")
+			fmt.Println("Placeholder IPFS CID created")
 		} else {
 			f, _ := os.Open(item_thumbnail_file_path)
 			cid, _ := c.Put(context.Background(), f)

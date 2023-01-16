@@ -89,7 +89,7 @@ func main() {
 		Print()
 
 	// create inventory items
-	item_names, item_descriptions, item_thumbnails, item_quantities, item_prices, item_artist_names, item_series_names, item_art_names, item_art_categories := inventory_prep.PrepareInventory("./art/accessories/store_inventory_list.csv", "./accessories/", flow_network)
+	item_names, item_descriptions, item_thumbnails, item_quantities, item_prices, item_artist_names, item_series_names, item_art_names, item_art_categories := inventory_prep.PrepareInventory("./art/accessories/store_inventory_list.csv", "./art/accessories", flow_network)
 	c.Tx(
 		"FLOASISItemsStore/batch_add_inventory",
 		o.WithArg("itemNames", item_names),
