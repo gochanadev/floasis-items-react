@@ -116,7 +116,7 @@ export function Builder() {
         if (currentUser.loggedIn === true) {
             prepFloasisNFTData();
             prepFloasisItemsNFTData();
-            // prepNFTCompositesData();
+            prepNFTCompositesData();
         }
     }, [currentUser]);
 
