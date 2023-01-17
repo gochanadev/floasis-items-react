@@ -36,6 +36,7 @@ import { useTransaction } from "../contexts/TransactionContext";
 import { replaceCDCImports } from "../lib/helpers";
 import GET_ALL_ACTIVE_INVENTORY_DATA from "../scripts/FLOASISItemsStore/get_all_active_inventory.cdc";
 import BUY_NFTS from "../transactions/FLOASISItems/batch_buy_nfts.cdc";
+import INITIALIZE from "../transactions/FLOASISNFT/initialize_account.cdc"
 import { getFloasisNFTData, getNFTCompositesData } from "../flow/scripts";
 import {
     FCL_LIMIT,
@@ -325,6 +326,33 @@ export function Store() {
         });
     };
 
+    // PROCESS FLOW TX FOR USER TO SELF INITIALIZE
+    const handleInitialize = async () => {
+        initTransactionState();
+            
+            try {
+                const transactionCode = replaceCDCImports(INITIALIZE);
+    
+                const transactionId = await fcl.mutate({
+                    cadence: transactionCode,
+                    payer: fcl.authz,
+                    proposer: fcl.authz,
+                    authorizations: [fcl.authz],
+                    limit: FCL_LIMIT,
+                });
+
+                setTxId(transactionId);
+                fcl.tx(transactionId).subscribe((res) => {
+                    console.log("res:", res);
+                    setTransactionStatus(res.status);
+                });
+        
+            } catch (e) {
+                console.log("Error when initializing user:", e);
+            }
+
+    }
+
     // PROCESS FLOW TX TO BUY AN ACCESSORY
     const handleBuy = async () => {
         initTransactionState();
@@ -395,6 +423,8 @@ export function Store() {
                 <h1>{ITEMS_STORE_NAME}</h1>
                 <h2>Accessories Store!</h2>
             </div>
+
+            <button onClick={handleInitialize}>Initialize</button>
 
             <div className="grid">
                 {/* GRID COLUMN A: LEFT-SIDE (ON DESKTOP), BOTTOM (ON MOBILE) */}

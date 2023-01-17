@@ -1,4 +1,5 @@
 import { config } from "@onflow/fcl";
+import { send as grpcSend } from "@onflow/transport-grpc"
 import { APP_DETAIL_TITLE } from "../lib/constants";
 
 if (process.env.NEXT_PUBLIC_FLOW_ENV === "emulator") {
@@ -8,6 +9,7 @@ if (process.env.NEXT_PUBLIC_FLOW_ENV === "emulator") {
         "app.detail.title": APP_DETAIL_TITLE,
         "accessNode.api": "http://localhost:8080",
         "discovery.wallet": "http://localhost:8701/fcl/authn",
+        "sdk.transport": grpcSend,
         "0xNonFungibleToken": "0xf8d6e0586b0a20c7",
         "0xFlowToken": "0ae53cb6e3f42a79",
         "0xIaNFTAnalogs": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_EMULATOR,
@@ -22,8 +24,9 @@ if (process.env.NEXT_PUBLIC_FLOW_ENV === "emulator") {
     config({
         "flow.network": "testnet",
         "app.detail.title": APP_DETAIL_TITLE,
-        "accessNode.api": "https://rest-testnet.onflow.org",
+        "accessNode.api": "https://access-testnet.onflow.org",
         "discovery.wallet": "https://fcl-discovery.onflow.org/testnet/authn",
+        "sdk.transport": grpcSend,
         "0xNonFungibleToken": "0x631e88ae7f1d7c20",
         "0xFlowToken": "0x7e60df042a9c0868",
         "0xIaNFTAnalogs": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_TESTNET,
@@ -38,8 +41,9 @@ if (process.env.NEXT_PUBLIC_FLOW_ENV === "emulator") {
     config({
         "flow.network": "mainnet",
         "app.detail.title": APP_DETAIL_TITLE,
-        "accessNode.api": "https://rest-mainnet.onflow.org",
+        "accessNode.api": "https://access-mainnet.onflow.org",
         "discovery.wallet": "https://fcl-discovery.onflow.org/authn",
+        "sdk.transport": grpcSend,
         "0xNonFungibleToken": "1d7e57aa55817448",
         "0xFlowToken": "1654653399040a61",
         "0xIaNFTAnalogs": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_MAINNET,
