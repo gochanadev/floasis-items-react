@@ -63,6 +63,7 @@ export function Builder() {
 
     // on-chain (stored on the NFT itself) composites
     const [onChainComposites, setOnChainComposites] = useState({});
+    console.log("onChainComposites:", onChainComposites);
 
     // local composites (stored in the browser)
     const [localComposites, setLocalComposites] = useState({});
@@ -402,6 +403,7 @@ export function Builder() {
 
     // UPDATE THE ON-CHAIN COMPOSITES STATE EACH TIME A FLOASIS NFT IS SELECTED
     const handleFloasisNFTSelection = async (floasisNFTIdx) => {
+        console.log("Floasis NFT selected:", floasisNFTIdx);
         setSelectedFloasisNFTIdx(floasisNFTIdx);
 
         /*
@@ -409,7 +411,8 @@ export function Builder() {
         exist yet, fetch the composite data from on-chain and add to local state.
         */
         if (onChainComposites[floasisNFTIdx] === undefined) {
-            const nFTCompositesData = await getNFTCompositesData(currentUser.addr, floasisNFTIdx);
+            // const nFTCompositesData = await getNFTCompositesData(currentUser.addr, floasisNFTs[floasisNFTIdx.toString()]);
+            const nFTCompositesData = await getNFTCompositesData(currentUser.addr, floasisNFTs[floasisNFTIdx].id);
 
             setOnChainComposites((prev) => {
                 return {
@@ -507,7 +510,7 @@ export function Builder() {
                             <>
                                 <h4>Your localComposites:</h4>
                                 <section className="cards-section">
-                                    {Object.entries(onChainComposites[selectedFloasisNFTIdx])?.map(([key, value]) => (
+                                    {onChainComposites[selectedFloasisNFTIdx] && Object.entries(onChainComposites[selectedFloasisNFTIdx])?.map(([key, value]) => (
                                         <div
                                             key={key}
                                             className="card"
@@ -605,7 +608,7 @@ export function Builder() {
                             {viewMode === VIEW_MODE_SAVED && (
                                 <>
                                     <h4>Your Composite:</h4>
-                                    {onChainComposites[selectedFloasisNFTIdx][selectedOnChainCompositeName] !==
+                                    {onChainComposites[selectedFloasisNFTIdx] && onChainComposites[selectedFloasisNFTIdx][selectedOnChainCompositeName] !==
                                         undefined && (
                                         <>
                                             <Image
@@ -629,7 +632,7 @@ export function Builder() {
                                             </button>
                                         </>
                                     )}
-                                    {onChainComposites[selectedFloasisNFTIdx][selectedOnChainCompositeName] ===
+                                    {onChainComposites[selectedFloasisNFTIdx] && onChainComposites[selectedFloasisNFTIdx][selectedOnChainCompositeName] ===
                                         undefined && <p>choose one of your composites to view and download as PNG.</p>}
                                 </>
                             )}
