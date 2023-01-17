@@ -58,14 +58,14 @@ export function Builder() {
 
     // NFTs from the FLOASIS NFT contract
     const [floasisNFTs, setFloasisNFTs] = useState([]);
-    console.log("floasisNFTs:", floasisNFTs);
+    // console.log("floasisNFTs:", floasisNFTs);
 
     // NFTs from the FLOASIS Items NFT contract
     const [itemsNFTs, setItemsNFTs] = useState([]);
 
     // on-chain (stored on the NFT itself) composites
     const [onChainComposites, setOnChainComposites] = useState({});
-    console.log("onChainComposites:", onChainComposites);
+    // console.log("onChainComposites:", onChainComposites);
 
     // local composites (stored in the browser)
     const [localComposites, setLocalComposites] = useState({});
@@ -107,7 +107,7 @@ export function Builder() {
         }
 
         async function prepNFTCompositesData() {
-            const nFTCompositesData = await getNFTCompositesData(currentUser.addr, selectedFloasisNFTIdx);
+            const nFTCompositesData = await getNFTCompositesData(currentUser.addr, selectedFloasisNFTIdx.toString());
 
             // since this is the initial load, we can set the local composites with retrieved data or an empty object
             setOnChainComposites({
@@ -208,6 +208,7 @@ export function Builder() {
         const gElemIndices = compositeLayer.gElems
             .filter((gElem) => gElem.attributes.original)
             .map((_, gElemIdx) => gElemIdx);
+        console.log("gElemIndices that have been changed:", gElemIndices);
 
         // get the new colors for the gElems that have been changed for the Flow transaction
         const gElemColors = compositeLayer.gElems
