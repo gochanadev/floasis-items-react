@@ -203,7 +203,6 @@ export function Builder() {
         initTransactionState();
 
         const compositeLayer = localComposites[selectedFloasisNFTIdx].layers[selectedCompositeLayerIdx];
-        console.log("compositeLayer:", compositeLayer);
 
         // get the indices of the gElems that have been changed for the Flow transaction
         const gElemIndices = []
