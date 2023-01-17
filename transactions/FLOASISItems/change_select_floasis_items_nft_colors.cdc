@@ -4,7 +4,7 @@ import FLOASISItems from "../../contracts/FLOASISItems.cdc"
 transaction(nFTID: UInt64, gElemIndices: [UInt64], colors: [String]) {
 
     let userNFTCollection: &FLOASISItems.Collection
-    let userNFT: &FLOASISItems.NFT
+    let userNFT: &FLOASISItems.NFT{NonFungibleToken.INFT, FLOASISItems.NFTPrivate}
 
     prepare(acct: AuthAccount) {
 

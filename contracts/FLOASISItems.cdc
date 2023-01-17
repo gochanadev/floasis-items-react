@@ -247,7 +247,7 @@ pub contract FLOASISItems: NonFungibleToken {
             return nil
         }
 
-        pub fun borrowFLOASISItemsNFTPrivate(id: UInt64): &{NonFungibleToken.INFT, FLOASISItems.NFTPrivate}? {
+        pub fun borrowFLOASISItemsNFTPrivate(id: UInt64): &FLOASISItems.NFT{NonFungibleToken.INFT, FLOASISItems.NFTPrivate}? {
             if self.ownedNFTs[id] != nil {
                 let ref = (&self.ownedNFTs[id] as auth &NonFungibleToken.NFT?)!
                 return ref as! &FLOASISItems.NFT

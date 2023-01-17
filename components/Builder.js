@@ -304,7 +304,7 @@ export function Builder() {
                 */
                 if (res.status === 4 && res.statusCode === 0) {
                     const namedOnChainCompositeExists =
-                        onChainComposites[selectedFloasisNFTIdx][newCompositeName] !== undefined;
+                        onChainComposites[selectedFloasisNFTIdx]?.[newCompositeName] !== undefined;
 
                     !namedOnChainCompositeExists &&
                         setOnChainComposites((prev) => {
