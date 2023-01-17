@@ -203,12 +203,13 @@ export function Builder() {
         initTransactionState();
 
         const compositeLayer = localComposites[selectedFloasisNFTIdx].layers[selectedCompositeLayerIdx];
+        console.log("compositeLayer:", compositeLayer);
 
         // get the indices of the gElems that have been changed for the Flow transaction
-        const gElemIndices = compositeLayer.gElems
-            .filter((gElem) => gElem.attributes.original)
-            .map((_, gElemIdx) => gElemIdx);
-        console.log("gElemIndices that have been changed:", gElemIndices);
+        const gElemIndices = []
+        compositeLayer.gElems.forEach((gElem, gElemIdx) => {
+            gElem.attributes.original && gElemIndices.push(gElemIdx)
+        })
 
         // get the new colors for the gElems that have been changed for the Flow transaction
         const gElemColors = compositeLayer.gElems
