@@ -6,7 +6,7 @@ pub fun main(address: Address, nftID: UInt64): {String: FLOASISPrimitives.Compos
 
     let account = getAccount(address)
 
-    let collectionRef = account.getCapability(FLOASISNFT.CollectionPublicPath)!.borrow<&{NonFungibleToken.CollectionPublic, FLOASISNFT.FLOASISNFTCollectionPublic}>()
+    let collectionRef = account.getCapability(FLOASISNFT.CollectionPublicPath).borrow<&{NonFungibleToken.CollectionPublic, FLOASISNFT.FLOASISNFTCollectionPublic}>()
         ?? panic("Could not borrow capability from public collection")
     
     let nftRef = collectionRef.borrowFLOASISNFT(id: nftID)!

@@ -5,6 +5,7 @@ import { replaceCDCImports } from "../lib/helpers";
 
 export async function getNFTCompositesData(addr, floasisNFTIdx) {
     const scriptCode = replaceCDCImports(GET_NFT_COMPOSITES);
+    console.log("floasisNFTIdx from scripts.js:", floasisNFTIdx);
 
     return await fcl.query({
         cadence: scriptCode,

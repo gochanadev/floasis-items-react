@@ -36,7 +36,8 @@ import { useTransaction } from "../contexts/TransactionContext";
 import { replaceCDCImports } from "../lib/helpers";
 import GET_ALL_ACTIVE_INVENTORY_DATA from "../scripts/FLOASISItemsStore/get_all_active_inventory.cdc";
 import BUY_NFTS from "../transactions/FLOASISItems/batch_buy_nfts.cdc";
-import INITIALIZE from "../transactions/FLOASISNFT/initialize_account.cdc"
+import INITIALIZE_FLOASIS_NFT from "../transactions/FLOASISNFT/initialize_account.cdc"
+import INITIALIZE_FLOASIS_ITEMS_NFT from "../transactions/FLOASISItems/initialize_account.cdc"
 import { getFloasisNFTData, getNFTCompositesData } from "../flow/scripts";
 import {
     FCL_LIMIT,
@@ -54,10 +55,11 @@ export function Store() {
 
     // NFTs from the FLOASIS NFT contract
     const [floasisNFTs, setFloasisNFTs] = useState([]);
+    console.log("floasisNFTs", floasisNFTs);
 
     // Inventory items for sale from the FLOASISItemsStore contract
     const [inventory, setInventory] = useState({});
-    console.log("inventory", inventory);
+    // console.log("inventory", inventory);
 
     // Planet names present in the current set of inventory
     const [planets, setPlanets] = useState([]);
@@ -67,14 +69,14 @@ export function Store() {
 
     // composites created by the users as they try on items NFTs
     const [tryItOnComposites, setTryItOnComposites] = useState({});
-    console.log("tryItOnComposites", tryItOnComposites);
+    // console.log("tryItOnComposites", tryItOnComposites);
 
     // stores the index of the currently selected FLOASIS NFT
     const [selectedFloasisNFT, setSelectedFloasisNFT] = useState(null);
 
     // filtered invntory items as the user selects a planet and item category
     const [inventoryByFilters, setInventoryByFilters] = useState({});
-    console.log("inventoryByFilters", inventoryByFilters);
+    // console.log("inventoryByFilters", inventoryByFilters);
 
     // user-selected planet
     const [selectedPlanet, setSelectedPlanet] = useState(null);
@@ -106,7 +108,6 @@ export function Store() {
         async function prepInventoryItemsData() {
             // Replace CDC imports in script
             const script = replaceCDCImports(GET_ALL_ACTIVE_INVENTORY_DATA);
-            console.log("script:", script);
 
             // Get all active inventory data
             const inventoryItems = await fcl.query({
@@ -183,7 +184,7 @@ export function Store() {
         // created it
         if (!tryItOnCompositesExist) {
             // get all the user's on-chain composites data from the blockchain for this NFT
-            const nFTCompositesData = await getNFTCompositesData(currentUser.addr, floasisNFTIdx);
+            const nFTCompositesData = await getNFTCompositesData(currentUser.addr, floasisNFTs[floasisNFTIdx].id);
 
             // check if the fetched data for tryItOnComposites from this
             // particular project exists. If it does we re-shape it and add it
@@ -326,12 +327,40 @@ export function Store() {
         });
     };
 
-    // PROCESS FLOW TX FOR USER TO SELF INITIALIZE
-    const handleInitialize = async () => {
+    // PROCESS FLOW TX FOR USER TO SELF INITIALIZE WITH FLOASIS NFT
+    const handleInitializeFloasisItemsNFT = async () => {
         initTransactionState();
             
             try {
-                const transactionCode = replaceCDCImports(INITIALIZE);
+                const transactionCode = replaceCDCImports(INITIALIZE_FLOASIS_ITEMS_NFT);
+    
+                const transactionId = await fcl.mutate({
+                    cadence: transactionCode,
+                    payer: fcl.authz,
+                    proposer: fcl.authz,
+                    authorizations: [fcl.authz],
+                    limit: FCL_LIMIT,
+                });
+
+                setTxId(transactionId);
+                fcl.tx(transactionId).subscribe((res) => {
+                    console.log("res:", res);
+                    setTransactionStatus(res.status);
+                });
+        
+            } catch (e) {
+                console.log("Error when initializing user:", e);
+            }
+
+    }
+
+
+    // PROCESS FLOW TX FOR USER TO SELF INITIALIZE WITH FLOASIS NFT
+    const handleInitializeFloasisNFT = async () => {
+        initTransactionState();
+            
+            try {
+                const transactionCode = replaceCDCImports(INITIALIZE_FLOASIS_NFT);
     
                 const transactionId = await fcl.mutate({
                     cadence: transactionCode,
@@ -424,7 +453,8 @@ export function Store() {
                 <h2>Accessories Store!</h2>
             </div>
 
-            <button onClick={handleInitialize}>Initialize</button>
+            <button onClick={handleInitializeFloasisNFT}>Initialize FLOASIS NFT</button>
+            <button onClick={handleInitializeFloasisItemsNFT}>Initialize FLOASIS Items NFT</button>
 
             <div className="grid">
                 {/* GRID COLUMN A: LEFT-SIDE (ON DESKTOP), BOTTOM (ON MOBILE) */}

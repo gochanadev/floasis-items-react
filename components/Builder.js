@@ -56,6 +56,7 @@ export function Builder() {
 
     // NFTs from the FLOASIS NFT contract
     const [floasisNFTs, setFloasisNFTs] = useState([]);
+    console.log("floasisNFTs:", floasisNFTs);
 
     // NFTs from the FLOASIS Items NFT contract
     const [itemsNFTs, setItemsNFTs] = useState([]);
@@ -114,7 +115,7 @@ export function Builder() {
         if (currentUser.loggedIn === true) {
             prepFloasisNFTData();
             prepFloasisItemsNFTData();
-            prepNFTCompositesData();
+            // prepNFTCompositesData();
         }
     }, [currentUser]);
 
