@@ -11,7 +11,7 @@ if (process.env.NEXT_PUBLIC_FLOW_ENV === "emulator") {
         "discovery.wallet": "http://localhost:8701/fcl/authn",
         "sdk.transport": grpcSend,
         "0xNonFungibleToken": "0xf8d6e0586b0a20c7",
-        "0xFlowToken": "0ae53cb6e3f42a79",
+        "0xFlowToken": "0x0ae53cb6e3f42a79",
         "0xIaNFTAnalogs": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_EMULATOR,
         "0xFLOASISNFT": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_EMULATOR,
         "0xFLOASISItemsStore": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_EMULATOR, // fcl has an error if this alias is created after '0xFLOASISItems', so keep this one first
