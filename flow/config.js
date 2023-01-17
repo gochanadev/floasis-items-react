@@ -3,7 +3,7 @@ import { send as grpcSend } from "@onflow/transport-grpc"
 import { APP_DETAIL_TITLE } from "../lib/constants";
 
 if (process.env.NEXT_PUBLIC_FLOW_ENV === "emulator") {
-    console.log("Emulator env loaded in fcl config");
+    console.log("App mode: Emulator");
     config({
         "flow.network": "emulator",
         "app.detail.title": APP_DETAIL_TITLE,
@@ -20,7 +20,7 @@ if (process.env.NEXT_PUBLIC_FLOW_ENV === "emulator") {
     });
 
 } else if (process.env.NEXT_PUBLIC_FLOW_ENV === "testnet") {
-    console.log("Testnet env loaded in fcl config");
+    console.log("App mode: Testnet");
     config({
         "flow.network": "testnet",
         "app.detail.title": APP_DETAIL_TITLE,
@@ -37,7 +37,7 @@ if (process.env.NEXT_PUBLIC_FLOW_ENV === "emulator") {
     });
 
 } else {
-    console.log("Mainnet env loaded in fcl config");
+    console.log("App mode: Mainnet");
     config({
         "flow.network": "mainnet",
         "app.detail.title": APP_DETAIL_TITLE,
