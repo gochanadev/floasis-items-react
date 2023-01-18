@@ -391,7 +391,7 @@ func (pi *PixelImage) Bytes() []byte {
 		"#ffc0cb": []byte("pink"),
 		"#dda0dd": []byte("plum"),
 		"#800080": []byte("purple"),
-		"#f00":    []byte("red"),
+		"#ff0000": []byte("red"),
 		"#fa8072": []byte("salmon"),
 		"#a0522d": []byte("sienna"),
 		"#c0c0c0": []byte("silver"),
