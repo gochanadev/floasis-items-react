@@ -13,7 +13,17 @@ import (
 	"github.com/web3-storage/go-w3s-client"
 )
 
-func PrepareArt(artRepoPath string, artIndexFileName string, flowNetwork string) (cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array) {
+func PrepareArt(
+	artRepoPath string,
+	artIndexFileName string,
+	flowNetwork string) (
+	cadence.Array,
+	cadence.Array,
+	cadence.Array,
+	cadence.Array,
+	cadence.Array,
+	cadence.Array,
+	cadence.Array) {
 
 	err := godotenv.Load(".env.local")
 	if err != nil {
@@ -35,6 +45,7 @@ func PrepareArt(artRepoPath string, artIndexFileName string, flowNetwork string)
 	card_artwork_cadence := []cadence.Value{}
 	art_descriptions_cadence := []cadence.Value{}
 	art_thumbnails_cadence := []cadence.Value{}
+	art_thumbnail_paths_cadence := []cadence.Value{}
 
 	for _, line := range csvData {
 		art_name := line[0]
@@ -68,16 +79,18 @@ func PrepareArt(artRepoPath string, artIndexFileName string, flowNetwork string)
 		art_descriptions_cadence = append(art_descriptions_cadence, cadence.String(art_description))
 
 		art_thumbnail_file_path := fmt.Sprintf("%s/png/%s.png", artRepoPath, art_thumbnail_file_name)
-		fmt.Println("art_thumbnail_file_path ", art_thumbnail_file_path)
+		art_thumbnail_file_name_and_type := fmt.Sprintf("%s.png", art_thumbnail_file_name)
 
 		if flowNetwork == "emulator" || flowNetwork == "embedded" {
 			art_thumbnails_cadence = append(art_thumbnails_cadence, cadence.String(placeholder_demo_floasis_nft_artwork_cid))
+			art_thumbnail_paths_cadence = append(art_thumbnail_paths_cadence, cadence.String(art_thumbnail_file_name_and_type))
 		} else {
 			f, _ := os.Open(art_thumbnail_file_path)
 			cid, _ := c.Put(context.Background(), f)
 			fmt.Printf("Pinned to IPFS: https://%v.ipfs.w3s.link\n", cid)
 
 			art_thumbnails_cadence = append(art_thumbnails_cadence, cadence.String(cid.String()))
+			art_thumbnail_paths_cadence = append(art_thumbnail_paths_cadence, cadence.String(art_thumbnail_file_name_and_type))
 		}
 
 	}
@@ -88,7 +101,8 @@ func PrepareArt(artRepoPath string, artIndexFileName string, flowNetwork string)
 	card_artwork := cadence.NewArray(card_artwork_cadence)
 	art_descriptions := cadence.NewArray(art_descriptions_cadence)
 	art_thumbnails := cadence.NewArray(art_thumbnails_cadence)
+	art_thumbnail_paths := cadence.NewArray(art_thumbnail_paths_cadence)
 
-	return art_names, planet_names, base_artwork, card_artwork, art_descriptions, art_thumbnails
+	return art_names, planet_names, base_artwork, card_artwork, art_descriptions, art_thumbnails, art_thumbnail_paths
 
 }

@@ -35,7 +35,7 @@ func main() {
 		Print()
 
 	// service account mints demo FLOASIS NFTs
-	art_names, planet_names, base_artwork, card_artwork, art_descriptions, art_thumbnails := demo_floasis_nfts_prep.PrepareArt("./art/demo_floasis_nfts", "art_list.csv", flow_network)
+	art_names, planet_names, base_artwork, card_artwork, art_descriptions, art_thumbnails, art_thumbnail_paths := demo_floasis_nfts_prep.PrepareArt("./art/demo_floasis_nfts", "art_list.csv", flow_network)
 	c.Tx(
 		"FLOASISNFT/batch_mint_demo_floasis_nfts",
 		o.WithArg("recipient", "account"),
@@ -45,6 +45,7 @@ func main() {
 		o.WithArg("cardArtwork", card_artwork),
 		o.WithArg("artDescriptions", art_descriptions),
 		o.WithArg("artThumbnails", art_thumbnails),
+		o.WithArg("artThumbnailPaths", art_thumbnail_paths),
 		o.WithSigner("account")).
 		Print()
 
@@ -74,7 +75,7 @@ func main() {
 		Print()
 
 	// upload on-chain artwork to art library
-	artNamesItems, planetNamesItems, baseArtworkItems, cardArtworkItems, artDescriptionsItems, artThumbnailsItems := art_prep.PrepareArt("./art/accessories", "art_list.csv", flow_network)
+	artNamesItems, planetNamesItems, baseArtworkItems, cardArtworkItems, artDescriptionsItems, artThumbnailsItems, artThumbnailPathsItems := art_prep.PrepareArt("./art/accessories", "art_list.csv", flow_network)
 	c.Tx(
 		"FLOASISItemsStore/batch_add_art_to_artLibrary",
 		o.WithArg("artistName", artist_name),
@@ -85,17 +86,19 @@ func main() {
 		o.WithArg("cardArtwork", cardArtworkItems),
 		o.WithArg("artDescriptions", artDescriptionsItems),
 		o.WithArg("artThumbnails", artThumbnailsItems),
+		o.WithArg("artThumbnailPaths", artThumbnailPathsItems),
 		o.WithSigner("account")).
 		Print()
 
 	// create inventory items
-	item_names, item_descriptions, item_thumbnails, item_quantities, item_prices, item_artist_names, item_series_names, item_art_names, item_art_categories := inventory_prep.PrepareInventory("./art/accessories/store_inventory_list.csv", "./art/accessories", flow_network)
+	item_names, item_descriptions, item_thumbnails, item_thumbnail_paths, item_quantities, item_prices, item_artist_names, item_series_names, item_art_names, item_art_categories := inventory_prep.PrepareInventory("./art/accessories/store_inventory_list.csv", "./art/accessories", flow_network)
 	c.Tx(
 		"FLOASISItemsStore/batch_add_inventory",
 		o.WithArg("itemNames", item_names),
 		o.WithArg("itemDescriptions", item_descriptions),
 		o.WithArg("itemCategories", item_art_categories),
 		o.WithArg("itemThumbnails", item_thumbnails),
+		o.WithArg("itemThumbnailPaths", item_thumbnail_paths),
 		o.WithArg("itemQuantities", item_quantities),
 		o.WithArg("itemPrices", item_prices),
 		o.WithArg("itemArtistNames", item_artist_names),

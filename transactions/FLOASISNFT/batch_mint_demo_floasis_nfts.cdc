@@ -9,7 +9,8 @@ transaction(
     baseArtwork: [IaNFTAnalogs.Svg], 
     cardArtwork: [IaNFTAnalogs.Svg], 
     artDescriptions: [String], 
-    artThumbnails: [String]
+    artThumbnails: [String],
+    artThumbnailPaths: [String]
 ) {
 
     let recipientCollectionRef: &{NonFungibleToken.CollectionPublic}
@@ -19,6 +20,7 @@ transaction(
     let cardArtwork: [IaNFTAnalogs.Svg]
     let artDescriptions: [String]
     let artThumbnails: [String]
+    let artThumbnailPaths: [String]
 
     prepare(signer: AuthAccount) {
 
@@ -31,6 +33,7 @@ transaction(
         self.cardArtwork = cardArtwork
         self.artDescriptions = artDescriptions
         self.artThumbnails = artThumbnails
+        self.artThumbnailPaths = artThumbnailPaths
 
     }
 
@@ -48,7 +51,7 @@ transaction(
                 cardSvgAnalog: self.cardArtwork[loopIndex],
                 artDescription: self.artDescriptions[loopIndex],
                 artThumbnail: self.artThumbnails[loopIndex],
-                artThumbnailPath: nil // for now we are not adding a path for the IPFS CID
+                artThumbnailPath: self.artThumbnailPaths[loopIndex]
             )
 
             // increment the loop reference index

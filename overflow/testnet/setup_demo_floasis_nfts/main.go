@@ -18,7 +18,7 @@ func main() {
 		Print()
 
 	// service account mints demo FLOASIS NFTs to user1
-	art_names, planet_names, base_artwork, card_artwork, art_descriptions, art_thumbnails := demo_floasis_nfts_prep.PrepareArt("./art/demo_floasis_nfts", "art_list.csv", flow_network)
+	art_names, planet_names, base_artwork, card_artwork, art_descriptions, art_thumbnails, art_thumbnail_paths := demo_floasis_nfts_prep.PrepareArt("./art/demo_floasis_nfts", "art_list.csv", flow_network)
 	c.Tx(
 		"FLOASISNFT/batch_mint_demo_floasis_nfts",
 		o.WithArg("recipient", "user1"),
@@ -28,6 +28,7 @@ func main() {
 		o.WithArg("cardArtwork", card_artwork),
 		o.WithArg("artDescriptions", art_descriptions),
 		o.WithArg("artThumbnails", art_thumbnails),
+		o.WithArg("artThumbnailPaths", art_thumbnail_paths),
 		o.WithSigner("account")).
 		Print()
 

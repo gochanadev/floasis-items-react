@@ -9,7 +9,8 @@ transaction(
     baseArtwork: [IaNFTAnalogs.Svg], 
     cardArtwork: [IaNFTAnalogs.Svg], 
     artDescriptions: [String], 
-    artThumbnails: [String]
+    artThumbnails: [String],
+    artThumbnailPaths: [String],
     ) {
 
     let storeAdminRef: &FLOASISItemsStore.StoreAdmin
@@ -34,7 +35,7 @@ transaction(
                 cardArt: cardArtwork[loopIndex], 
                 artDescription: artDescriptions[loopIndex],
                 artThumbnail: artThumbnails[loopIndex],
-                artThumbnailPath: nil // for now we are not adding a path to the IPFS CID
+                artThumbnailPath: artThumbnailPaths[loopIndex]
             )
 
             // increment the loop reference index

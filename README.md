@@ -184,6 +184,9 @@ go run ./overflow/setup_web/setup_web.go
 ### Worklfow notes
 You must first get the dapp working on emulator, then testnet, then mainnet. It's not just best practice, it's going to get everything set up correctly, like converting the artwork from PNG to SVG.
 
+### royalty receiver in floasis items
+- change to your preferred
+
 ---
 
 The web app for this project is a Next.js project that interacts with the Flow Client Library (FCL).

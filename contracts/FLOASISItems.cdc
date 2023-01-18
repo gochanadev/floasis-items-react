@@ -304,7 +304,7 @@ pub contract FLOASISItems: NonFungibleToken {
 
         let royaltyReceiver = MetadataViews.Royalty(
             receiver: royaltiesReceiverFlowTokenReceiverCap,
-            cut: 1.0,
+            cut: 0.05,
             description: "FLOASIS Items royalty"
         )
 

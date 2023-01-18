@@ -5,6 +5,7 @@ transaction(
     itemDescriptions: [String],
     itemCategories: [String],
     itemThumbnails: [String],
+    itemThumbnailPaths: [String],
     itemQuantities: [UInt64],
     itemPrices: [UFix64],
     itemArtistNames: [String],
@@ -32,7 +33,7 @@ transaction(
                 description: itemDescriptions[loopIndex],
                 category: itemCategories[loopIndex],
                 thumbnail: itemThumbnails[loopIndex],
-                thumbnailPath: nil, // for now we are not adding a path for the IPFS CID
+                thumbnailPath: itemThumbnailPaths[loopIndex],
                 quantity: itemQuantities[loopIndex],
                 price: itemPrices[loopIndex],
                 artistName: itemArtistNames[loopIndex],

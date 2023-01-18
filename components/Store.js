@@ -55,11 +55,11 @@ export function Store() {
 
     // NFTs from the FLOASIS NFT contract
     const [floasisNFTs, setFloasisNFTs] = useState([]);
-    console.log("floasisNFTs", floasisNFTs);
+    // console.log("floasisNFTs", floasisNFTs);
 
     // Inventory items for sale from the FLOASISItemsStore contract
     const [inventory, setInventory] = useState({});
-    // console.log("inventory", inventory);
+    console.log("inventory", inventory);
 
     // Planet names present in the current set of inventory
     const [planets, setPlanets] = useState([]);

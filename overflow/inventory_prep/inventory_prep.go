@@ -13,7 +13,20 @@ import (
 	"github.com/web3-storage/go-w3s-client"
 )
 
-func PrepareInventory(inventoryCSVPath string, artRepoPath string, flowNetwork string) (cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array, cadence.Array) {
+func PrepareInventory(
+	inventoryCSVPath string,
+	artRepoPath string,
+	flowNetwork string) (
+	cadence.Array,
+	cadence.Array,
+	cadence.Array,
+	cadence.Array,
+	cadence.Array,
+	cadence.Array,
+	cadence.Array,
+	cadence.Array,
+	cadence.Array,
+	cadence.Array) {
 
 	err := godotenv.Load(".env.local")
 	if err != nil {
@@ -31,6 +44,7 @@ func PrepareInventory(inventoryCSVPath string, artRepoPath string, flowNetwork s
 	item_names_cadence := []cadence.Value{}
 	item_descriptions_cadence := []cadence.Value{}
 	item_thumbnails_cadence := []cadence.Value{}
+	item_thumbnail_paths_cadence := []cadence.Value{}
 	item_quantities_cadence := []cadence.Value{}
 	item_prices_cadence := []cadence.Value{}
 	item_artist_names_cadence := []cadence.Value{}
@@ -67,9 +81,11 @@ func PrepareInventory(inventoryCSVPath string, artRepoPath string, flowNetwork s
 		item_art_categories_cadence = append(item_art_categories_cadence, cadence.String(item_art_category))
 
 		item_thumbnail_file_path := fmt.Sprintf("%s/png/%s.png", artRepoPath, item_thumbnail_file_name)
+		item_thumbnail_file_name_and_type := fmt.Sprintf("%s.png", item_thumbnail_file_name)
 
 		if flowNetwork == "emulator" || flowNetwork == "embedded" {
 			item_thumbnails_cadence = append(item_thumbnails_cadence, cadence.String(placeholder_inventory_item_cid))
+			item_thumbnail_paths_cadence = append(item_thumbnail_paths_cadence, cadence.String(item_thumbnail_file_name_and_type))
 			fmt.Println("Placeholder IPFS CID created")
 		} else {
 			f, _ := os.Open(item_thumbnail_file_path)
@@ -77,6 +93,7 @@ func PrepareInventory(inventoryCSVPath string, artRepoPath string, flowNetwork s
 			fmt.Printf("Pinned to IPFS: https://%v.ipfs.w3s.link\n", cid)
 
 			item_thumbnails_cadence = append(item_thumbnails_cadence, cadence.String(cid.String()))
+			item_thumbnail_paths_cadence = append(item_thumbnail_paths_cadence, cadence.String(item_thumbnail_file_name_and_type))
 		}
 
 	}
@@ -84,6 +101,7 @@ func PrepareInventory(inventoryCSVPath string, artRepoPath string, flowNetwork s
 	item_names := cadence.NewArray(item_names_cadence)
 	item_descriptions := cadence.NewArray(item_descriptions_cadence)
 	item_thumbnails := cadence.NewArray(item_thumbnails_cadence)
+	item_thumbnail_paths := cadence.NewArray(item_thumbnail_paths_cadence)
 	item_quantities := cadence.NewArray(item_quantities_cadence)
 	item_prices := cadence.NewArray(item_prices_cadence)
 	item_artist_names := cadence.NewArray(item_artist_names_cadence)
@@ -91,6 +109,6 @@ func PrepareInventory(inventoryCSVPath string, artRepoPath string, flowNetwork s
 	item_art_names := cadence.NewArray(item_art_names_cadence)
 	item_art_categories := cadence.NewArray(item_art_categories_cadence)
 
-	return item_names, item_descriptions, item_thumbnails, item_quantities, item_prices, item_artist_names, item_series_names, item_art_names, item_art_categories
+	return item_names, item_descriptions, item_thumbnails, item_thumbnail_paths, item_quantities, item_prices, item_artist_names, item_series_names, item_art_names, item_art_categories
 
 }
