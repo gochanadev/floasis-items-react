@@ -200,6 +200,10 @@ npm run start
 
 ## Developing with Flow emulator
 
+
+# PISKEL
+- make sure give instructions on how to export the thumbnail image at a higher resolution, and it should be a composite of the base and the card
+
 **Pre-Requisite**: To develop locally, make sure you have the Flow CLI installed: https://docs.onflow.org/flow-cli/install/
 
 Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start the emulator, deploy the contracts, followed by the development server:
