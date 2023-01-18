@@ -59,7 +59,7 @@ export function Store() {
 
     // Inventory items for sale from the FLOASISItemsStore contract
     const [inventory, setInventory] = useState({});
-    console.log("inventory", inventory);
+    // console.log("inventory", inventory);
 
     // Planet names present in the current set of inventory
     const [planets, setPlanets] = useState([]);
