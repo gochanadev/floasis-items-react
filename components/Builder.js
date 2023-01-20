@@ -107,7 +107,7 @@ export function Builder() {
         }
 
         async function prepNFTCompositesData() {
-            const nFTCompositesData = await getNFTCompositesData(currentUser.addr, selectedFloasisNFTIdx.toString());
+            const nFTCompositesData = await getNFTCompositesData(currentUser.addr, floasisNFTs[selectedFloasisNFTIdx].id);
 
             // since this is the initial load, we can set the local composites with retrieved data or an empty object
             setOnChainComposites({
@@ -118,7 +118,9 @@ export function Builder() {
         if (currentUser.loggedIn === true) {
             prepFloasisNFTData();
             prepFloasisItemsNFTData();
-            prepNFTCompositesData();
+            if (floasisNFTs.length > 0) {
+                prepNFTCompositesData();
+            }
         }
     }, [currentUser]);
 
