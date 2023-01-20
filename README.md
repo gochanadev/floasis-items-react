@@ -78,6 +78,10 @@ FLOASIS Items can and should run on emulator, testnet and mainnet. Those three e
 
 Let's get started on your deployment.
 
+### Demo Floasis NFT resoruce storage path
+- should be unique for each deployer, even tho the FLOASISNFT contract here is only being used as a demo contract for creating NFTs on emulator and testnet
+- your setup step will be to change the path in that contract
+
 ### Create FLOW Accounts
 I highly recommend you have both testnet and mainnet Flow accounts.
 
