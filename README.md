@@ -187,6 +187,7 @@ You must first get the dapp working on emulator, then testnet, then mainnet. It'
 ### royalty receiver in floasis items
 - change to your preferred
 
+- note, part of the process is to add FLOW_ENV=testnet env var for development env in vercel
 ---
 
 The web app for this project is a Next.js project that interacts with the Flow Client Library (FCL).
