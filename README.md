@@ -168,6 +168,10 @@ https://www.piskelapp.com/
 go run ./overflow/setup_web/setup_web.go
 
 ### Deploy to testnet
+
+- account for this somewhere!!!
+    - also update constants.js and .env.local
+
 `flow project deploy --network=testnet`
 
 ### Deploy to mainnet
