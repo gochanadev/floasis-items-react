@@ -58,7 +58,7 @@ export function Builder() {
 
     // NFTs from the FLOASIS NFT contract
     const [floasisNFTs, setFloasisNFTs] = useState([]);
-    // console.log("floasisNFTs:", floasisNFTs);
+    console.log("floasisNFTs:", floasisNFTs);
 
     // NFTs from the FLOASIS Items NFT contract
     const [itemsNFTs, setItemsNFTs] = useState([]);
@@ -69,6 +69,7 @@ export function Builder() {
 
     // local composites (stored in the browser)
     const [localComposites, setLocalComposites] = useState({});
+    console.log("localComposites:", localComposites);
 
     // UI toggle for either building or viewing saved composites
     const [viewMode, setViewMode] = useState(VIEW_MODE_BUILD);
@@ -77,7 +78,7 @@ export function Builder() {
     const [editMode, setEditMode] = useState(EDIT_MODE_COLORS);
 
     // stores the index of the selected NFT from the FLOASIS NFT data
-    const [selectedFloasisNFTIdx, setSelectedFloasisNFTIdx] = useState(0);
+    const [selectedFloasisNFTIdx, setSelectedFloasisNFTIdx] = useState(null);
 
     // stores the index of the currently selected local composite
     const [selectedCompositeLayerIdx, setSelectedCompositeLayerIdx] = useState(null);
@@ -109,7 +110,7 @@ export function Builder() {
         async function prepNFTCompositesData() {
             const nFTCompositesData = await getNFTCompositesData(currentUser.addr, floasisNFTs[selectedFloasisNFTIdx].id);
 
-            // since this is the initial load, we can set the local composites with retrieved data or an empty object
+            // since this is the initial load, we can set the on-chain composites with retrieved data or an empty object
             setOnChainComposites({
                 [selectedFloasisNFTIdx]: nFTCompositesData[ITEMS_NFT_CONTRACT_IDENTIFIER]?.group || {},
             });
@@ -164,7 +165,7 @@ export function Builder() {
             setLocalComposites((prev) => {
                 return {
                     ...prev,
-                    [selectedFloasisNFTIdx]: {
+                    [floasisNFTs[selectedFloasisNFTIdx].id]: {
                         svgAnalog: starterComposite,
                         layers: [initialLayer], // we start off with only the layers from the FLOASIS NFT's art
                     },
@@ -258,6 +259,7 @@ export function Builder() {
         initTransactionState();
 
         const floasisNFTID = floasisNFTs[selectedFloasisNFTIdx].id;
+        console.log("floasisNFTID:", floasisNFTID);
 
         // get the string identifiers for the NFTs that make up the composite
         const nftIdentifiers = [];
