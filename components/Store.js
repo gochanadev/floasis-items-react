@@ -42,11 +42,11 @@ import { getFloasisNFTData, getNFTCompositesData } from "../flow/scripts";
 import {
     FCL_LIMIT,
     FLOASIS_PROJECT_TYPE,
-    ITEMS_NFT_CONTRACT_IDENTIFIER,
     ITEMS_PROJECT_TYPE,
     ITEMS_STORE_NAME,
     ON_CHAIN_COMPOSITE_TYPE,
 } from "../lib/constants";
+import { getItemsNFTContractIdentifier } from "../lib/helpers";
 import { SortStoreLayers } from "./SortStoreLayers";
 
 export function Store() {
@@ -191,14 +191,14 @@ export function Store() {
             // to local state together with the original NFT base art as a
             // tryItOnComposite. If it doesn't we just add the orginal NFT base
             // art as the only tryItOnComposite.
-            const compositesForThisProjectExist = nFTCompositesData[ITEMS_NFT_CONTRACT_IDENTIFIER] !== undefined;
+            const compositesForThisProjectExist = nFTCompositesData[getItemsNFTContractIdentifier()] !== undefined;
 
             // if the user's on-chain NFT has composites for this project exist, we
             // add it and the original NFT base art to local state
             if (compositesForThisProjectExist) {
                 // reshape the tryItOnComposites data to match what tryItOnComposites state expects
                 const projectOnChainComposites = Object.entries(
-                    nFTCompositesData[ITEMS_NFT_CONTRACT_IDENTIFIER].group
+                    nFTCompositesData[getItemsNFTContractIdentifier()].group
                 ).reduce((acc, [key, value]) => {
                     const tryItOnBaseLayer = {
                         id: `floasis:${key}:${floasisNFTIdx}`, // create a new id using the floasis NFT index and name of the composite

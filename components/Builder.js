@@ -31,7 +31,6 @@ import {
     ITEMS_STORE_NAME,
     FCL_LIMIT,
     FLOASIS_PROJECT_TYPE,
-    ITEMS_NFT_CONTRACT_IDENTIFIER,
     ITEMS_PROJECT_TYPE,
     EDIT_MODE_COLORS,
     EDIT_MODE_ORDER,
@@ -40,7 +39,7 @@ import {
 } from "../lib/constants";
 import { useAuth } from "../contexts/AuthContext";
 import { useTransaction } from "../contexts/TransactionContext";
-import { getLayerName, replaceCDCImports } from "../lib/helpers";
+import { getLayerName, replaceCDCImports, getItemsNFTContractIdentifier } from "../lib/helpers";
 import { getNFTCompositesData, getFloasisNFTData } from "../flow/scripts";
 import GET_FLOASISITEMS_COLLECTION_DATA from "../scripts/FLOASISItems/get_collection_data.cdc";
 import COMPOSITE_MULTIPLE_LAYERS from "../transactions/FLOASISNFT/composite_multiple_layers.cdc";
@@ -112,7 +111,7 @@ export function Builder() {
 
             // since this is the initial load, we can set the on-chain composites with retrieved data or an empty object
             setOnChainComposites({
-                [selectedFloasisNFTIdx]: nFTCompositesData[ITEMS_NFT_CONTRACT_IDENTIFIER]?.group || {},
+                [selectedFloasisNFTIdx]: nFTCompositesData[getItemsNFTContractIdentifier()]?.group || {},
             });
         }
 
@@ -299,7 +298,7 @@ export function Builder() {
                     arg(floasisNFTID, t.UInt64),
                     arg(nftIdentifiers, t.Array(t.String)),
                     arg(nftIDs, t.Array(t.UInt64)),
-                    arg(ITEMS_NFT_CONTRACT_IDENTIFIER, t.String),
+                    arg(getItemsNFTContractIdentifier(), t.String),
                     arg(newCompositeName, t.String),
                 ],
                 payer: fcl.authz,
@@ -432,7 +431,7 @@ export function Builder() {
             setOnChainComposites((prev) => {
                 return {
                     ...prev,
-                    [floasisNFTIdx]: nFTCompositesData[ITEMS_NFT_CONTRACT_IDENTIFIER]?.group || {},
+                    [floasisNFTIdx]: nFTCompositesData[getItemsNFTContractIdentifier()]?.group || {},
                 };
             });
         }
@@ -477,7 +476,7 @@ export function Builder() {
                 cadence: txCode,
                 args: (arg, t) => [
                     arg(floasisNFTID, t.UInt64),
-                    arg(ITEMS_NFT_CONTRACT_IDENTIFIER, t.String),
+                    arg(getItemsNFTContractIdentifier(), t.String),
                     arg(compositeName, t.String),
                 ],
                 payer: fcl.authz,

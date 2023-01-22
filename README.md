@@ -171,6 +171,7 @@ go run ./overflow/setup_web/setup_web.go
 
 - account for this somewhere!!!
     - also update constants.js and .env.local
+    - also update the composite_multiple_layers transaction hard-coded identifiers
 
 `flow project deploy --network=testnet`
 
