@@ -201,7 +201,7 @@ export function Store() {
                     nFTCompositesData[getItemsNFTContractIdentifier()].group
                 ).reduce((acc, [key, value]) => {
                     const tryItOnBaseLayer = {
-                        id: `floasis:${key}:${floasisNFTIdx}`, // create a new id using the floasis NFT index and name of the composite
+                        id: `${FLOASIS_PROJECT_TYPE}:${key}:${floasisNFTIdx}`, // create a new id using the floasis NFT index and name of the composite
                         type: ON_CHAIN_COMPOSITE_TYPE,
                         indexInParent: floasisNFTIdx,
                         gElems: [...value.children],
@@ -217,7 +217,7 @@ export function Store() {
                 setTryItOnComposites((prev) => {
                     // create the base initial layer for the tryItOnComposite for the Floasis NFT
                     const floasisNFTBaseLayer = {
-                        id: `floasis:${floasisNFTs[floasisNFTIdx].identifier}:${floasisNFTs[floasisNFTIdx].id}`, //
+                        id: `${FLOASIS_PROJECT_TYPE}:${floasisNFTs[floasisNFTIdx].identifier}:${floasisNFTs[floasisNFTIdx].id}`, //
                         type: FLOASIS_PROJECT_TYPE,
                         indexInParent: floasisNFTIdx,
                         gElems: [...floasisNFTs[floasisNFTIdx].base.children],
@@ -227,7 +227,7 @@ export function Store() {
                         ...prev,
                         [floasisNFTIdx]: {
                             ...prev[floasisNFTIdx],
-                            [`FLOASIS NFT #${floasisNFTs[floasisNFTIdx].id}`]: {
+                            [`${FLOASIS_PROJECT_TYPE} NFT #${floasisNFTs[floasisNFTIdx].id}`]: {
                                 ["svgAnalog"]: floasisNFTs[floasisNFTIdx].base,
                                 ["layers"]: [floasisNFTBaseLayer],
                             },
@@ -241,7 +241,7 @@ export function Store() {
                 setTryItOnComposites((_) => {
                     // create the base initial layer for the tryItOnComposite for the Floasis NFT
                     const floasisNFTBaseLayer = {
-                        id: `floasis:${floasisNFTs[floasisNFTIdx].identifier}:${floasisNFTs[floasisNFTIdx].id}`, // create the id using data from the floasis NFT
+                        id: `${FLOASIS_PROJECT_TYPE}:${floasisNFTs[floasisNFTIdx].identifier}:${floasisNFTs[floasisNFTIdx].id}`, // create the id using data from the floasis NFT
                         type: FLOASIS_PROJECT_TYPE,
                         indexInParent: floasisNFTIdx,
                         gElems: [...floasisNFTs[floasisNFTIdx].base.children],
@@ -249,7 +249,7 @@ export function Store() {
 
                     return {
                         [floasisNFTIdx]: {
-                            [`FLOASIS NFT #${floasisNFTs[floasisNFTIdx].id}`]: {
+                            [`${FLOASIS_PROJECT_TYPE} NFT #${floasisNFTs[floasisNFTIdx].id}`]: {
                                 ["svgAnalog"]: floasisNFTs[floasisNFTIdx].base,
                                 ["layers"]: [floasisNFTBaseLayer],
                             },
@@ -269,14 +269,14 @@ export function Store() {
             // tryItOnComposites composite.
             const existingLayerIdx = tryItOnComposites[selectedFloasisNFT][selectedComposite].layers?.findIndex(
                 (layer) => {
-                    const layerExists = layer.id === `items:${item.artName}:${item.id}`;
+                    const layerExists = layer.id === `${ITEMS_PROJECT_TYPE}:${item.artName}:${item.id}`;
                     return layerExists;
                 }
             );
 
             if (existingLayerIdx === -1) {
                 const newLayer = {
-                    id: `items:${item.artName}:${item.id}`,
+                    id: `${ITEMS_PROJECT_TYPE}:${item.artName}:${item.id}`,
                     type: ITEMS_PROJECT_TYPE,
                     indexInParent: parseInt(inventoryItemID),
                     gElems: [...item.artItem.base.children],
@@ -575,7 +575,7 @@ export function Store() {
                     {inventoryByFilters &&
                         Object.keys(inventoryByFilters).map((itemID) => {
                             const item = inventoryByFilters[itemID];
-                            const itemLayerID = `items:${item.artName}:${item.id}`;
+                            const itemLayerID = `${ITEMS_PROJECT_TYPE}:${item.artName}:${item.id}`;
                             const layerInTryItOnComposites = tryItOnComposites[selectedFloasisNFT]?.[
                                 selectedComposite
                             ]?.layers.find((layer) => layer.id === itemLayerID);

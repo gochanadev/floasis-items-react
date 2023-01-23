@@ -145,6 +145,8 @@ In the root of this project, find the '.env.example' file and change it to just 
 - note, deployer address in .env should NOT have 0x prefix
 - make sure deployer addresses in .env match from flow.json
 
+- update all env vars where appropriate
+
 ### Set up constants.ts
 This is a file where we keep some more data that establishes your unique project variables.
 - open the 'constants.ts' file (lib -> constants.js) and update the fully qualified identifier with new testnet deployer address. To do this, chop off the '0x' from your testnet account address and replace the address part of the identfier, so it resembles this: 'A.75327e876546b2d1.FLOASISItems.NFT'

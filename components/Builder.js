@@ -33,9 +33,9 @@ import {
     FLOASIS_PROJECT_TYPE,
     ITEMS_PROJECT_TYPE,
     EDIT_MODE_COLORS,
-    EDIT_MODE_ORDER,
-    VIEW_MODE_SAVED,
-    VIEW_MODE_BUILD,
+    EDIT_MODE_LAYERS_ORDER,
+    VIEW_MODE_ONCHAIN_COMPOSITES,
+    VIEW_MODE_LOCAL_COMPOSITES,
 } from "../lib/constants";
 import { useAuth } from "../contexts/AuthContext";
 import { useTransaction } from "../contexts/TransactionContext";
@@ -62,33 +62,38 @@ export function Builder() {
     // NFTs from the FLOASIS Items NFT contract
     const [itemsNFTs, setItemsNFTs] = useState([]);
 
-    // on-chain (stored on the NFT itself) composites
+    // on-chain (stored on the NFT itself) composites data that does not change
+    // as the user interacts with the builder
     const [onChainComposites, setOnChainComposites] = useState({});
-    // console.log("onChainComposites:", onChainComposites);
+    console.log("onChainComposites:", onChainComposites);
 
-    // local composites (stored in the browser)
+    // local (stored in the browser) composites data that changes as the user
+    // interacts with the builder. The key for each local composite corresponds
+    // to the index of the the FLOASIS NFT dat in floasisNFTs
     const [localComposites, setLocalComposites] = useState({});
     console.log("localComposites:", localComposites);
 
-    // UI toggle for either building or viewing saved composites
-    const [viewMode, setViewMode] = useState(VIEW_MODE_BUILD);
+    // UI toggle for either building new composites or viewing saved composites
+    const [viewMode, setViewMode] = useState(VIEW_MODE_LOCAL_COMPOSITES);
 
     // UI toggle for either editing the order of the composites or the colors
     const [editMode, setEditMode] = useState(EDIT_MODE_COLORS);
 
-    // stores the index of the selected NFT from the FLOASIS NFT data
-    const [selectedFloasisNFTIdx, setSelectedFloasisNFTIdx] = useState(null);
+    // index of the selected NFT from FLOASIS NFT data
+    // intitialize with the 0th NFT index
+    const [selectedFloasisNFTIdx, setSelectedFloasisNFTIdx] = useState(0);
+    console.log("selectedFloasisNFTIdx:", selectedFloasisNFTIdx);
 
-    // stores the index of the currently selected local composite
+    // index of the selected local composite
     const [selectedCompositeLayerIdx, setSelectedCompositeLayerIdx] = useState(null);
 
-    // stores the name of the currently selected on-chain composite
+    // name of the selected on-chain composite
     const [selectedOnChainCompositeName, setSelectedOnChainCompositeName] = useState(null);
 
     // user-entered name for saving a new composite
     const [newCompositeName, setNewCompositeName] = useState("");
 
-    // FETCH USER DATA AND SET INITIAL APP STATE IF USER IS LOGGED IN
+    // FETCH USER FLOASIS AND FLOASIS ITEMS NFT DATA ONCE USER IS LOGGED IN
     useEffect(() => {
         async function prepFloasisNFTData() {
             const floasisNFTData = await getFloasisNFTData(currentUser.addr);
@@ -106,47 +111,41 @@ export function Builder() {
             setItemsNFTs(floasisItemsNFTData);
         }
 
+        if (currentUser.loggedIn === true) {
+            prepFloasisNFTData();
+            prepFloasisItemsNFTData();
+        }
+    }, [currentUser]);
+
+    // IF THE USER HAS FLOASIS NFTS, FETCH THE ON-CHAIN COMPOSITES FOR THE FIRST
+    // ONE AND THEN FOR EACH OF THE OTHERS AS THE USER SELECTS A NEW FLAOSIS
+    // NFT IN THE UI
+    useEffect(() => {
         async function prepNFTCompositesData() {
+
             const nFTCompositesData = await getNFTCompositesData(currentUser.addr, floasisNFTs[selectedFloasisNFTIdx].id);
 
-            // since this is the initial load, we can set the on-chain composites with retrieved data or an empty object
+            // if there is not yet any composites data on the user NFT, we set
+            // state of an empty object
             setOnChainComposites({
                 [selectedFloasisNFTIdx]: nFTCompositesData[getItemsNFTContractIdentifier()]?.group || {},
             });
         }
 
-        if (currentUser.loggedIn === true) {
-            prepFloasisNFTData();
-            prepFloasisItemsNFTData();
-            if (floasisNFTs.length > 0) {
-                prepNFTCompositesData();
-            }
+        if (floasisNFTs.length > 0) {
+            prepNFTCompositesData();
         }
-    }, [currentUser]);
 
-    // WATCH FOR SELECTION OF FLOASIS NFT AND PREPARE INITIAL COMPOSITE STATE ACCORDINGLY
+    },[selectedFloasisNFTIdx, floasisNFTs])
+
+    // USE THE BASE ART FROM EACH FLOASIS NFT AS THE INITIAL LAYER FOR LOCAL
+    // COMPOSITING
     useEffect(() => {
-        // selected Floasis NFT data exists and local composite data does not
-        if (floasisNFTs[selectedFloasisNFTIdx] !== undefined && localComposites[selectedFloasisNFTIdx] === undefined) {
-            const selectedFloasisNFTData = floasisNFTs[selectedFloasisNFTIdx];
 
-            /*
-            We need an initial layer to use for compositing in the UI, so we use
-            references to the selected NFT and a shallow copy of the selected
-            floasis NFT's base artwork.
-
-            If you don't know much about shallow copies, read up on shallow
-            copies vs. deep copies in Javascript because they can be tricky. In
-            this case, we want color changes to the on-chain artowrk to also be
-            reflected in the local composite, so we use a shallow copy of this
-            data instead of a depp copy.
-            */
-            const initialLayer = {
-                id: `floasis:${selectedFloasisNFTIdx}`,
-                type: FLOASIS_PROJECT_TYPE,
-                indexInParent: selectedFloasisNFTIdx,
-                gElems: [...selectedFloasisNFTData.base.children], // gElems are groups of rectangles that make up the artwork
-            };
+        // the user has Floasis NFTs and local composite data for the selected
+        // FLOASIS NFT does not exist 
+        if ((floasisNFTs.length > 0) && (localComposites[selectedFloasisNFTIdx] === undefined)) {
+            const floasisNFTData = floasisNFTs[selectedFloasisNFTIdx];
 
             /* 
             To make things easy, we clone the original base art to use as a starter 
@@ -154,17 +153,35 @@ export function Builder() {
             artwork layers with a shallow copy of the original base artwork 
             layers. 
             */
-            const starterComposite = structuredClone(selectedFloasisNFTData.base);
-            starterComposite.children = [...selectedFloasisNFTData.base.children];
+            const starterComposite = structuredClone(floasisNFTData.base);
+            starterComposite.children = [...floasisNFTData.base.children];
+
+            /*
+            We need an initial layer to use for compositing layers in the UI, so
+            we use a shallow copy of the selected floasis NFT's base artwork and
+            reference data.
+
+            If you don't know much about shallow copies, read up on shallow
+            copies vs. deep copies in Javascript. In this case, we want color
+            changes to the local composite artowrk to also be reflected in the
+            thumbnails all thumbnails of NFTs in the UI, so we use a shallow
+            copy instead of a depp copy.
+            */
+            const initialLayer = {
+                id: `${FLOASIS_PROJECT_TYPE}:${selectedFloasisNFTIdx}`,
+                type: FLOASIS_PROJECT_TYPE,
+                indexInParent: selectedFloasisNFTIdx,
+                gElems: [...floasisNFTData.base.children], // gElems are groups of rectangles that make up the artwork
+            };
 
             /*
             Set the composite state, spreading out any previous composite data
-            before adding new data.
+            for other NFTs before adding the new data.
             */
             setLocalComposites((prev) => {
                 return {
                     ...prev,
-                    [floasisNFTs[selectedFloasisNFTIdx].id]: {
+                    [selectedFloasisNFTIdx]: {
                         svgAnalog: starterComposite,
                         layers: [initialLayer], // we start off with only the layers from the FLOASIS NFT's art
                     },
@@ -178,7 +195,10 @@ export function Builder() {
         const newColorValue = e.target.value;
 
         setLocalComposites((prev) => {
+
             const updated = { ...prev };
+            
+            // access the g element of the svg analog
             const gElem = updated[selectedFloasisNFTIdx]["layers"][selectedCompositeLayerIdx]["gElems"][gElemIdx];
 
             // get the original fill color of the gElem
@@ -186,7 +206,7 @@ export function Builder() {
 
             /*
             If the selected gElem for the local composite doesn't have the 
-            original color value designated, create it.
+            original color value designated, create it so we can the change.
             */
             if (gElem.attributes.original === undefined) {
                 gElem.attributes.original = originalColorValue;
@@ -258,7 +278,6 @@ export function Builder() {
         initTransactionState();
 
         const floasisNFTID = floasisNFTs[selectedFloasisNFTIdx].id;
-        console.log("floasisNFTID:", floasisNFTID);
 
         // get the string identifiers for the NFTs that make up the composite
         const nftIdentifiers = [];
@@ -268,7 +287,7 @@ export function Builder() {
 
         // iterate over the local composites to create the ordered arrays of
         // identifiers and IDs
-        localComposites[floasisNFTID].layers.forEach((layer) => {
+        localComposites[selectedFloasisNFTIdx].layers.forEach((layer) => {
             nftIdentifiers.push(
                 layer.type === FLOASIS_PROJECT_TYPE
                     ? floasisNFTs[layer.indexInParent].identifier
@@ -320,6 +339,8 @@ export function Builder() {
                     const namedOnChainCompositeExists =
                         onChainComposites[selectedFloasisNFTIdx]?.[newCompositeName] !== undefined;
 
+                    // add the successfully saved on-chain composite to the
+                    // local on-chain composite state
                     !namedOnChainCompositeExists &&
                         setOnChainComposites((prev) => {
                             return {
@@ -337,8 +358,10 @@ export function Builder() {
         }
     };
 
-    // UPDATE THE COMPOSITE STATE EACH TIME AN ITEMS NFT IS SELECTED IN THE UI
+    // UPDATE THE LOCAL COMPOSITE STATE EACH TIME AN ITEMS NFT IS SELECTED OR
+    // DESELECTED IN THE UI
     const handleSelectItemsNFT = (selectedItemsNFTIdx) => {
+
         /*
         When an items NFT is initially selected, we add it to the composite
         data. If it already exists, we remove it from composite data. This
@@ -361,17 +384,18 @@ export function Builder() {
             if (existingLayerIdx === -1) {
                 // create a new layer with a shallow copy of the gElems from selected items NFT
                 const newLayer = {
-                    id: `items:${selectedItemsNFTIdx}`,
+                    id: `${ITEMS_PROJECT_TYPE}:${selectedItemsNFTIdx}`,
                     type: ITEMS_PROJECT_TYPE,
                     indexInParent: selectedItemsNFTIdx,
                     gElems: [...itemsNFTs[selectedItemsNFTIdx].base.children],
                 };
 
                 // create an updated layers array with the previous layers first
-                // and the new layer last
+                // and the new layer last. So when we add layers they goes onto
+                // the top
                 const updatedLayers = [...prev[selectedFloasisNFTIdx].layers, newLayer];
 
-                /* to display the artwork inteh UI, spread the artwork from the
+                /* to display the artwork in the UI, spread the artwork from the
                 selected items NFT into the existing artwork for this composite.
                 */
                 const updatedArtworkChildren = [
@@ -417,7 +441,6 @@ export function Builder() {
 
     // UPDATE THE ON-CHAIN COMPOSITES STATE EACH TIME A FLOASIS NFT IS SELECTED
     const handleFloasisNFTSelection = async (floasisNFTIdx) => {
-        console.log("Floasis NFT selected:", floasisNFTIdx);
         setSelectedFloasisNFTIdx(floasisNFTIdx);
 
         /*
@@ -449,6 +472,7 @@ export function Builder() {
 
     // determines if the selected items NFT is active/present in the composite or not
     const itemsLayerIsActive = (itemsNFTIdx) => {
+
         const selectedLayerIdx = localComposites[selectedFloasisNFTIdx]?.layers.findIndex(
             (compositeLayer) =>
                 compositeLayer.type === ITEMS_PROJECT_TYPE && compositeLayer.indexInParent === itemsNFTIdx
@@ -520,7 +544,7 @@ export function Builder() {
                 {/* UI SELECTION OF NFTS AND ON-CHAIN COMPOSITES */}
                 <div id="a">
                     <article>
-                        {viewMode === VIEW_MODE_SAVED && (
+                        {viewMode === VIEW_MODE_ONCHAIN_COMPOSITES && (
                             <>
                                 <h4>Your localComposites:</h4>
                                 <section className="cards-section">
@@ -543,7 +567,7 @@ export function Builder() {
                                 </section>
                             </>
                         )}
-                        {viewMode === VIEW_MODE_BUILD && (
+                        {viewMode === VIEW_MODE_LOCAL_COMPOSITES && (
                             <>
                                 <h3>Choose one FLOASIS NFT:</h3>
                                 <section className="cards-section">
@@ -602,16 +626,16 @@ export function Builder() {
                     <div className="tabs">
                         <div className="tab">
                             <button
-                                className={`outline ${viewMode === VIEW_MODE_SAVED && "active"}`}
-                                onClick={(e) => handleViewModeSelection(e, VIEW_MODE_SAVED)}
+                                className={`outline ${viewMode === VIEW_MODE_ONCHAIN_COMPOSITES && "active"}`}
+                                onClick={(e) => handleViewModeSelection(e, VIEW_MODE_ONCHAIN_COMPOSITES)}
                             >
                                 on-chain composites
                             </button>
                         </div>
                         <div className="tab">
                             <button
-                                className={`outline ${viewMode === VIEW_MODE_BUILD && "active"}`}
-                                onClick={(e) => handleViewModeSelection(e, VIEW_MODE_BUILD)}
+                                className={`outline ${viewMode === VIEW_MODE_LOCAL_COMPOSITES && "active"}`}
+                                onClick={(e) => handleViewModeSelection(e, VIEW_MODE_LOCAL_COMPOSITES)}
                             >
                                 build a new composite
                             </button>
@@ -619,7 +643,7 @@ export function Builder() {
                     </div>
                     <article>
                         <>
-                            {viewMode === VIEW_MODE_SAVED && (
+                            {viewMode === VIEW_MODE_ONCHAIN_COMPOSITES && (
                                 <>
                                     <h4>Your Composite:</h4>
                                     {onChainComposites[selectedFloasisNFTIdx] && onChainComposites[selectedFloasisNFTIdx][selectedOnChainCompositeName] !==
@@ -650,7 +674,7 @@ export function Builder() {
                                         undefined && <p>choose one of your composites to view and download as PNG.</p>}
                                 </>
                             )}
-                            {viewMode === VIEW_MODE_BUILD && (
+                            {viewMode === VIEW_MODE_LOCAL_COMPOSITES && (
                                 <>
                                     {localComposites[selectedFloasisNFTIdx]?.layers.length > 0 && (
                                         <>
@@ -685,8 +709,8 @@ export function Builder() {
                                         </div>
                                         <div className="tab">
                                             <button
-                                                className={`outline ${editMode === EDIT_MODE_ORDER && "active"}`}
-                                                onClick={(e) => handleEditModeSelection(e, EDIT_MODE_ORDER)}
+                                                className={`outline ${editMode === EDIT_MODE_LAYERS_ORDER && "active"}`}
+                                                onClick={(e) => handleEditModeSelection(e, EDIT_MODE_LAYERS_ORDER)}
                                             >
                                                 change order
                                             </button>
@@ -746,7 +770,7 @@ export function Builder() {
                                             )}
                                         </>
                                     )}
-                                    {editMode === EDIT_MODE_ORDER && (
+                                    {editMode === EDIT_MODE_LAYERS_ORDER && (
                                         <>
                                             <SortBuilderLayers
                                                 composites={localComposites}
