@@ -57,7 +57,7 @@ export function Builder() {
 
     // NFTs from the FLOASIS NFT contract
     const [floasisNFTs, setFloasisNFTs] = useState([]);
-    console.log("floasisNFTs:", floasisNFTs);
+    // console.log("floasisNFTs:", floasisNFTs);
 
     // NFTs from the FLOASIS Items NFT contract
     const [itemsNFTs, setItemsNFTs] = useState([]);
@@ -65,13 +65,13 @@ export function Builder() {
     // on-chain (stored on the NFT itself) composites data that does not change
     // as the user interacts with the builder
     const [onChainComposites, setOnChainComposites] = useState({});
-    console.log("onChainComposites:", onChainComposites);
+    // console.log("onChainComposites:", onChainComposites);
 
     // local (stored in the browser) composites data that changes as the user
     // interacts with the builder. The key for each local composite corresponds
     // to the index of the the FLOASIS NFT dat in floasisNFTs
     const [localComposites, setLocalComposites] = useState({});
-    console.log("localComposites:", localComposites);
+    // console.log("localComposites:", localComposites);
 
     // UI toggle for either building new composites or viewing saved composites
     const [viewMode, setViewMode] = useState(VIEW_MODE_LOCAL_COMPOSITES);
@@ -82,7 +82,7 @@ export function Builder() {
     // index of the selected NFT from FLOASIS NFT data
     // intitialize with the 0th NFT index
     const [selectedFloasisNFTIdx, setSelectedFloasisNFTIdx] = useState(0);
-    console.log("selectedFloasisNFTIdx:", selectedFloasisNFTIdx);
+    // console.log("selectedFloasisNFTIdx:", selectedFloasisNFTIdx);
 
     // index of the selected local composite
     const [selectedCompositeLayerIdx, setSelectedCompositeLayerIdx] = useState(null);
