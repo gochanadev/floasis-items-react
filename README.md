@@ -171,6 +171,7 @@ https://www.piskelapp.com/
 
 ### !!!!
 also update the collection metadata text in the contract for each deployer
+- make sure storage paths are prefixed with this project name so they won't conflict with other ones
 
 ### Run emulator
 go run ./overflow/setup_web/setup_web.go
