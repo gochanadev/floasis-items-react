@@ -163,7 +163,7 @@ pub contract FLOASISItems: NonFungibleToken {
                     )
 
                     return MetadataViews.NFTCollectionDisplay(
-                        name: "The IaNFT Items Collection",
+                        name: "FLOSIS Items Collection",
                         description: "This collection is used as an example to help you develop your next Flow IaNFT.",
                         externalURL: MetadataViews.ExternalURL("https://ianft.fun"),
                         squareImage: squareMedia,

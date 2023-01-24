@@ -38,3 +38,4 @@ package-lock.json
 
 # flow
 flow.json
+flow.*.json

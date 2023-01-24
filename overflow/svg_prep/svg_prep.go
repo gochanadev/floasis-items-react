@@ -124,13 +124,13 @@ func GetSvgStruct(svgString string, flowNetwork string) cadence.Struct {
 	var deployer_address string
 
 	if flowNetwork == "emulator" || flowNetwork == "embedded" {
-		full_deployer_address := os.Getenv("NEXT_PUBLIC_DEPLOYER_ADDRESS_EMULATOR")
+		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_EMULATOR")
 		deployer_address = full_deployer_address[2:]
 	} else if flowNetwork == "testnet" {
-		full_deployer_address := os.Getenv("NEXT_PUBLIC_DEPLOYER_ADDRESS_TESTNET")
+		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_TESTNET")
 		deployer_address = full_deployer_address[2:]
 	} else {
-		full_deployer_address := os.Getenv("NEXT_PUBLIC_DEPLOYER_ADDRESS_MAINNET")
+		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_MAINNET")
 		deployer_address = full_deployer_address[2:]
 	}
 

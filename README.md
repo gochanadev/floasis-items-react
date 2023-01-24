@@ -139,6 +139,9 @@ MORE NOTES ABOUT THE FLOW.JSON file
     - IaNFTAnalogs
 
 
+### NOTE
+- each deployer needs to update the paths in FLOASISItems, FLOASISItemsStore, FLOASISNFT (the demo contract for floasis NFTs) also!!!
+
 ### Set up .env
 In the root of this project, find the '.env.example' file and change it to just be '.env'. Now open the .env file and add the 'TESTNET_DEPLOYER_ADDRESS' env var value as your testnet account address. Note, this file is also excluded from version control. You should securely back this one up elsewhere as well.
 
@@ -165,6 +168,9 @@ The default project here has some placeholder art so that you can immediately ru
 
 - Piskel instructions
 https://www.piskelapp.com/
+
+### !!!!
+also update the collection metadata text in the contract for each deployer
 
 ### Run emulator
 go run ./overflow/setup_web/setup_web.go

@@ -36,6 +36,7 @@ import {
     EDIT_MODE_LAYERS_ORDER,
     VIEW_MODE_ONCHAIN_COMPOSITES,
     VIEW_MODE_LOCAL_COMPOSITES,
+    ON_CHAIN_COMPOSITES_GROUP_NAME,
 } from "../lib/constants";
 import { useAuth } from "../contexts/AuthContext";
 import { useTransaction } from "../contexts/TransactionContext";
@@ -113,7 +114,7 @@ export function Builder() {
 
         if (currentUser.loggedIn === true) {
             prepFloasisNFTData();
-            prepFloasisItemsNFTData();
+            // prepFloasisItemsNFTData();
         }
     }, [currentUser]);
 
@@ -128,7 +129,7 @@ export function Builder() {
             // if there is not yet any composites data on the user NFT, we set
             // state of an empty object
             setOnChainComposites({
-                [selectedFloasisNFTIdx]: nFTCompositesData[getItemsNFTContractIdentifier()]?.group || {},
+                [selectedFloasisNFTIdx]: nFTCompositesData[ON_CHAIN_COMPOSITES_GROUP_NAME]?.group || {},
             });
         }
 
@@ -317,7 +318,7 @@ export function Builder() {
                     arg(floasisNFTID, t.UInt64),
                     arg(nftIdentifiers, t.Array(t.String)),
                     arg(nftIDs, t.Array(t.UInt64)),
-                    arg(getItemsNFTContractIdentifier(), t.String),
+                    arg(ON_CHAIN_COMPOSITES_GROUP_NAME, t.String),
                     arg(newCompositeName, t.String),
                 ],
                 payer: fcl.authz,
@@ -500,7 +501,7 @@ export function Builder() {
                 cadence: txCode,
                 args: (arg, t) => [
                     arg(floasisNFTID, t.UInt64),
-                    arg(getItemsNFTContractIdentifier(), t.String),
+                    arg(ON_CHAIN_COMPOSITES_GROUP_NAME, t.String),
                     arg(compositeName, t.String),
                 ],
                 payer: fcl.authz,
