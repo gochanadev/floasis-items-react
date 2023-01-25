@@ -25,7 +25,30 @@ pub contract FLOASISNFT: NonFungibleToken {
     pub let CollectionPublicPath: PublicPath
     pub let CollectionProviderPath: PrivatePath
 
-    pub resource NFT: NonFungibleToken.INFT, MetadataViews.Resolver {
+    pub resource interface NFTPublic {
+        pub let id: UInt64
+        pub let name: String
+        pub let description: String
+        pub let thumbnail: String
+        pub let thumbnailPath: String?
+        pub let floasisID: UInt64
+        pub let planet: FLOASISPrimitives.Planet
+        pub fun getBase(): IaNFTAnalogs.Svg
+        pub fun getCard(): IaNFTAnalogs.Svg
+        pub fun getCompositesGroupNamesList(): [String]
+        pub fun getCompositesNamesByGroupName(compositeGroupName: String): [String]
+        pub fun getComposite(compositeGroupName: String, compositeName: String): IaNFTAnalogs.Svg?
+        pub fun getComposites(): {String: FLOASISPrimitives.CompositeGroup}
+    }
+
+    pub resource interface NFTPrivate {
+        pub fun updateBaseGFill(gElementId: UInt64, color: String)
+        pub fun updateCardGFill(gElementId: UInt64, color: String)
+        pub fun addComposite(compositeGroupName: String, compositeName: String, composite: IaNFTAnalogs.Svg)
+        pub fun removeComposite(compositeGroupName: String, compositeName: String)
+    }
+
+    pub resource NFT: NonFungibleToken.INFT, MetadataViews.Resolver, NFTPublic, NFTPrivate {
         pub let floasisID: UInt64
         pub let id: UInt64
         pub let planet: FLOASISPrimitives.Planet
@@ -172,7 +195,7 @@ pub contract FLOASISNFT: NonFungibleToken {
         pub fun deposit(token: @NonFungibleToken.NFT)
         pub fun getIDs(): [UInt64]
         pub fun borrowNFT(id: UInt64): &NonFungibleToken.NFT
-        pub fun borrowFLOASISNFT(id: UInt64): &FLOASISNFT.NFT? {
+        pub fun borrowFLOASISNFT(id: UInt64): &FLOASISNFT.NFT{NonFungibleToken.INFT, FLOASISNFT.NFTPublic, MetadataViews.Resolver}? {
             post {
                 (result == nil) || (result?.id == id):
                     "Cannot borrow FLOASISNFT reference: the ID of the returned reference is incorrect"
@@ -181,7 +204,6 @@ pub contract FLOASISNFT: NonFungibleToken {
     }
 
     pub resource Collection: FLOASISNFTCollectionPublic, NonFungibleToken.Provider, NonFungibleToken.Receiver, NonFungibleToken.CollectionPublic, MetadataViews.ResolverCollection {
-
         pub var ownedNFTs: @{UInt64: NonFungibleToken.NFT}
 
         init () {
@@ -216,13 +238,25 @@ pub contract FLOASISNFT: NonFungibleToken {
             return (&self.ownedNFTs[id] as &NonFungibleToken.NFT?)!
         }
  
-        pub fun borrowFLOASISNFT(id: UInt64): &FLOASISNFT.NFT? {
+        pub fun borrowFLOASISNFT(id: UInt64): &FLOASISNFT.NFT{NonFungibleToken.INFT, FLOASISNFT.NFTPublic, MetadataViews.Resolver}? {
             if self.ownedNFTs[id] != nil {
+                // Create an authorized reference to allow downcasting
                 let ref = (&self.ownedNFTs[id] as auth &NonFungibleToken.NFT?)!
-                return ref as! &FLOASISNFT.NFT
+                let floasisNFTRef = ref as! &FLOASISNFT.NFT
+                return floasisNFTRef as &FLOASISNFT.NFT{NonFungibleToken.INFT, FLOASISNFT.NFTPublic, MetadataViews.Resolver}
             }
 
             return nil
+        }
+
+        pub fun borrowFLOASISNFTPrivate(id: UInt64): &FLOASISNFT.NFT{NonFungibleToken.INFT, FLOASISNFT.NFTPrivate, FLOASISNFT.NFTPublic, MetadataViews.Resolver}? {
+            if self.ownedNFTs[id] != nil {
+                let ref = (&self.ownedNFTs[id] as auth &NonFungibleToken.NFT?)!
+                let floasisNFTRef = ref as! &FLOASISNFT.NFT
+                return floasisNFTRef as &FLOASISNFT.NFT{NonFungibleToken.INFT, FLOASISNFT.NFTPrivate, FLOASISNFT.NFTPublic, MetadataViews.Resolver}
+            } else {
+                return nil
+            }
         }
  
         pub fun borrowViewResolver(id: UInt64): &AnyResource{MetadataViews.Resolver} {

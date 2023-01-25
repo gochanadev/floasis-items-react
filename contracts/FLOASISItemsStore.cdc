@@ -350,7 +350,7 @@ pub contract FLOASISItemsStore {
 
         self.totalInventoryItemSupply = 0
 
-        self.FLOASISItemsStoreAdminPath = /storage/floasisItemsStoreAdmin
+        self.FLOASISItemsStoreAdminPath = /storage/floasisOfficialfloasisItemsStoreAdmin
 
         let storeAdmin <- create StoreAdmin()
 

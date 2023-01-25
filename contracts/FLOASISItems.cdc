@@ -278,7 +278,8 @@ pub contract FLOASISItems: NonFungibleToken {
         recipient: &{NonFungibleToken.CollectionPublic},
         inventoryItemID: UInt64,
         payment: @FungibleToken.Vault,
-        floasisNFTRef: &FLOASISNFT.NFT
+        floasisNFTRef: &FLOASISNFT.NFT{NonFungibleToken.INFT, FLOASISNFT.NFTPrivate, FLOASISNFT.NFTPublic, MetadataViews.Resolver}
+
     ) {
         pre {
             FLOASISItemsStore.getActiveInventoryItem(inventoryItemID) != nil : "Could not find inventory item with that ID."
@@ -355,10 +356,10 @@ pub contract FLOASISItems: NonFungibleToken {
         self.totalSupply = 0
 
         // Set the named paths
-        self.CollectionStoragePath = /storage/FLOASISItemsCollection
-        self.CollectionPublicPath = /public/FLOASISItemsCollection
-        self.CollectionProviderPath = /private/FLOASISItemsCollection
-        self.MinterStoragePath = /storage/FLOASISItemsMinter
+        self.CollectionStoragePath = /storage/floasisOfficialFLOASISItemsCollection
+        self.CollectionPublicPath = /public/floasisOfficialFLOASISItemsCollection
+        self.CollectionProviderPath = /private/floasisOfficialFLOASISItemsCollection
+        self.MinterStoragePath = /storage/floasisOfficialFLOASISItemsMinter
 
         // Create a Collection resource and save it to storage
         let collection <- create Collection()

@@ -1,5 +1,6 @@
 import NonFungibleToken from "../../contracts/core/NonFungibleToken.cdc"
 import FlowToken from "../../contracts/core/FlowToken.cdc"
+import MetadataViews from "../../contracts/core/MetadataViews.cdc"
 import FLOASISItems from "../../contracts/FLOASISItems.cdc"
 import FLOASISItemsStore from "../../contracts/FLOASISItemsStore.cdc"
 import FLOASISNFT from "../../contracts/FLOASISNFT.cdc"
@@ -9,8 +10,8 @@ transaction(inventoryItemIDs: [UInt64], floasisNFTID: UInt64) {
     let inventoryItemIDs: [UInt64]
     let buyerCollection: &FLOASISItems.Collection{NonFungibleToken.CollectionPublic}
     let buyerPaymentVault: &FlowToken.Vault
-    let floasisNFTRef: &FLOASISNFT.NFT
-
+    let floasisNFTRef: &FLOASISNFT.NFT{NonFungibleToken.INFT, FLOASISNFT.NFTPrivate, FLOASISNFT.NFTPublic, MetadataViews.Resolver}
+    
     prepare(signer: AuthAccount) {
 
         self.inventoryItemIDs = inventoryItemIDs
@@ -30,11 +31,10 @@ transaction(inventoryItemIDs: [UInt64], floasisNFTID: UInt64) {
         self.buyerPaymentVault = signer.borrow<&FlowToken.Vault>(from: /storage/flowTokenVault)
             ?? panic("Can't borrow the Flow Token vault for the main payment from acct storage")
 
-        let floasisCollectionRef = signer.borrow<&FLOASISNFT.Collection{FLOASISNFT.FLOASISNFTCollectionPublic, NonFungibleToken.CollectionPublic}>(
-            from: FLOASISNFT.CollectionStoragePath
-        ) ?? panic("Cannot borrow FLOASIS NFT collection capability from signer")
+        let floasisCollectionRef = signer.borrow<&FLOASISNFT.Collection>(from: FLOASISNFT.CollectionStoragePath)
+            ?? panic("Could not borrow the FLOASISNFT Collection")
 
-        self.floasisNFTRef = floasisCollectionRef.borrowFLOASISNFT(id: floasisNFTID)!
+        self.floasisNFTRef = floasisCollectionRef.borrowFLOASISNFTPrivate(id: floasisNFTID)!
 
     }
 

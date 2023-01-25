@@ -1,4 +1,5 @@
 import NonFungibleToken from "../../contracts/core/NonFungibleToken.cdc"
+import MetadataViews from "../../contracts/core/MetadataViews.cdc"
 import FLOASISNFT from "../../contracts/FLOASISNFT.cdc"
 import FLOASISItems from "../../contracts/FLOASISItems.cdc"
 import IaNFTAnalogs from "../../contracts/IaNFTAnalogs.cdc"
@@ -6,7 +7,7 @@ import IaNFTAnalogs from "../../contracts/IaNFTAnalogs.cdc"
 transaction(floasisNFTID: UInt64, typeIDs: [String], ids: [UInt64], compositeGroupName: String, compositeName: String) {
 
     let userFLOASISNFTCollection: &FLOASISNFT.Collection
-    let userFLOASISNFT: &FLOASISNFT.NFT
+    let userFLOASISNFT: &FLOASISNFT.NFT{NonFungibleToken.INFT, FLOASISNFT.NFTPrivate, FLOASISNFT.NFTPublic, MetadataViews.Resolver}
     let compositeName: String
     let orderedGElements: [IaNFTAnalogs.GElem]
     let compositeGroupName: String
@@ -16,7 +17,7 @@ transaction(floasisNFTID: UInt64, typeIDs: [String], ids: [UInt64], compositeGro
         self.userFLOASISNFTCollection = acct.borrow<&FLOASISNFT.Collection>(from: FLOASISNFT.CollectionStoragePath)
             ?? panic("Could not borrow the FLOASISNFT Collection")
 
-        self.userFLOASISNFT = self.userFLOASISNFTCollection.borrowFLOASISNFT(id: floasisNFTID)
+        self.userFLOASISNFT = self.userFLOASISNFTCollection.borrowFLOASISNFTPrivate(id: floasisNFTID)
             ?? panic("No such ID in that collection")
 
         self.compositeGroupName = compositeGroupName 
@@ -29,7 +30,7 @@ transaction(floasisNFTID: UInt64, typeIDs: [String], ids: [UInt64], compositeGro
 
         for typeID in typeIDs {
             switch typeID {
-                case "A.0xca9934c9eaf21f1a.FLOASISNFT.NFT":
+                case "A.1e6c796ede473684.FLOASISNFT.NFT":
 
                     let floasisNFTCollection = acct.borrow<&FLOASISNFT.Collection{FLOASISNFT.FLOASISNFTCollectionPublic, NonFungibleToken.CollectionPublic}>(
                         from: FLOASISNFT.CollectionStoragePath
@@ -40,13 +41,13 @@ transaction(floasisNFTID: UInt64, typeIDs: [String], ids: [UInt64], compositeGro
                     if floasisNFT != nil {
                         self.orderedGElements.appendAll(floasisNFT.getBase().children)
                     }
-                case "A.0xd9a4baa2e742d546.FLOASISItems.NFT":
+                case "A.df7c298a55327a58.FLOASISItems.NFT":
 
-                    let floasisNFTCollection = acct.borrow<&FLOASISItems.Collection{FLOASISItems.FLOASISItemsCollectionPublic, NonFungibleToken.CollectionPublic}>(
+                    let floasisItemsNFTCollection = acct.borrow<&FLOASISItems.Collection{FLOASISItems.FLOASISItemsCollectionPublic, NonFungibleToken.CollectionPublic}>(
                         from: FLOASISItems.CollectionStoragePath
                     ) ?? panic("Cannot borrow FLOASISItems collection capability signer")
 
-                    let floasisItemsNFT = floasisNFTCollection.borrowFLOASISItemsNFT(id: ids[loopIndex])!
+                    let floasisItemsNFT = floasisItemsNFTCollection.borrowFLOASISItemsNFT(id: ids[loopIndex])!
 
                     if floasisItemsNFT != nil {
                         self.orderedGElements.appendAll(floasisItemsNFT.getBase().children)
@@ -75,4 +76,3 @@ transaction(floasisNFTID: UInt64, typeIDs: [String], ids: [UInt64], compositeGro
         )
     }
 }
- 
