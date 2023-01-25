@@ -283,9 +283,9 @@ pub contract FLOASISNFT: NonFungibleToken {
     init() {
         self.totalSupply = 0
 
-        self.CollectionStoragePath = /storage/floasisProjectOfficialDemoFloasisNFTCollection
-        self.CollectionPublicPath = /public/floasisProjectOfficialDemoFloasisNFTCollection
-        self.CollectionProviderPath = /private/floasisProjectOfficialDemoFloasisNFTCollection
+        self.CollectionStoragePath = /storage/demoFloasisNFTCollection
+        self.CollectionPublicPath = /public/demoFloasisNFTCollection
+        self.CollectionProviderPath = /private/demoFloasisNFTCollection
 
         emit ContractInitialized()
     }

@@ -32,8 +32,7 @@ if (process.env.NEXT_PUBLIC_FLOW_ENV === "emulator") {
         "0xIaNFTAnalogs": process.env.NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_TESTNET,
         "0xFLOASISNFT": process.env.NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_TESTNET,
         "0xFLOASISItemsStore": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_TESTNET, // fcl has an error if this alias is created after '0xFLOASISItems', so keep this one first
-        "0xFLOASISItems": process.env.NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_TESTNET,
-        // "0xFLOASISItems": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_TESTNET,
+        "0xFLOASISItems": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_TESTNET,
         "0xFLOASISPrimitives": process.env.NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_TESTNET,
     });
 

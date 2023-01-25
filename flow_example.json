@@ -26,7 +26,7 @@
             "source": "./contracts/FLOASISNFT.cdc",
             "aliases": {
                 "emulator": "f8d6e0586b0a20c7",
-                "testnet": "[YOUR-TESTNET-ACCOUNT-ADDRESS]",
+                "testnet": "[FLOASIS-TESTNET-ACCOUNT-ADDRESS]",
                 "mainnet": "[FLOASIS-MAINNET-ACCOUNT]"
             }
         },
@@ -34,7 +34,7 @@
             "source": "./contracts/FLOASISPrimitives.cdc",
             "aliases": {
                 "emulator": "f8d6e0586b0a20c7",
-                "testnet": "[YOUR-TESTNET-ACCOUNT-ADDRESS]",
+                "testnet": "[FLOASIS-TESTNET-ACCOUNT-ADDRESS]",
                 "mainnet": "[FLOASIS-MAINNET-ACCOUNT]"
             }
         },
@@ -58,7 +58,7 @@
             "source": "./contracts/IaNFTAnalogs.cdc",
             "aliases": {
                 "emulator": "f8d6e0586b0a20c7",
-                "testnet": "[YOUR-TESTNET-ACCOUNT-ADDRESS]",
+                "testnet": "[FLOASIS-TESTNET-ACCOUNT-ADDRESS]",
                 "mainnet": "[FLOASIS-MAINNET-ACCOUNT]"
             }
         },
@@ -125,10 +125,7 @@
         "testnet": {
             "testnet-account": [
                 "FLOASISItems",
-                "FLOASISItemsStore",
-                "FLOASISNFT",
-                "FLOASISPrimitives",
-                "IaNFTAnalogs"
+                "FLOASISItemsStore"
             ]
         },
         "mainnet": {
