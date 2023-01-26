@@ -17,10 +17,21 @@ pub contract FLOASISNFT: NonFungibleToken {
 
     pub var totalSupply: UInt64
 
+    // named artists who make art for The FLOASIS
+    pub var artLibrary: {String: FLOASISPrimitives.Artist}
+
+    pub let paymentRecipient: Address
+
     pub event ContractInitialized()
     pub event Withdraw(id: UInt64, from: Address?)
     pub event Deposit(id: UInt64, to: Address?)
-
+    pub event ArtistAdded(artistName: String, address: Address)
+    pub event ArtistRemoved(artistName: String, address: Address)
+    pub event SeriesAdded(artistName: String, seriesName: String)
+    pub event SeriesRemoved(artistName: String, seriesName: String)
+    pub event ArtAddedToSeries(artistName: String, seriesName: String, artName: String)
+    pub event ArtRemovedFromSeries(artistName: String, seriesName: String, artName: String)
+ 
     pub let CollectionStoragePath: StoragePath
     pub let CollectionPublicPath: PublicPath
     pub let CollectionProviderPath: PrivatePath
@@ -49,19 +60,26 @@ pub contract FLOASISNFT: NonFungibleToken {
     }
 
     pub resource NFT: NonFungibleToken.INFT, MetadataViews.Resolver, NFTPublic, NFTPrivate {
-        pub let floasisID: UInt64
         pub let id: UInt64
-        pub let planet: FLOASISPrimitives.Planet
         pub let name: String
         pub let description: String
         pub let thumbnail: String
         pub let thumbnailPath: String?
+
+        pub let floasisID: UInt64
+        pub let planet: FLOASISPrimitives.Planet
         
+        access(self) let stacklist: [String]
         access(self) let base: IaNFTAnalogs.Svg
         access(self) let card: IaNFTAnalogs.Svg
-        
+        access(self) let metadata: {String: AnyStruct}
+ 
         // here the key can be any string, but usually should be a resource type identifier
         access(self) var composites: {String: FLOASISPrimitives.CompositeGroup}
+
+        pub fun getStacklist(): [String] {
+            return self.stacklist
+        }
 
         pub fun getBase(): IaNFTAnalogs.Svg {
             return self.base
@@ -71,7 +89,6 @@ pub contract FLOASISNFT: NonFungibleToken {
             return self.card
         }
 
-        // TODO: do public methods here mean anyone who borrows the NFT can call them?
         pub fun updateBaseGFill(gElementId: UInt64, color: String) {
             pre {
                 self.base.children[gElementId] != nil : "Cannot find the g element with provided id for the base"
@@ -135,6 +152,7 @@ pub contract FLOASISNFT: NonFungibleToken {
         init(
             floasisID: UInt64,
             id: UInt64,
+            stacklist: [String],
             planet: FLOASISPrimitives.Planet,
             name: String,
             description: String,
@@ -142,9 +160,11 @@ pub contract FLOASISNFT: NonFungibleToken {
             thumbnailPath: String?,
             base: IaNFTAnalogs.Svg,
             card: IaNFTAnalogs.Svg,
+            metadata: {String: AnyStruct}
         ) {
             self.floasisID = floasisID
             self.id = id
+            self.stacklist = stacklist
             self.planet = planet
             self.name = name
             self.description = description
@@ -152,14 +172,16 @@ pub contract FLOASISNFT: NonFungibleToken {
             self.thumbnailPath = thumbnailPath
             self.base = base
             self.card = card
+            self.metadata = metadata
             self.composites = {}
         }
     
-        // TODO: add metadata view
         pub fun getViews(): [Type] {
             return [
                 Type<MetadataViews.Display>(),
-                Type<MetadataViews.NFTCollectionData>()
+                Type<MetadataViews.NFTCollectionData>(),
+                Type<MetadataViews.NFTCollectionDisplay>(),
+                Type<MetadataViews.Traits>()
             ]
         }
 
@@ -186,6 +208,37 @@ pub contract FLOASISNFT: NonFungibleToken {
                             return <-FLOASISNFT.createEmptyCollection()
                         })
                     )
+                case Type<MetadataViews.NFTCollectionDisplay>():
+                    let squareMedia = MetadataViews.Media(
+                        file: MetadataViews.IPFSFile(
+                            cid: "[TODO: add CID here]",
+                            path: nil
+                        ),
+                        mediaType: "image/png"
+                    )
+
+                    let bannerMedia = MetadataViews.Media(
+                        file: MetadataViews.IPFSFile(
+                            cid: "[TODO: add CID here]",
+                            path: nil
+                        ),
+                        mediaType: "image/png"
+                    )
+
+                    return MetadataViews.NFTCollectionDisplay(
+                        name: "FLOASIS Items NFT Collection",
+                        description: "This is a FLOASIS Items project, decentralized accessories for FLOASIS NFTs!",
+                        externalURL: MetadataViews.ExternalURL("https://floasis.fun"),
+                        squareImage: squareMedia,
+                        bannerImage: bannerMedia,
+                        socials: {
+                            "twitter": MetadataViews.ExternalURL("https://twitter.com/thefloasis")
+                        }
+                    )
+                case Type<MetadataViews.Traits>():
+                    let traitsView = MetadataViews.dictToTraits(dict: self.metadata, excludedNames: nil)
+                    return traitsView
+
             }
             return nil
         }
@@ -285,27 +338,141 @@ pub contract FLOASISNFT: NonFungibleToken {
         )
     }
 
-    // no payment required, is just intended to get demo FLOASIS NFTs into user account
-    pub fun mintNFT(
-        recipient: &{NonFungibleToken.CollectionPublic},
-        planet: String,
+    pub fun addArtist(artistName: String, artistDetails: FLOASISPrimitives.Artist) {
+        pre {
+            FLOASISNFT.artLibrary[artistName] == nil: "Artist already exists in the art library"
+        }
+
+        FLOASISNFT.artLibrary.insert(key: artistName, artistDetails)
+
+        emit ArtistAdded(artistName: artistName, address: artistDetails.address)
+
+    }
+
+    pub fun removeArtist(artistName: String) {
+        pre {
+            FLOASISNFT.artLibrary[artistName] != nil: "Artist not found in the art library"
+        }
+
+        let address = FLOASISNFT.artLibrary[artistName]!.address
+
+        FLOASISNFT.artLibrary.remove(key: artistName)
+
+        emit ArtistRemoved(artistName: artistName, address: address)
+    }
+
+    pub fun addSeries(artistName: String, seriesName: String) {
+        pre {
+            FLOASISNFT.artLibrary[artistName] != nil: "Artist not found in the art library"
+        }
+
+        FLOASISNFT.artLibrary[artistName]!.addSeries(seriesName: seriesName)
+
+        emit SeriesAdded(artistName: artistName, seriesName: seriesName)
+    }
+
+    pub fun removeSeries(artistName: String, seriesName: String) {
+        pre {
+            FLOASISNFT.artLibrary[artistName] != nil: "Artist not found in the art library"
+            FLOASISNFT.artLibrary[artistName]!.series[seriesName] != nil: "Series not found"
+        }
+
+        FLOASISNFT.artLibrary[artistName]!.removeSeries(seriesName: seriesName)
+
+        emit SeriesRemoved(artistName: artistName, seriesName: seriesName)
+
+    }
+
+    pub fun addArt(
+        artistName: String, 
+        seriesName: String, 
         artName: String,
-        baseSvgAnalog: IaNFTAnalogs.Svg,
-        cardSvgAnalog: IaNFTAnalogs.Svg,
+        planetName: String,
+        baseArt: IaNFTAnalogs.Svg, 
+        cardArt: IaNFTAnalogs.Svg, 
         artDescription: String,
         artThumbnail: String,
         artThumbnailPath: String?
     ) {
+        pre {
+            FLOASISNFT.artLibrary[artistName] != nil: "Artist not found in the art library"
+            FLOASISNFT.artLibrary[artistName]!.series[seriesName] != nil: "Series not found in the art library"
+            FLOASISNFT.artLibrary[artistName]!.series[seriesName]!.art[artName] == nil : "An artwork for this series with the same name already exists"
+        }
+
+        FLOASISNFT.artLibrary[artistName]!.series[seriesName]!.addArt(artName: artName, planet: FLOASISNFT.getPlanetDetails(planetName)!, base: baseArt, card: cardArt, artDescription: artDescription, artThumbnail: artThumbnail, artThumbnailPath: artThumbnailPath)
+
+        emit ArtAddedToSeries(artistName: artistName, seriesName: seriesName, artName: artName)
+
+    }
+
+    pub fun removeArt(artistName: String, seriesName: String, artName: String) {
+        pre {
+            FLOASISNFT.artLibrary[artistName] != nil: "Artist not found in the art library"
+            FLOASISNFT.artLibrary[artistName]!.series[seriesName] != nil: "Series not found in the art library"
+            FLOASISNFT.artLibrary[artistName]!.series[seriesName]!.art[artName] != nil : "Artwork for this series not found"
+        }
+
+        FLOASISNFT.artLibrary[artistName]!.series[seriesName]!.removeArt(artName: artName)
+
+        emit ArtRemovedFromSeries(artistName: artistName, seriesName: seriesName, artName: artName)
+
+    }
+
+    pub fun getArtistSeriesArt(artistName: String, seriesName: String, artName: String): FLOASISPrimitives.Art? {
+        pre {
+            FLOASISNFT.artLibrary[artistName] != nil : "Cannot find an artist by that name in the art library"
+            FLOASISNFT.artLibrary[artistName]!.series[seriesName] != nil : "Cannot find an a series with that name for the given artist"
+            FLOASISNFT.artLibrary[artistName]!.series[seriesName]!.art[artName] != nil : "Cannot find an a an artwork with that name"
+        }
+
+        return FLOASISNFT.artLibrary[artistName]!.series[seriesName]!.art[artName]
+    }
+
+    pub fun mintNFT(
+        recipient: &{NonFungibleToken.CollectionPublic},
+        dropId: UInt64,
+        artName: String,
+        stacklist: [&NonFungibleToken.NFT],
+        payment: @FungibleToken.Vault
+    ) {
+
+        let paymentRecipientRef = getAccount(FLOASISNFT.paymentRecipient).getCapability<&{FungibleToken.Receiver}>(/public/flowTokenReceiver).borrow()
+            ?? panic("couldn't borrow receiver cap")
+
+        paymentRecipientRef.deposit(from: <-payment)
+
+        let demoArt = FLOASISNFT.getArtistSeriesArt(artistName: "floasisDemoArtist", seriesName: "floasisDemoSeries", artName: artName)!
+
+        let metadata: {String: AnyStruct} = {}
+        let currentBlock = getCurrentBlock()
+        metadata["mintedBlock"] = currentBlock.height
+        metadata["mintedTime"] = currentBlock.timestamp
+        metadata["minter"] = recipient.owner!.address
+
+        let fullyQualifiedStacklistIdentifiers: [String] = []
+        for nftRef in stacklist {
+            let nftRefIdentifier = nftRef.getType().identifier
+
+            let rawRefID: UInt64 = nftRef.id
+            let dotSeparator: String = "."
+            let refID: String = dotSeparator.concat(rawRefID.toString())
+            let concatenatedIdentifier: String = nftRefIdentifier.concat(refID)
+            fullyQualifiedStacklistIdentifiers.append(concatenatedIdentifier)
+        }
+
         var newNFT <- create NFT(
             floasisID: FLOASISNFT.totalSupply,
             id: FLOASISNFT.totalSupply,
-            planet: FLOASISPrimitives.Planet(name: planet, discoveredTs: getCurrentBlock().timestamp),
-            name: artName,
-            description: artDescription,
-            thumbnail: artThumbnail,
-            thumbnailPath: artThumbnailPath,
-            base: baseSvgAnalog,
-            card: cardSvgAnalog,
+            stacklist: fullyQualifiedStacklistIdentifiers,
+            planet: FLOASISPrimitives.Planet(name: "Demo Planet", discoveredTs: getCurrentBlock().timestamp),
+            name: "Demo NFT name",
+            description: "This is the description for the demo FLOASIS NFT.",
+            thumbnail: "[PLACEHOLDER-FOR-IPFS-CID]",
+            thumbnailPath: "[PLACEHOLDER-FOR-IPFS-CID-PATH]",
+            base: demoArt.base,
+            card: demoArt.card,
+            metadata: metadata
         )
 
         recipient.deposit(token: <-newNFT)
@@ -316,6 +483,8 @@ pub contract FLOASISNFT: NonFungibleToken {
 
     init() {
         self.totalSupply = 0
+        self.artLibrary = {}
+        self.paymentRecipient = self.account.address
 
         self.CollectionStoragePath = /storage/demoFloasisNFTCollection
         self.CollectionPublicPath = /public/demoFloasisNFTCollection

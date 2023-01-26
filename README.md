@@ -174,6 +174,7 @@ also update the collection metadata text in the contract for each deployer
 - make sure storage paths are prefixed with this project name so they won't conflict with other ones
 - composite_multiple_layers_testnet and mainnet will need to have both the user's account and the official floasis account addresses
 - deployer devs need to prefix their paths in FLOASISItems and FLOASISItemsStore
+- deployer needs to go into one or more smart contracst (like the NFT contract) and update strings like metadata standard data
 
 ### Run emulator
 go run ./overflow/setup_web/setup_web.go
