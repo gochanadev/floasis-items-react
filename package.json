@@ -2,7 +2,6 @@
   "name": "fcl-quickstart",
   "private": true,
   "scripts": {
-    "devE": "NEXT_PUBLIC_FLOW_ENV=emulator next dev",
     "devT": "NEXT_PUBLIC_FLOW_ENV=testnet next dev",
     "devM": "next dev",
     "build": "next build",

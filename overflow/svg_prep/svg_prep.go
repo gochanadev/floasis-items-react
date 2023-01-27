@@ -127,7 +127,7 @@ func GetSvgStruct(svgString string, flowNetwork string) cadence.Struct {
 		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_EMULATOR")
 		deployer_address = full_deployer_address[2:]
 	} else if flowNetwork == "testnet" {
-		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_TESTNET")
+		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_OFFICIAL_NFT_ADDRESS_TESTNET")
 		deployer_address = full_deployer_address[2:]
 	} else {
 		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_MAINNET")
@@ -299,9 +299,6 @@ func GetSvgStruct(svgString string, flowNetwork string) cadence.Struct {
 			}},
 		},
 	}
-
-	// fmt.Println("SVG STRUCT:::::::::::::::::::::")
-	// fmt.Println(svgStruct)
 
 	return svgStruct
 

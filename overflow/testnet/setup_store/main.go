@@ -12,8 +12,8 @@ func main() {
 	flow_network := "testnet"
 	c := o.Overflow(o.WithNetwork(flow_network))
 
-	artist_name := "mats"
-	series_name := "accessoriesSeries1"
+	artist_name := "floasis-items-official"
+	series_name := "series0"
 
 	// service account adds artist to art libarary in FLOASISItemsStore
 	c.Tx(

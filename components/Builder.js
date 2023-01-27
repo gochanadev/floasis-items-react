@@ -43,7 +43,6 @@ import { useTransaction } from "../contexts/TransactionContext";
 import { getLayerName, replaceCDCImports, getItemsNFTContractIdentifier } from "../lib/helpers";
 import { getNFTCompositesData, getFloasisNFTData } from "../flow/scripts";
 import GET_FLOASISITEMS_COLLECTION_DATA from "../scripts/FLOASISItems/get_collection_data.cdc";
-import COMPOSITE_MULTIPLE_LAYERS from "../transactions/FLOASISNFT/composite_multiple_layers.cdc";
 import COMPOSITE_MULTIPLE_LAYERS_TESTNET from "../transactions/FLOASISNFT/composite_multiple_layers_testnet.cdc";
 import COMPOSITE_MULTIPLE_LAYERS_MAINNET from "../transactions/FLOASISNFT/composite_multiple_layers_mainnet.cdc";
 import CHANGE_SELECT_FLOAIS_NFT_COLORS from "../transactions/FLOASISNFT/change_select_floasis_nft_colors.cdc";
@@ -304,9 +303,7 @@ export function Builder() {
         try {
 
             let txCode;
-            if (process.env.NEXT_PUBLIC_FLOW_ENV === "emulator") {
-                txCode = replaceCDCImports(COMPOSITE_MULTIPLE_LAYERS);
-            } else if (process.env.NEXT_PUBLIC_FLOW_ENV === "testnet") {
+            if (process.env.NEXT_PUBLIC_FLOW_ENV === "testnet") {
                 txCode = replaceCDCImports(COMPOSITE_MULTIPLE_LAYERS_TESTNET);
             } else {
                 txCode = replaceCDCImports(COMPOSITE_MULTIPLE_LAYERS_MAINNET);

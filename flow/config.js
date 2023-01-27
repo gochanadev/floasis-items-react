@@ -2,25 +2,7 @@ import { config } from "@onflow/fcl";
 import { send as grpcSend } from "@onflow/transport-grpc"
 import { APP_DETAIL_TITLE } from "../lib/constants";
 
-if (process.env.NEXT_PUBLIC_FLOW_ENV === "emulator") {
-    console.log("App mode: Emulator");
-    config({
-        "flow.network": "emulator",
-        "app.detail.title": APP_DETAIL_TITLE,
-        "accessNode.api": "http://localhost:8080",
-        "discovery.wallet": "http://localhost:8701/fcl/authn",
-        "sdk.transport": grpcSend,
-        "0xNonFungibleToken": "0xf8d6e0586b0a20c7",
-        "0xMetadataViews": "0xf8d6e0586b0a20c7",
-        "0xFlowToken": "0x0ae53cb6e3f42a79",
-        "0xIaNFTAnalogs": process.env.NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_EMULATOR,
-        "0xFLOASISNFT": process.env.NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_EMULATOR,
-        "0xFLOASISItemsStore": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_EMULATOR, // fcl has an error if this alias is created after '0xFLOASISItems', so keep this one first
-        "0xFLOASISItems": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_EMULATOR,
-        "0xFLOASISPrimitives": process.env.NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_EMULATOR,
-    });
-
-} else if (process.env.NEXT_PUBLIC_FLOW_ENV === "testnet") {
+if (process.env.NEXT_PUBLIC_FLOW_ENV === "testnet") {
     console.log("App mode: Testnet");
     config({
         "flow.network": "testnet",
@@ -31,11 +13,11 @@ if (process.env.NEXT_PUBLIC_FLOW_ENV === "emulator") {
         "0xNonFungibleToken": "0x631e88ae7f1d7c20",
         "0xMetadataViews": "0x631e88ae7f1d7c20",
         "0xFlowToken": "0x7e60df042a9c0868",
-        "0xIaNFTAnalogs": process.env.NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_TESTNET,
-        "0xFLOASISNFT": process.env.NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_TESTNET,
-        "0xFLOASISItemsStore": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_TESTNET, // fcl has an error if this alias is created after '0xFLOASISItems', so keep this one first
-        "0xFLOASISItems": process.env.NEXT_PUBLIC_DEPLOYER_ADDRESS_TESTNET,
-        "0xFLOASISPrimitives": process.env.NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_TESTNET,
+        "0xIaNFTAnalogs": process.env.NEXT_PUBLIC_FLOASIS_OFFICIAL_NFT_ADDRESS_TESTNET,
+        "0xFLOASISNFT": process.env.NEXT_PUBLIC_FLOASIS_OFFICIAL_NFT_ADDRESS_TESTNET,
+        "0xFLOASISItemsStore": process.env.NEXT_PUBLIC_FLOASIS_ITEMS_ADDRESS_TESTNET, // fcl has an error if this alias is created after '0xFLOASISItems', so keep this one first
+        "0xFLOASISItems": process.env.NEXT_PUBLIC_FLOASIS_ITEMS_ADDRESS_TESTNET,
+        "0xFLOASISPrimitives": process.env.NEXT_PUBLIC_FLOASIS_OFFICIAL_NFT_ADDRESS_TESTNET,
     });
 
 } else {

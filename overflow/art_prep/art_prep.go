@@ -32,7 +32,6 @@ func PrepareArt(
 		log.Fatal("Error in art_pre.go when loading .env.local file")
 	}
 	web3_storage_api_key := os.Getenv("WEB3_STORAGE_API_KEY")
-	placeholder_artwork_cid := os.Getenv("PLACEHOLDER_FLOASIS_ITEMS_ARTWORK_CID")
 	c, _ := w3s.NewClient(w3s.WithToken(web3_storage_api_key))
 
 	csvPath := fmt.Sprintf("%s/%s", artRepoPath, artIndexFileName)
@@ -85,18 +84,13 @@ func PrepareArt(
 		art_thumbnail_file_path := fmt.Sprintf("%s/png/%s.png", artRepoPath, art_thumbnail_file_name)
 		art_thumbnail_file_name_and_type := fmt.Sprintf("%s.png", art_thumbnail_file_name)
 
-		if flowNetwork == "emulator" || flowNetwork == "embedded" {
-			art_thumbnails_cadence = append(art_thumbnails_cadence, cadence.String(placeholder_artwork_cid))
-			art_thumbnail_paths_cadence = append(art_thumbnail_paths_cadence, cadence.String(art_thumbnail_file_name_and_type))
-			fmt.Println("Placeholder IPFS CID created: bafybeigy7cpgakfxdabjb2gxcri3fdojeyvalwq5estarwwjy6qvolzgeu")
-		} else {
-			f, _ := os.Open(art_thumbnail_file_path)
-			cid, _ := c.Put(context.Background(), f)
-			fmt.Printf("Pinned to IPFS: https://%v.ipfs.w3s.link\n", cid)
+		f, _ := os.Open(art_thumbnail_file_path)
+		cid, _ := c.Put(context.Background(), f)
 
-			art_thumbnails_cadence = append(art_thumbnails_cadence, cadence.String(cid.String()))
-			art_thumbnail_paths_cadence = append(art_thumbnail_paths_cadence, cadence.String(art_thumbnail_file_name_and_type))
-		}
+		art_thumbnails_cadence = append(art_thumbnails_cadence, cadence.String(cid.String()))
+		art_thumbnail_paths_cadence = append(art_thumbnail_paths_cadence, cadence.String(art_thumbnail_file_name_and_type))
+
+		fmt.Printf("Pinned to IPFS: https://%v.ipfs.w3s.link/%v\n", cid, art_thumbnail_file_name_and_type)
 
 	}
 
