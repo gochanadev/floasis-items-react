@@ -24,11 +24,11 @@ func MakeRange(min, max int) []int {
 	return a
 }
 
-func getGElemStruct(deployer_address string, attributes cadence.Struct, children cadence.Array) cadence.Struct {
+func getGElemStruct(ianft_deployer_address string, attributes cadence.Struct, children cadence.Array) cadence.Struct {
 	gSvgChildStruct := cadence.Struct{
 		Fields: []cadence.Value{cadence.String("g"), cadence.String("element"), cadence.String(""), attributes, children},
 		StructType: &cadence.StructType{
-			QualifiedIdentifier: "A." + deployer_address + ".IaNFTAnalogs.GElem",
+			QualifiedIdentifier: "A." + ianft_deployer_address + ".IaNFTAnalogs.GElem",
 			Fields: []cadence.Field{{
 				Identifier: "name",
 				Type:       cadence.StringType{},
@@ -52,11 +52,11 @@ func getGElemStruct(deployer_address string, attributes cadence.Struct, children
 	return gSvgChildStruct
 }
 
-func getGElemAttributesStruct(deployer_address string, fill string) cadence.Struct {
+func getGElemAttributesStruct(ianft_deployer_address string, fill string) cadence.Struct {
 	gSvgChildAttributesStruct := cadence.Struct{
 		Fields: []cadence.Value{cadence.String(fill)},
 		StructType: &cadence.StructType{
-			QualifiedIdentifier: "A." + deployer_address + ".IaNFTAnalogs.GElemAttributes",
+			QualifiedIdentifier: "A." + ianft_deployer_address + ".IaNFTAnalogs.GElemAttributes",
 			Fields: []cadence.Field{{
 				Identifier: "fill",
 				Type:       cadence.StringType{},
@@ -66,11 +66,11 @@ func getGElemAttributesStruct(deployer_address string, fill string) cadence.Stru
 	return gSvgChildAttributesStruct
 }
 
-func getRectStruct(deployer_address string, name string, rectType string, value string, attributes cadence.Struct) cadence.Struct {
+func getRectStruct(ianft_deployer_address string, name string, rectType string, value string, attributes cadence.Struct) cadence.Struct {
 	rectSvgChildStruct := cadence.Struct{
 		Fields: []cadence.Value{cadence.String(name), cadence.String(rectType), cadence.String(value), attributes},
 		StructType: &cadence.StructType{
-			QualifiedIdentifier: "A." + deployer_address + ".IaNFTAnalogs.Rect",
+			QualifiedIdentifier: "A." + ianft_deployer_address + ".IaNFTAnalogs.Rect",
 			Fields: []cadence.Field{{
 				Identifier: "name",
 				Type:       cadence.StringType{},
@@ -89,11 +89,11 @@ func getRectStruct(deployer_address string, name string, rectType string, value 
 	return rectSvgChildStruct
 }
 
-func getRectAttributesStruct(deployer_address string, x string, y string, width string, height string) cadence.Struct {
+func getRectAttributesStruct(ianft_deployer_address string, x string, y string, width string, height string) cadence.Struct {
 	rectAttributesStruct := cadence.Struct{
 		Fields: []cadence.Value{cadence.String(x), cadence.String(y), cadence.String(width), cadence.String(height)},
 		StructType: &cadence.StructType{
-			QualifiedIdentifier: "A." + deployer_address + ".IaNFTAnalogs.RectAttributes",
+			QualifiedIdentifier: "A." + ianft_deployer_address + ".IaNFTAnalogs.RectAttributes",
 			Fields: []cadence.Field{{
 				Identifier: "x",
 				Type:       cadence.StringType{},
@@ -121,17 +121,14 @@ func GetSvgStruct(svgString string, flowNetwork string) cadence.Struct {
 		log.Fatal("Error in svg_prep.go when loading .env.local file")
 	}
 
-	var deployer_address string
+	var ianft_deployer_address string
 
-	if flowNetwork == "emulator" || flowNetwork == "embedded" {
-		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_EMULATOR")
-		deployer_address = full_deployer_address[2:]
-	} else if flowNetwork == "testnet" {
-		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_OFFICIAL_NFT_ADDRESS_TESTNET")
-		deployer_address = full_deployer_address[2:]
+	if flowNetwork == "testnet" {
+		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_OFFICIAL_PROJECT_ADDRESS_TESTNET")
+		ianft_deployer_address = full_deployer_address[2:]
 	} else {
-		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_NFT_DEPLOYER_ADDRESS_MAINNET")
-		deployer_address = full_deployer_address[2:]
+		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_OFFICIAL_PROJECT_ADDRESS_MAINNET")
+		ianft_deployer_address = full_deployer_address[2:]
 	}
 
 	// CREATE READER FOR THE SVG STRING
@@ -171,7 +168,7 @@ func GetSvgStruct(svgString string, flowNetwork string) cadence.Struct {
 			cadence.String("shape-rendering:crispEdges"),
 		},
 		StructType: &cadence.StructType{
-			QualifiedIdentifier: "A." + deployer_address + ".IaNFTAnalogs.SvgAttributes",
+			QualifiedIdentifier: "A." + ianft_deployer_address + ".IaNFTAnalogs.SvgAttributes",
 			Fields: []cadence.Field{{
 				Identifier: "width",
 				Type:       cadence.StringType{},
@@ -223,10 +220,10 @@ func GetSvgStruct(svgString string, flowNetwork string) cadence.Struct {
 				rectAttr := rectParserElem.Attributes
 
 				// create a new rect attributes struct
-				rectAttributesStruct := getRectAttributesStruct(deployer_address, rectAttr["x"], rectAttr["y"], rectAttr["width"], rectAttr["height"])
+				rectAttributesStruct := getRectAttributesStruct(ianft_deployer_address, rectAttr["x"], rectAttr["y"], rectAttr["width"], rectAttr["height"])
 
 				// create a new rect struct
-				rectStruct := getRectStruct(deployer_address, "rect", "type", "value", rectAttributesStruct)
+				rectStruct := getRectStruct(ianft_deployer_address, "rect", "type", "value", rectAttributesStruct)
 
 				// append the slice of rect structs
 				rectStructSlice = append(rectStructSlice, rectStruct)
@@ -240,10 +237,10 @@ func GetSvgStruct(svgString string, flowNetwork string) cadence.Struct {
 			// for 'rect' element, default value is black: https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill#rect
 			// so empty string as the 'fill' color will render as black.
 			// the svg scour library appears to leave the 'fill' attribute out for black elements
-			gAttributes := getGElemAttributesStruct(deployer_address, svgChildParserElem.Attributes["fill"])
+			gAttributes := getGElemAttributesStruct(ianft_deployer_address, svgChildParserElem.Attributes["fill"])
 
 			// create the g struct
-			gStruct := getGElemStruct(deployer_address, gAttributes, rectStructArray)
+			gStruct := getGElemStruct(ianft_deployer_address, gAttributes, rectStructArray)
 
 			// add the g struct to the cadenve struct slice just outside of this scope
 			cadenceStructSlice = append(cadenceStructSlice, gStruct)
@@ -254,14 +251,14 @@ func GetSvgStruct(svgString string, flowNetwork string) cadence.Struct {
 			rectAttr := svgChildParserElem.Attributes
 
 			// create the g attributes struct using hte fill from the rect
-			gAttributes := getGElemAttributesStruct(deployer_address, rectAttr["fill"])
+			gAttributes := getGElemAttributesStruct(ianft_deployer_address, rectAttr["fill"])
 
 			// create a new rect attributes struct
-			rectAttributesStruct := getRectAttributesStruct(deployer_address, rectAttr["x"], rectAttr["y"], rectAttr["width"], rectAttr["height"])
+			rectAttributesStruct := getRectAttributesStruct(ianft_deployer_address, rectAttr["x"], rectAttr["y"], rectAttr["width"], rectAttr["height"])
 
 			// create a new rect struct
 			// rectStruct := getRectStruct("rect", "type", "value", rectAttributesStruct, emptyValueArray)
-			rectStruct := getRectStruct(deployer_address, "rect", "type", "value", rectAttributesStruct)
+			rectStruct := getRectStruct(ianft_deployer_address, "rect", "type", "value", rectAttributesStruct)
 
 			// slice of rect structs
 			rectStructSlice := []cadence.Value{rectStruct}
@@ -270,7 +267,7 @@ func GetSvgStruct(svgString string, flowNetwork string) cadence.Struct {
 			rectStructArray := cadence.NewArray(rectStructSlice)
 
 			// create the g struct
-			gStruct := getGElemStruct(deployer_address, gAttributes, rectStructArray)
+			gStruct := getGElemStruct(ianft_deployer_address, gAttributes, rectStructArray)
 
 			// add the rect struct to the cadenve struct slice just outside of this scope
 			cadenceStructSlice = append(cadenceStructSlice, gStruct)
@@ -284,7 +281,7 @@ func GetSvgStruct(svgString string, flowNetwork string) cadence.Struct {
 	svgStruct := cadence.Struct{
 		Fields: []cadence.Value{cadence.String("svg"), svgAttributesStruct, cadenceGStructArray},
 		StructType: &cadence.StructType{
-			QualifiedIdentifier: "A." + deployer_address + ".IaNFTAnalogs.Svg",
+			QualifiedIdentifier: "A." + ianft_deployer_address + ".IaNFTAnalogs.Svg",
 			Fields: []cadence.Field{{
 				Identifier: "name",
 				Type:       cadence.StringType{},

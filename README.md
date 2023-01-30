@@ -177,6 +177,8 @@ also update the collection metadata text in the contract for each deployer
 - deployer needs to go into one or more smart contracst (like the NFT contract) and update strings like metadata standard data
 - explain how handle FLOW_ENV in package.json and vercel
 - in svg_prep, dev will need to change the artist name and series name when adding art on-chain
+- don't forget, if I change the testnet address for the official floasis project, I need to change it here as well wherever it is used, ex. in flow.json
+- for developer deployer, the artist name and series name in the setup_store script will need to line up with the CSF file for inventory
 
 ### Run emulator
 go run ./overflow/setup_web/setup_web.go
@@ -199,8 +201,6 @@ go run ./overflow/setup_web/setup_web.go
 go run ./overflow/setup_web/setup_web.go
 
 ## Testnet setup
-- setup testnet-user1 with demo FLOASIS NFTs
-    - go run ./overflow/testnet/setup_demo_floasis_nfts/main.go
 - setup store
     - go run ./overflow/testnet/setup_store/main.go
 
