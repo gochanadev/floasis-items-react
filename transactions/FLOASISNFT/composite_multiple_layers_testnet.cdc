@@ -41,7 +41,7 @@ transaction(floasisNFTID: UInt64, typeIDs: [String], ids: [UInt64], compositeGro
                     if floasisNFT != nil {
                         self.orderedGElements.appendAll(floasisNFT.getBase().children)
                     }
-                case "A.df5d7267ce530716.FLOASISItems.NFT":
+                case "A.aca6f2b7e5bad42b.FLOASISItems.NFT":
 
                     let floasisItemsNFTCollection = acct.borrow<&FLOASISItems.Collection{FLOASISItems.FLOASISItemsCollectionPublic, NonFungibleToken.CollectionPublic}>(
                         from: FLOASISItems.CollectionStoragePath

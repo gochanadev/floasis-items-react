@@ -179,6 +179,7 @@ also update the collection metadata text in the contract for each deployer
 - in svg_prep, dev will need to change the artist name and series name when adding art on-chain
 - don't forget, if I change the testnet address for the official floasis project, I need to change it here as well wherever it is used, ex. in flow.json
 - for developer deployer, the artist name and series name in the setup_store script will need to line up with the CSF file for inventory
+- dev deployer must change contract paths
 
 ### Run emulator
 go run ./overflow/setup_web/setup_web.go
