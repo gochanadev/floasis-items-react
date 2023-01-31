@@ -1,24 +1,27 @@
 # FLOASIS Items -- Create and Sell ***Decentralized NFT Accessories***!
 Welcome to FLOASIS Items!!! Unleash your creativity and deploy your own NFT store on the Flow blockchain.
 
-FLOSIS Items NFTs are the perfect accessories for [FLOASIS NFTs](https://floasis.fun), like hats, rocket ships, game assets, or anything else you can imagine, all created as pixel art and saved on-chain, inside the NFT itself. I like to call them ***Decentralized NFT Accessories*** because it's not just me who can create and sell the NFT accessories used by FLOASIS NFTs, it's anyone. You don't owe me a cut of your sales, you don't need my permission!!!
+FLOSIS Items NFTs are the perfect accessories for [FLOASIS NFTs](https://floasis.fun), like hats, rocket ships, game assets, or many other things you can imagine, all created as pixel art and saved on-chain, inside the NFT itself. I like to call them ***Decentralized NFT Accessories*** because it's not just me who can create and sell the NFT accessories used by FLOASIS NFTs, it's anyone. You don't owe me a cut of your sales -- you don't need my permission!!! 
 
-FLOASIS Items are created using [IaNFT](https://github.com/hichana/iaNFT), which means the ability to modify their on-chain artwork is embedded within the NFT itself. You can change their colors, composite them as layers to create new and unique on-chain art, and view/download them as SVGs or various image formats in front-end applications (with more functionality to come). It's the owner of the NFT who decides if and when to modify the internal state (the artwork) of the NFT, and they can do so across any future projects as it's only simple transaction code that is needed to change colors and recomposite layers! (link to the transactinos here).
+FLOASIS Items are created using [IaNFT](https://github.com/hichana/iaNFT), which means the ability to modify their on-chain artwork is embedded within the NFT itself. You can change their colors, composite them as layers to create new and unique on-chain art, and view/download them as SVGs or various image formats in front-end applications (with more functionality from IaNFT possible). It's the owner of the NFT who decides if and when to modify the internal state (the artwork) of the NFT, and they can do so across any future projects as it's only simple transaction code that is needed to change colors and recomposite layers! (link to the transactinos here).
 
 This project should have all you need to create your own accessory NFTs for The FLOASIS and sell them on Flow. Join the movement to create truly collaborative and decentralized on-chain NFT experiences with your own FLOASIS Items project!!!
 
 ## About FLOASIS Items:
 
-### License
-Let's get this one out of the way before you start building... ALL artwork and source code from FLOASIS Items are in the public domain via [CCO 1.0](https://creativecommons.org/publicdomain/zero/1.0/) and [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.en.html) respectively. Fork and build build build Flow devs!!! You're also welcome to use any of the art or code to create an entirely new NFT project and rally other devs to build upon it, just like I'm doing here :) 
+### No Bullshit
+In theory, sales from FLOASIS Items stores deployed and run by various community members should drive sales of FLOASIS NFTs. Good for you, good for me :). The FLOASIS and FLOASIS Items should demonstrate the ability for IaNFT to enable us to create truly composable, truly decentralized cross-project NFTs. There is no hyped-up bullshit roadmap with IaNFT, The FLOASIS or FLOASIS Items. Let's instead build great NFT experiences on the merit of the technology and the blood, sweat and tears that we put into it!
 
-### Example Use Case
+### License
+Let's get this out of the way before you start building... ALL artwork and source code from FLOASIS Items are in the public domain via [CCO 1.0](https://creativecommons.org/publicdomain/zero/1.0/) and [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.en.html) respectively. Fork and build build build Flow devs!!! You're also welcome to use any of the art or code to create an entirely new NFT project and rally other devs to build upon it, just like I'm doing here :) I'm happy to support people who want to take IaNFT, FLOASIS and/or FLAOSIS Items any new direction they may feel inspired to go.
+
+### Example Use Cases
 IaNFT and FLOASIS Items are meant to unlock truly collaborative and decentralized on-chain NFT experiences on Flow. Simply put, this means that it's YOU who creates and sells the vast majority of accessory NFTs for the characters of The FLOASIS. With FLOASIS Items, it's like going from zero to *"I have my own mainnet deployed full stack NFT project"* quickly and with as little friction as possible.
 
-In the real world I can get a smartphone case from anyone who makes one that fits my phone, not just the phone maker. I can buy art to hang on the wall in my room, score some pink and black retro Nike shoes to wear, or foolishly keep potted plants on the dashboard of my car, basically whatever I want. I want to do something similar with my NFTs as they travel around on the Flow blockchain. Here are some sample use cases illustrating how that looks:
+In the real world I can get a smartphone case from anyone who makes one that fits my phone, not just the phone maker. I can buy art to hang on the wall in my room, score some pink and black retro Nike shoes to wear, or foolishly keep potted plants on the dashboard of my car, basically whatever I want. I want to do something similar with my NFTs as they travel around on the Flow blockchain. Here are some sample use cases illustrating what that might look like:
 
-##### A community member forks FLOASIS Items and independantly sells NFT accessories
-A totally unrelated and independant Flow developer creates the CryptoNyans project, *premium Nyan cats for FLOASIS NFTs to ride around the metaverse* (someone please make this!!!). Inhabitants from each of the 7 known planets in The FLOASIS are able to purchase a NyanCat specific to their home planet.
+#### A community member forks FLOASIS Items and independantly sells NFT accessories
+A totally unrelated and independant Flow developer creates the CryptoNyans project, *premium Nyan cats for FLOASIS NFTs to fly you around the metaverse* (someone please make this!!!). Inhabitants from each of the 7 known planets in The FLOASIS are able to purchase a NyanCat specific to their home planet.
 
 ```images
 FLOASIS NFT (build by hichana)
@@ -39,17 +42,17 @@ CryptoNyans NFT 2 (rainbow nyan cat) (build by another Flow developer)
 FLOASIS NFT with composite order 2 but with rocket ship replaced by Nyan cat and palm trees in background (removes the clouds)
 ```
 
-Because the ability to change colors and composite IaNFTs as layers to create new on-chain art is embedded in the NFT code itself (add link here to IaNFTAnalogs contract, make sure it has a good explanation at top about the embedded code and unlocking/collaborative/decentralized concept), CryptoNyans doesn't need anyone's permission to create and sell NFTs that work with The FLOASIS NFTs. Changing artwork color or recompositing layers to create unique artwork can happen both in the CrypoNyans FLOASIS Items project builder tool, or in The FLOASIS builder tool at http://floasis.fun.
+Because the ability to change colors and composite IaNFTs as layers to create new on-chain art is embedded in the NFT code itself (add link here to IaNFTAnalogs contract, make sure it has a good explanation at top about the embedded code and unlocking/collaborative/decentralized concept), CryptoNyans doesn't need anyone's permission to create and sell NFTs that work with The FLOASIS NFTs. Changing artwork color or recompositing layers to create unique artwork can happen both in the CrypoNyans FLOASIS Items project builder tool, or in The FLOASIS builder tool at http://floasis.fun (under construction).
 
-##### A secondary marketplace on Flow makes free merch for FLOASIS NFT holders to promote secondary FLOASIS NFT sales
+#### A secondary marketplace on Flow makes free merch for FLOASIS NFT holders to promote secondary FLOASIS NFT sales
 As a limited mint free NFT, FLOASIS NFT holders who visit the marketplace can mint a special t-shirt or hat for their FLOASIS NFT with the marketplace logo on it.
 
 ```image
 The NFT from above image shown, then show the NFT merch, then show the character now wearing the NFT shirt or hat.
 ```
-Notice in the above two use cases there are three independant projects -- The FLOASIS, CryptoNyans, and the secondary marketplace. What's cool is they all operate on the same NFT, adding more NFTs to composite their artwork layers into The FLOASIS NFT!!! It can happen the other way around too, The FLOASIS NFT art can be added to the accessory NFTs! Each of the three projects operates totally independantly and doesn't need permission from anyone to make and sell these compatible NFTs. Mucho funno!!!
+Notice in the above two use cases there are three independant projects -- The FLOASIS, CryptoNyans, and the secondary marketplace. What's cool is they all operate on the same NFT, adding more and more NFTs with the ability to composite their artwork layers into The FLOASIS NFT's on-chain storage!!! It can happen the other way around too, The FLOASIS NFT art can be added to the accessory NFTs or a wholly different NFT project uisng IaNFT! Each of the three projects operates totally independantly and doesn't need permission from anyone to make and sell these compatible NFTs. Mucho funno!!!
 
-##### A community member makes NFT characters instead of accessories for The FLOASIS
+#### A community member makes NFT characters instead of accessories for The FLOASIS
 There's nothing stopping anyone from using FLOASIS Items to make a unique story and set of characters that accept their own accessories from other builders. If you're a slightly more advanced coder it's very possible, and I'd be happy to help guide you (message me please).
 
 ```image
@@ -63,20 +66,47 @@ Composite all
 ```
 
 ### Core Concept
-Besides creating the theme and artwork for your FLOASIS Items store, there are a small number of files you will need to modify:
-- `flow.json` (add link for each)
-- `.env`
+FLOASIS Items is meant to be as simple as possible yet still be a *real* Flow blockchain project with web app code and smart contracts that you own. Here are the things you will need to do in order to sell FLOASIS accessory NFTs on Flow mainnet (detailed steps are provided later on in this guide):
 
-Following the guides in this repo will walk you through that process, and the various other steps to get you from the emulator to your mainnet deployment. You're welcome to modify as much or as little of the app as you want. For relatively unexperienced developers this may be a chance to get a live project out there with minimal friction, and learn more about smart contracts, automation, integration tests and full stack web apps as you run your project. When I was learning that's something that I would have loved to have but never found...
+- add data specific to your project (like the project name) to:
+    - `flow.json`
+    - `.env.local`
+    - `constants.js`
+    - `FLOASISItems.cdc`
+    - `FLOASISItemsStore.cdc`
+- deploy to testnet
+- run store setup script on testnet
+- deploy the web app to Vercel
+- deploy to mainnet
+- run store setup script on mainnet
+- re-deploy the web app to Vercel
 
-In theory, sales from FLOASIS Items stores deployed and run by various community members should drive sales of The FLOASIS NFTs. This is how I hope to support ongoing development of IaNFT and The FLOASIS. It would be amazing to see the Flow developer community come up with fun themes and artwork for their own FLOASIS Items stores!!! 
-
-Finally, I will be making a guide on pulling upstream changes from the parent repo (this one). This means that your FLOASIS Items store deployment can merge in improvements and bug fixes.
+When I first started lerning to build on the Flow blockchain, I would have loved to have a minimalist NFT project codebase and a clear path to get me to mainnet with minimal friction and no backend complexity, leaving it to me to optimize any testing or backend later on. If you're interested in that too, I hope you can give FLOASIS Items a shot and help me improve it as you go along.
 
 ## Getting Started:
-FLOASIS Items can and should run on emulator, testnet and mainnet. Those three environments represent the basic development path for the dapp. Working with emulator, you can spin up a detailed scenario of usage with multiple users, creating and adding all artwork on-chain, having users purchase NFTs, and so on. Its state is reset each time you turn it on and off and it's a great place also to run integration tests. The blockchain state of the dapp on testnet is tied to the testnet deployer account to which you deploy the smart contracts and execute transactions against. While emulator should reflect testnet closely, in my experience, something in the client (the web app) that works without any problems on emulator may in fact need to be re-architected to work as intended against testnet. Testnet is also where you can get others to start using the dapp. From there the step from testnet to mainnet is mostly simple.
+To keep things as simple as possible, there is no emulator deployment for FLOASIS Items at the moment. That would require multiple other smart contracts, transactions and scripts amongst other code to make that work. I can add that in the future if enough people request it (I actually have it partially built). The same goes for unit and integration tests. Part of keeping things simple is starting on testnet.
 
-Let's get started on your deployment.
+Note, the instructions, for now, are made with OSX and Visual Studio Code in mind. 
+
+Now, at last, let's get started on your deployment.
+
+# Fork FLOASIS Items
+1. Visit the [hichana/floasis-items-react](https://github.com/hichana/floasis-items-react) repo and fork it. You can leave "Copy the main branch only" checked. If you're new to forking a repo, follow the [Fork a repo](https://docs.github.com/en/get-started/quickstart/fork-a-repo) instructions from Github.
+2. Clone the forked repo onto your local machine (cloning a repo instructions [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository))
+3. after you clone the repo, 
+
+1. visit https://github.com/hichana/floasis-items-react
+2. 
+
+### Set Up `flow.json`
+In the root directory of this project, change the name of `flow_example.json` to be just `flow.json`. You'll notice that once you do that the file 
+
+
+
+
+
+
+
 
 ### Demo Floasis NFT resoruce storage path
 - should be unique for each deployer, even tho the FLOASISNFT contract here is only being used as a demo contract for creating NFTs on emulator and testnet
@@ -180,6 +210,8 @@ also update the collection metadata text in the contract for each deployer
 - don't forget, if I change the testnet address for the official floasis project, I need to change it here as well wherever it is used, ex. in flow.json
 - for developer deployer, the artist name and series name in the setup_store script will need to line up with the CSF file for inventory
 - dev deployer must change contract paths
+- make guide on pulling from upstream. Finally, I will be making a guide on pulling upstream changes from the parent repo (this one). This means that your FLOASIS Items store deployment can merge in improvements and bug fixes.
+- you'll notice that the web app is similar to @Andrea's Flow quickstart for Next.js. 
 
 ### Run emulator
 go run ./overflow/setup_web/setup_web.go
@@ -253,3 +285,25 @@ npm run build
 ```
 
 ## Testimonials
+
+
+
+
+
+
+
+```
+Besides creating the theme and artwork for your FLOASIS Items store, there are a small number of files you will need to modify:
+- `flow.json` (add link for each)
+- `.env`
+
+Following the guides in this repo will walk you through that process, and the various other steps to get you from the emulator to your mainnet deployment. You're welcome to modify as much or as little of the app as you want. For relatively unexperienced developers this may be a chance to get a live project out there with minimal friction, and learn more about smart contracts, automation, integration tests and full stack web apps as you run your project. When I was learning that's something that I would have loved to have but never found...
+
+
+It would be amazing to see the Flow developer community come up with fun themes and artwork for their own FLOASIS Items stores!!!
+I can do that in the future, but for now it's best to keep it ultra simple. It's easier to just start grag the FLOASIS NFT on testnet and then use it with the NFT accessories you create. The same goes for integration tests. 
+
+Starting development
+
+can and should run on emulator, testnet and mainnet. Those three environments represent the basic development path for the dapp. Working with emulator, you can spin up a detailed scenario of usage with multiple users, creating and adding all artwork on-chain, having users purchase NFTs, and so on. Its state is reset each time you turn it on and off and it's a great place also to run integration tests. The blockchain state of the dapp on testnet is tied to the testnet deployer account to which you deploy the smart contracts and execute transactions against. While emulator should reflect testnet closely, in my experience, something in the client (the web app) that works without any problems on emulator may in fact need to be re-architected to work as intended against testnet. Testnet is also where you can get others to start using the dapp. From there the step from testnet to mainnet is mostly simple.
+
