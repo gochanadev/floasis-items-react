@@ -83,7 +83,6 @@ FLOASIS Items is meant to be as simple as possible yet still be a *real* Flow bl
 
 When I first started lerning to build on the Flow blockchain, I would have loved to have a minimalist NFT project codebase and a clear path to get me to mainnet with minimal friction and no backend complexity, leaving it to me to optimize any testing or backend later on. If you're interested in that too, I hope you can give FLOASIS Items a shot and help me improve it as you go along (your PRs are welcome!!!).
 
-## Getting Started:
 A number of choices went into keeping FLOASIS Items simple. Some of them are:
 - There's no emulator deployment for FLOASIS Items, for now. I tabled an emulator deployment (tho it's partially implemented) as it would require multiple other smart contracts, transactions scripts and numerous setup steps. It can happen in the future if needed.
 - There are no unit or integration tests, but there will be. Even a simple app like this should have meaningful test coverage. Once at least some Flow devs fork and deploy their own store, they can be added. Your computer won't explode or anything, so calm down my fellow nerds! For now, I've added a single integration test sample file with instructions to run it, so there is a path for any brave community member to build it out into a suite of tests.
@@ -93,9 +92,11 @@ A number of choices went into keeping FLOASIS Items simple. Some of them are:
 
 Now, at last, let's get started on your deployment.
 
-# Fork FLOASIS Items
+## Getting Started:
+
+### Fork FLOASIS Items
 1. Visit the [hichana/floasis-items-react](https://github.com/hichana/floasis-items-react) repo and fork it. You can leave "Copy the main branch only" checked. If you're new to forking a repo, follow the [Fork a repo](https://docs.github.com/en/get-started/quickstart/fork-a-repo) instructions from Github.
-2. Clone the forked repo onto your local machine (cloning a repo instructions [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository))
+2. Clone the forked repo onto your local machine (instructions if you need them [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository))
 
 ### Set Up `flow.json`
 In the root directory of this project, change the name of `flow_example.json` to be just `flow.json`. You'll notice that once you do that the file 

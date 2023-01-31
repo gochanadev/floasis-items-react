@@ -1,50 +1,36 @@
 {
 	"networks": {
-		"emulator": "127.0.0.1:3569",
 		"mainnet": "access.mainnet.nodes.onflow.org:9000",
 		"testnet": "access.devnet.nodes.onflow.org:9000"
-	},
-	"emulators": {
-		"default": {
-			"port": 3569,
-			"serviceAccount": "emulator-account"
-		}
 	},
 	"contracts": {
         "FLOASISItems": {
             "source": "./contracts/FLOASISItems.cdc",
             "aliases": {
-                "emulator": "f8d6e0586b0a20c7",
-                "testnet": "aca6f2b7e5bad42b",
-                "mainnet": "ec133c7edd8213ef"
+                "testnet": "[YOUR-TESTNET-DEPLOYER-ACCOUNT]"
             }
         },
         "FLOASISItemsStore": {
             "source": "./contracts/FLOASISItemsStore.cdc",
             "aliases": {
-                "emulator": "f8d6e0586b0a20c7",
-                "testnet": "aca6f2b7e5bad42b",
-                "mainnet": "ec133c7edd8213ef"
+                "testnet": "[YOUR-TESTNET-DEPLOYER-ACCOUNT]"
             }
         },
         "FLOASISNFT": {
             "source": "./contracts/FLOASISNFT.cdc",
             "aliases": {
-                "emulator": "f8d6e0586b0a20c7",
                 "testnet": "1e6c796ede473684"
             }
         },
         "FLOASISPrimitives": {
             "source": "./contracts/FLOASISPrimitives.cdc",
             "aliases": {
-                "emulator": "f8d6e0586b0a20c7",
                 "testnet": "1e6c796ede473684"
             }
         },
         "FlowToken": {
             "source": "./contracts/core/FlowToken.cdc",
             "aliases": {
-                "emulator": "0ae53cb6e3f42a79",
                 "testnet": "7e60df042a9c0868",
                 "mainnet": "1654653399040a61"
             }
@@ -52,7 +38,6 @@
         "FungibleToken": {
             "source": "./contracts/core/FungibleToken.cdc",
             "aliases": {
-                "emulator": "ee82856bf20e2aa6",
                 "testnet": "9a0766d93b6608b7",
                 "mainnet": "f233dcee88fe0abe"
             }
@@ -60,82 +45,39 @@
         "IaNFTAnalogs": {
             "source": "./contracts/IaNFTAnalogs.cdc",
             "aliases": {
-                "emulator": "f8d6e0586b0a20c7",
                 "testnet": "1e6c796ede473684"
             }
         },
         "MetadataViews": {
             "source": "./contracts/core/MetadataViews.cdc",
             "aliases": {
-                "emulator": "f8d6e0586b0a20c7",
-                "testnet": "631e88ae7f1d7c20"
+                "testnet": "631e88ae7f1d7c20",
+                "mainnet": "1d7e57aa55817448"
             }
         },
         "NonFungibleToken": {
             "source": "./contracts/core/NonFungibleToken.cdc",
             "aliases": {
-                "emulator": "f8d6e0586b0a20c7",
                 "testnet": "631e88ae7f1d7c20",
                 "mainnet": "1d7e57aa55817448"
             }
         }
    },
 	"accounts": {
-		"emulator-account": {
-			"address": "f8d6e0586b0a20c7",
-            "key": "f8e188e8af0b8b414be59c4a1a15cc666c898fb34d94156e9b51e18bfde754a5"
-		},
         "testnet-account": {
-            "address": "aca6f2b7e5bad42b",
+            "address": "[YOUR-TESTNET-DEPLOYER-ACCOUNT]",
             "key":{
                 "type": "hex",
                 "index": 0,
                 "signatureAlgorithm": "ECDSA_P256",
                 "hashAlgorithm": "SHA3_256",
-                "privateKey": "1d96b2bb5656ad6aaa446f2521074ac4a512e3452902199224b5438894b15ba1"
-            }
-        },
-        "testnet-user1": {
-            "address": "3c52e13c807ed6f3",
-            "key":{
-                "type": "hex",
-                "index": 0,
-                "signatureAlgorithm": "ECDSA_secp256k1",
-                "hashAlgorithm": "SHA2_256",
-                "privateKey": "8c988d10ef7fe7b26a8591e35e516651ff4b64663f0fee5d7900c37b30759cd0"
-            }
-        },
-        "mainnet-account": {
-            "address": "ec133c7edd8213ef",
-            "key":{
-                "type": "hex",
-                "index": 0,
-                "signatureAlgorithm": "ECDSA_P256",
-                "hashAlgorithm": "SHA3_256",
-                "privateKey": "79ba5a4a7de5cbeb8b41d0e94a48efae3060270b7e4be673a4693793652d731b"
+                "privateKey": "[YOUR-TESTNET-DEPLOYER-ACCOUNT-PRIVATE-KEY"
             }
         }
 	},
 	"deployments": {
-        "emulator": {
-            "emulator-account": [
-                "FLOASISItems",
-                "FLOASISItemsStore",
-                "FLOASISNFT",
-                "FLOASISPrimitives",
-                "IaNFTAnalogs",
-                "MetadataViews",
-                "NonFungibleToken"
-            ]
-        },
         "testnet": {
             "testnet-account": [
-                "FLOASISItems",
-                "FLOASISItemsStore"
-            ]
-        },
-        "mainnet": {
-            "mainnet-account": [
                 "FLOASISItems",
                 "FLOASISItemsStore"
             ]
