@@ -4,7 +4,13 @@ import "../styles/globals.css";
 import Link from "next/link";
 import AuthProvider from "../contexts/AuthContext";
 import TransactionProvider from "../contexts/TransactionContext";
-import { ITEMS_STORE_NAME } from "../lib/constants";
+import { 
+    ITEMS_STORE_NAME, 
+    PRIMARY,
+    PRIMARY_FOCUS,
+    PRIMARY_HOVER,
+    PRIMARY_INVERSE
+} from "../lib/constants";
 import "../flow/config";
 
 function MyApp({ Component, pageProps }) {
@@ -70,6 +76,288 @@ function MyApp({ Component, pageProps }) {
                     </a>
                 </p>
             </footer>
+            <style global jsx>{`
+                /* Green Light scheme (Default) */
+                /* Can be forced with data-theme="light" */
+                [data-theme="light"],
+                :root:not([data-theme="dark"]) {
+                    --primary: ${PRIMARY};
+                    --primary-hover: ${PRIMARY_HOVER};
+                    --primary-focus: ${PRIMARY_FOCUS};
+                    --primary-inverse: ${PRIMARY_INVERSE};
+                }
+
+                /* Green Dark scheme (Auto) */
+                /* Automatically enabled if user has Dark mode enabled */
+                @media only screen and (prefers-color-scheme: dark) {
+                    :root:not([data-theme="light"]) {
+                        --primary: ${PRIMARY};
+                        --primary-hover: ${PRIMARY_HOVER};
+                        --primary-focus: ${PRIMARY_FOCUS};
+                        --primary-inverse: ${PRIMARY_INVERSE};
+                    }
+                }
+
+                /* Green Dark scheme (Forced) */
+                /* Enabled if forced with data-theme="dark" */
+                [data-theme="dark"] {
+                    --primary: ${PRIMARY};
+                    --primary-hover: ${PRIMARY_HOVER};
+                    --primary-focus: ${PRIMARY_FOCUS};
+                    --primary-inverse: ${PRIMARY_INVERSE};
+                }
+
+                /* (Common styles) */
+                :root {
+                    --form-element-active-border-color: var(--primary);
+                    --form-element-focus-color: var(--primary-focus);
+                    --switch-color: var(--primary-inverse);
+                    --switch-checked-background-color: var(--primary);
+                    --primary-green: ${PRIMARY};
+                    --primary-yellow: #efee6f;
+                    --primary-pink: #ff72de;
+                    --cardWidthExtraLarge: 220px;
+                    --cardHeightExtraLarge: 280px;
+                    --cardWidthLarge: 175px;
+                    --cardHeightLarge: 280px;
+                    --cardWidthExtraSmall: 80px;
+                    --cardHeightExtraSmall: 100px;
+                    --colorPickerWidthExtraLarge: 4.25rem;
+                    --colorPickerHeightExtraLarge: 4.25rem;
+                    --cardMargin: 8px;
+                    --colorPickerMargin: 6px;
+                    font-family: monospace;
+                    font-smooth: never;
+                    -webkit-font-smoothing: none;
+                }
+
+                button {
+                    font-weight: bold;
+                }
+
+                h1,
+                h2,
+                gh3 {
+                    margin-bottom: 0;
+                }
+
+                article {
+                    margin-top: 0;
+                }
+
+                article h3 {
+                    color: var(--primary-yellow);
+                    margin-top: 1rem;
+                    margin-bottom: 0.25rem;
+                    font-family: monospace;
+                }
+
+                footer {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 40px;
+                }
+
+                footer.container {
+                    margin-top: 5em;
+                }
+
+                .container,
+                main {
+                    margin-top: 0;
+                    padding-top: 0;
+                }
+
+                .grid {
+                    grid-template-areas: " a b ";
+                }
+
+                .mb-1 {
+                    margin-bottom: 1em;
+                }
+                .mb-2 {
+                    margin-bottom: 2em;
+                }
+
+                .accent-border {
+                    border: 1px solid var(--primary);
+                }
+
+                .container.header {
+                    margin-bottom: 30px;
+                }
+
+                .cards-section {
+                    display: flex;
+                    justify-content: center;
+                    flex-wrap: wrap;
+                }
+
+                .color-pickers-section {
+                    display: flex;
+                    justify-content: flex-start;
+                    flex-wrap: wrap;
+                }
+
+                input[type="color"] {
+                    appearance: none;
+                    border-radius: 5px;
+                    box-sizing: border-box;
+                    background: transparent;
+                    border: 1px solid var(--primary);
+                    -moz-appearance: none;
+                    -webkit-appearance: none;
+                    cursor: pointer;
+                    padding: 0.5rem;
+                    height: var(--colorPickerHeightExtraLarge);
+                    width: var(--colorPickerWidthExtraLarge);
+                    margin: var(--colorPickerMargin);
+                }
+
+                .card {
+                    margin: 0;
+                    border: 1px solid var(--primary);
+                    border-radius: 5px;
+                    margin: 10px 0px;
+                    background: transparent;
+                    width: var(--cardWidthExtraLarge);
+                    height: var(--cardHeightExtraLarge);
+                    margin: var(--cardMargin);
+                    box-sizing: border-box;
+                }
+
+                .card.active {
+                    background: var(--primary-focus);
+                }
+
+                .tx {
+                    margin-bottom: 2em;
+                }
+                .txId {
+                    font-family: monospace;
+                    margin-right: 10px;
+                }
+
+                .edit-area-content {
+                    display: flex;
+                    flex-direction: column-reverse;
+                }
+
+                .banner {
+                    display: flex;
+                    flex-direction: column;
+                    background-color: var(--primary-focus);
+                    align-items: center;
+                    transform: rotate(-3deg);
+                    margin: 25px;
+                    padding-top: 25px;
+                    padding-bottom: 25px;
+                }
+
+                .banner h1 {
+                    font-family: "VT323", monospace;
+                    text-shadow: -1px 1px 0 #41ba45, 1px 1px 0 #c63d2b, 1px -1px 0 #42afac, -1px -1px 0 #c6c23f,
+                        4px 4px 0px var(--primary-pink), 8px 8px 0px rgba(0, 0, 0, 0.2);
+                    color: var(--primary-yellow);
+                }
+
+                .banner h2 {
+                    font-family: "VT323", monospace;
+                    text-shadow: -1px 1px 0 #41ba45, 1px 1px 0 #c63d2b, 1px -1px 0 #42afac, -1px -1px 0 #c6c23f,
+                        4px 4px 0px var(--primary-pink), 8px 8px 0px rgba(0, 0, 0, 0.2);
+                    color: var(--primary-green);
+                }
+
+                .tabs {
+                    display: flex;
+                    flex-direction: row;
+                }
+
+                .tab {
+                    overflow: hidden;
+                }
+
+                .tabs button {
+                    border: none;
+                    border-radius: 0px;
+                    font-size: 17px;
+                    margin-bottom: 0px;
+                    border-bottom: 1px solid var(--primary);
+                }
+
+                .tabs button:hover {
+                    background-color: var(--primary-inverse);
+                }
+
+                .tabs button.active {
+                    background-color: var(--primary-focus);
+                }
+
+                /* THE 'A' AND 'B' IDS ARE USED IN THE UI TO FLIP THE GRID STACKING ORDER FOR MOBILE */
+                #a {
+                    grid-area: a;
+                    margin-top: 3rem;
+                }
+                #b {
+                    grid-area: b;
+                    margin-top: 3rem;
+                }
+
+                /* BREAKPOINTS: */
+                /* Extra small | Small	| Medium | Large  | Extra large */
+                /* <576px      | ≥576px | ≥768px | ≥992px | ≥1200px */
+
+                /* UP TO EXTRA LARGE BREAKPOINT */
+                @media (max-width: 1200px) {
+                    .card {
+                        width: var(--cardWidthLarge);
+                        height: var(--cardHeightLarge);
+                    }
+                }
+
+                /* UP TO LARGE BREAKPOINT */
+                @media (max-width: 992px) {
+                    .grid {
+                        grid-template-areas: "b" "a";
+                        grid-gap: 1em;
+                    }
+                    .cards-section {
+                        display: block;
+                        overflow: auto;
+                        white-space: nowrap;
+                        padding-bottom: 1rem;
+                    }
+                }
+
+                /* UP TO EXTRA SMALL BREAKPOINT */
+                @media (max-width: 576px) {
+                    .card {
+                        width: var(--cardWidthExtraSmall);
+                        height: var(--cardHeightExtcardWidthExtraSmall);
+                    }
+
+                    .cards-section p {
+                        font-size: 8px;
+                        word-break: break-all;
+                        white-space: normal;
+                    }
+                }
+
+                #left-items {
+                    display: flex;
+                    align-items: center;
+                }
+
+                #inner-text {
+                    margin-bottom: 0rem;
+                }
+
+                #items-button:hover {
+                    background: var(--primary);
+                }
+            `}</style>
         </div>
     );
 }
