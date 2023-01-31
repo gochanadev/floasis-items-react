@@ -81,12 +81,15 @@ FLOASIS Items is meant to be as simple as possible yet still be a *real* Flow bl
 - run store setup script on mainnet
 - re-deploy the web app to Vercel
 
-When I first started lerning to build on the Flow blockchain, I would have loved to have a minimalist NFT project codebase and a clear path to get me to mainnet with minimal friction and no backend complexity, leaving it to me to optimize any testing or backend later on. If you're interested in that too, I hope you can give FLOASIS Items a shot and help me improve it as you go along.
+When I first started lerning to build on the Flow blockchain, I would have loved to have a minimalist NFT project codebase and a clear path to get me to mainnet with minimal friction and no backend complexity, leaving it to me to optimize any testing or backend later on. If you're interested in that too, I hope you can give FLOASIS Items a shot and help me improve it as you go along (your PRs are welcome!!!).
 
 ## Getting Started:
-To keep things as simple as possible, there's no emulator deployment for FLOASIS Items, for now. That would require multiple other smart contracts, transactions and scripts amongst other code to make it work. I can add an emulator deployment in the future if enough people request it (I actually have it partially built). The same goes for unit and integration tests. Part of keeping things simple is to start on testnet.
-
-Note, the instructions, for now, are made with OSX and Visual Studio Code in mind. Also, I'm using Vercel to deploy the web app, but you're welcome to swap it out for one of your choice.
+A number of choices went into keeping FLOASIS Items simple. Some of them are:
+- There's no emulator deployment for FLOASIS Items, for now. I tabled an emulator deployment (tho it's partially implemented) as it would require multiple other smart contracts, transactions scripts and numerous setup steps. It can happen in the future if needed.
+- There are no unit or integration tests, but there will be. Even a simple app like this should have meaningful test coverage. Once at least some Flow devs fork and deploy their own store, they can be added. Your computer won't explode or anything, so calm down my fellow nerds! For now, I've added a single integration test sample file with instructions to run it, so there is a path for any brave community member to build it out into a suite of tests.
+- There are no detailed instructions and workflow for customizing the web app extensiv
+- There is no detailed branching and merging workflow instructions yet that would facilitate extensive customizations to the web app, yet still keep your codebase lined up with changes made to the upstream FLOASIS Items repo (the one you forked from to make your repo). For now, the changes you make in your `flow.json` and `env.local` files should be enough to do things like re-skinning the web app with a new color scheme or changing some of the details about your project like the description of your accessories. You're of course welcome to branch out, customize and then merge any conflicts that may arise when you pull changes from upstream into your fork. 
+- The instructions, for now, are made with OSX and Visual Studio Code in mind. Also, I'm using Vercel to deploy the web app, but you're welcome to swap it out for one of your choice. I hope we can make the options more diverse in the future.
 
 Now, at last, let's get started on your deployment.
 
@@ -208,6 +211,7 @@ also update the collection metadata text in the contract for each deployer
 - dev deployer must change contract paths
 - make guide on pulling from upstream. Finally, I will be making a guide on pulling upstream changes from the parent repo (this one). This means that your FLOASIS Items store deployment can merge in improvements and bug fixes.
 - you'll notice that the web app is similar to @Andrea's Flow quickstart for Next.js. 
+- add instructions for pulling from upstream
 
 ### Run emulator
 go run ./overflow/setup_web/setup_web.go
