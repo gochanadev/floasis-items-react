@@ -84,19 +84,15 @@ FLOASIS Items is meant to be as simple as possible yet still be a *real* Flow bl
 When I first started lerning to build on the Flow blockchain, I would have loved to have a minimalist NFT project codebase and a clear path to get me to mainnet with minimal friction and no backend complexity, leaving it to me to optimize any testing or backend later on. If you're interested in that too, I hope you can give FLOASIS Items a shot and help me improve it as you go along.
 
 ## Getting Started:
-To keep things as simple as possible, there is no emulator deployment for FLOASIS Items at the moment. That would require multiple other smart contracts, transactions and scripts amongst other code to make that work. I can add that in the future if enough people request it (I actually have it partially built). The same goes for unit and integration tests. Part of keeping things simple is starting on testnet.
+To keep things as simple as possible, there's no emulator deployment for FLOASIS Items, for now. That would require multiple other smart contracts, transactions and scripts amongst other code to make it work. I can add an emulator deployment in the future if enough people request it (I actually have it partially built). The same goes for unit and integration tests. Part of keeping things simple is to start on testnet.
 
-Note, the instructions, for now, are made with OSX and Visual Studio Code in mind. 
+Note, the instructions, for now, are made with OSX and Visual Studio Code in mind. Also, I'm using Vercel to deploy the web app, but you're welcome to swap it out for one of your choice.
 
 Now, at last, let's get started on your deployment.
 
 # Fork FLOASIS Items
 1. Visit the [hichana/floasis-items-react](https://github.com/hichana/floasis-items-react) repo and fork it. You can leave "Copy the main branch only" checked. If you're new to forking a repo, follow the [Fork a repo](https://docs.github.com/en/get-started/quickstart/fork-a-repo) instructions from Github.
 2. Clone the forked repo onto your local machine (cloning a repo instructions [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository))
-3. after you clone the repo, 
-
-1. visit https://github.com/hichana/floasis-items-react
-2. 
 
 ### Set Up `flow.json`
 In the root directory of this project, change the name of `flow_example.json` to be just `flow.json`. You'll notice that once you do that the file 
@@ -306,4 +302,16 @@ I can do that in the future, but for now it's best to keep it ultra simple. It's
 Starting development
 
 can and should run on emulator, testnet and mainnet. Those three environments represent the basic development path for the dapp. Working with emulator, you can spin up a detailed scenario of usage with multiple users, creating and adding all artwork on-chain, having users purchase NFTs, and so on. Its state is reset each time you turn it on and off and it's a great place also to run integration tests. The blockchain state of the dapp on testnet is tied to the testnet deployer account to which you deploy the smart contracts and execute transactions against. While emulator should reflect testnet closely, in my experience, something in the client (the web app) that works without any problems on emulator may in fact need to be re-architected to work as intended against testnet. Testnet is also where you can get others to start using the dapp. From there the step from testnet to mainnet is mostly simple.
+
+# Create your development and deployment branch
+Here is the basic workflow for FLOASIS Items (more detailed instructions below):
+- Leave the `main` branch in your FLOASIS Items fork as-is. Periodically pull changes from the upstream FLOASIS Items repo (the one you forked from to make your repo) into the `main` branch
+- Maintain a development branch that you originally branch off from `main`. You can call it anything you want, but to make things simple let's call it the `dev` branch. This is where you can make any custom changes to the web app if you like. Note, if you do go down the path of tailoring the web app with customizations (ex. new styling, layout, etc.), then each time you pull upstream changes from the original FLOASIS Items repo, you'll have to [resolve any conflicts](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts). That's totally ok, but I'd recommend keeping the number of changes small until you decide that you don't require changes/improvements/bug-fixes to the original FLOASIS Items repo anymore.
+- maintain a deployment branch that will be used to deploy the production web app to Vercel. We'll call this one `deploy`. Once your `dev` branch is to your liking, 
+
+
+3. after you clone the repo, 
+
+1. visit https://github.com/hichana/floasis-items-react
+2. 
 
