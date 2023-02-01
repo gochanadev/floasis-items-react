@@ -117,15 +117,13 @@ Jacob Tucker made a great video called '[How to create a Non-Custodial account o
 Create a test user account for both testnet and mainnet:
 To use and manually test your FLOASIS Items deployment, you're going to need a Flow account that you can log in using a wallet provider in the UI. One easy way we can do this is to use [Lilico wallet](https://lilico.app/). Lilico gives you easy access to your public and private keys, and you can toggle between testnet and mainnet easily. Given this is a test user account, I wouldn't recommend storing any significant funds or assets in this account when on mainnet. Follow the steps for installing their browswer extension [here](https://lilico.app/download). After you installed it, follow their steps to 'Create A New Wallet' and save all credentials using your preferred secure backup method. 
 
-
-
-
-
-
 ### Set Up `flow.json`
 In the root directory of this project, change the name of `flow_example.json` to be just `flow.json`. In VS Code, you'll notice that once you do that the file name has been changed the file name in the left-side "Explorer" section will become grey instead of white. This indicates that it is not included in git version control. Once you complete this file and `.env.local` you should back them up securely outside of the repo using your preferred method.
 
-
+In your `flow.json`, replace thew following with the corresponding values you got from creating your testnet and mainnet deployer accounts:
+- YOUR-TESTNET-DEPLOYER-ACCOUNT
+- YOUR-MAINNET-DEPLOYER-ACCOUNT
+- YOUR-TESTNET-DEPLOYER-ACCOUNT-PRIVATE-KEY
 
 
 
