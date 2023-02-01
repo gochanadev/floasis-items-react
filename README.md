@@ -71,9 +71,10 @@ FLOASIS Items is meant to be as simple as possible yet still be a *real* Flow bl
 - add data specific to your project (like the project name) to:
     - `flow.json`
     - `.env.local`
-    - `constants.js`
     - `FLOASISItems.cdc`
     - `FLOASISItemsStore.cdc`
+    - `composite_multiple_layers_testnet.cdc`
+    - `composite_multiple_layers_mainnet.cdc`
 - deploy to testnet
 - run store setup script on testnet
 - deploy the web app to Vercel
@@ -125,10 +126,8 @@ In your `flow.json`, replace thew following with the corresponding values you go
 - YOUR-MAINNET-DEPLOYER-ACCOUNT
 - YOUR-TESTNET-DEPLOYER-ACCOUNT-PRIVATE-KEY
 
-
-
-
-
+### Customize storage paths for your smart contracts
+Because 
 
 ### Demo Floasis NFT resoruce storage path
 - should be unique for each deployer, even tho the FLOASISNFT contract here is only being used as a demo contract for creating NFTs on emulator and testnet
@@ -184,10 +183,6 @@ In the root of this project, find the '.env.example' file and change it to just 
 
 - add your web3 storage API key
 
-### Set up constants.ts
-This is a file where we keep some more data that establishes your unique project variables.
-- open the 'constants.ts' file (lib -> constants.js) and update the data relevant to your app like title
-
 ### Run on emulator
 - Setup scripts
 Deploy contracts and run various transactions against the emulator:
@@ -217,16 +212,12 @@ also update the collection metadata text in the contract for each deployer
 - make guide on pulling from upstream. Finally, I will be making a guide on pulling upstream changes from the parent repo (this one). This means that your FLOASIS Items store deployment can merge in improvements and bug fixes.
 - you'll notice that the web app is similar to @Andrea's Flow quickstart for Next.js. 
 - add instructions for pulling from upstream
+- also update the composite_multiple_layers transaction hard-coded identifiers
 
 ### Run emulator
 go run ./overflow/setup_web/setup_web.go
 
 ### Deploy to testnet
-
-- account for this somewhere!!!
-    - also update constants.js and .env.local
-    - also update the composite_multiple_layers transaction hard-coded identifiers
-
 `flow project deploy --network=testnet`
 
 ### Deploy to mainnet
