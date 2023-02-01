@@ -183,12 +183,6 @@ In the root of this project, find the '.env.example' file and change it to just 
 
 - add your web3 storage API key
 
-### Run on emulator
-- Setup scripts
-Deploy contracts and run various transactions against the emulator:
-!!! note, if the setup script's 'flow_network' variable is set to 'embedded', the emulator will not be set up. Make sure it's set to 'emulator'.
-go run ./overflow/setup_web/setup_web.go
-
 ### Create some accessories art!
 The default project here has some placeholder art so that you can immediately run setup and deploy to emulator. But you'll need to come up with your own theme and FLOASIS Items accessories art. Here are the basic parameters for the artwork:
 
@@ -214,9 +208,6 @@ also update the collection metadata text in the contract for each deployer
 - add instructions for pulling from upstream
 - also update the composite_multiple_layers transaction hard-coded identifiers
 
-### Run emulator
-go run ./overflow/setup_web/setup_web.go
-
 ### Deploy to testnet
 `flow project deploy --network=testnet`
 
@@ -225,9 +216,6 @@ go run ./overflow/setup_web/setup_web.go
 
 ### Getting ready to deploy
 - change the NFT `Type<MetadataViews.NFTCollectionDisplay>` with you IPFS CID, etc.
-
-## Running on Flow Emulator
-go run ./overflow/setup_web/setup_web.go
 
 ## Testnet setup
 - setup store

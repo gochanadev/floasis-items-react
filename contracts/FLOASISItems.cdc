@@ -356,10 +356,10 @@ pub contract FLOASISItems: NonFungibleToken {
         self.totalSupply = 0
 
         // Set the named paths
-        self.CollectionStoragePath = /storage/floasisOfficialFloasisItemsCollection
-        self.CollectionPublicPath = /public/floasisOfficialFloasisItemsCollection
-        self.CollectionProviderPath = /private/floasisOfficialFloasisItemsCollection
-        self.MinterStoragePath = /storage/floasisOfficialFloasisItemsMinter
+        self.CollectionStoragePath = /storage/floasisItemsCollection
+        self.CollectionPublicPath = /public/floasisItemsCollection
+        self.CollectionProviderPath = /private/floasisItemsCollection
+        self.MinterStoragePath = /storage/floasisItemsMinter
 
         // Create a Collection resource and save it to storage
         let collection <- create Collection()
