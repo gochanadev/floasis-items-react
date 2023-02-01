@@ -7,13 +7,15 @@
         "FLOASISItems": {
             "source": "./contracts/FLOASISItems.cdc",
             "aliases": {
-                "testnet": "[YOUR-TESTNET-DEPLOYER-ACCOUNT]"
+                "testnet": "[YOUR-TESTNET-DEPLOYER-ACCOUNT]",
+                "mainnet": "[YOUR-MAINNET-DEPLOYER-ACCOUNT]"
             }
         },
         "FLOASISItemsStore": {
             "source": "./contracts/FLOASISItemsStore.cdc",
             "aliases": {
-                "testnet": "[YOUR-TESTNET-DEPLOYER-ACCOUNT]"
+                "testnet": "[YOUR-TESTNET-DEPLOYER-ACCOUNT]",
+                "mainnet": "[YOUR-MAINNET-DEPLOYER-ACCOUNT]"
             }
         },
         "FLOASISNFT": {

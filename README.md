@@ -98,8 +98,32 @@ Now, at last, let's get started on your deployment.
 1. Visit the [hichana/floasis-items-react](https://github.com/hichana/floasis-items-react) repo and fork it. You can leave "Copy the main branch only" checked. If you're new to forking a repo, follow the [Fork a repo](https://docs.github.com/en/get-started/quickstart/fork-a-repo) instructions from Github.
 2. Clone the forked repo onto your local machine (instructions if you need them [here](https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository))
 
+### Create FLOW Accounts
+If you don't already have deployer accounts for testnet and mainnet, you'll need to create them.
+
+Create a testnet account:
+1. With the [Flow CLI](https://developers.flow.com/tools/flow-cli) installed on your computer
+    - generate keys: `flow keys generate --network=testnet --sig-algo "ECDSA_P256"`
+    - add the private, public keys and mnemonic it gives you to your preferred backup secure solution outside of this repo
+2. Create and fund your testnet account with with flow via testnet faucet: https://testnet-faucet.onflow.org/
+    - in the faucet, copy/paste in your public key
+    - if not already set, make sure Signature Algorithm to be ECDSA_P256, and Hash Algorithm to be SHA3_256
+    - follow the steps to create the Flow account, and once done make note of the account address that it gives you. For example: 0x75327e876546b2d1
+    - click on the 'View Account' link on the page once you've successfully created an account. This should open up the testnet version of flow-view-source and show that your account has 1000 $FLOW in it.
+
+Create a deployer mainnet account:
+Jacob Tucker made a great video called '[How to create a Non-Custodial account on Flow MainNet](https://www.youtube.com/watch?v=vXui7uO4cIQ&t) to do just that. It uses [Flow Port](https://port.onflow.org/). Be sure to save your address, mnemonic, public and private keys securely using your preferred secure backup method outside of this repo.
+
+Create a test user account for both testnet and mainnet:
+To use and manually test your FLOASIS Items deployment, you're going to need a Flow account that you can log in using a wallet provider in the UI. One easy way we can do this is to use [Lilico wallet](https://lilico.app/). Lilico gives you easy access to your public and private keys, and you can toggle between testnet and mainnet easily. Given this is a test user account, I wouldn't recommend storing any significant funds or assets in this account when on mainnet. Follow the steps for installing their browswer extension [here](https://lilico.app/download). After you installed it, follow their steps to 'Create A New Wallet' and save all credentials using your preferred secure backup method. 
+
+
+
+
+
+
 ### Set Up `flow.json`
-In the root directory of this project, change the name of `flow_example.json` to be just `flow.json`. You'll notice that once you do that the file 
+In the root directory of this project, change the name of `flow_example.json` to be just `flow.json`. In VS Code, you'll notice that once you do that the file name has been changed the file name in the left-side "Explorer" section will become grey instead of white. This indicates that it is not included in git version control. Once you complete this file and `.env.local` you should back them up securely outside of the repo using your preferred method.
 
 
 
@@ -111,26 +135,6 @@ In the root directory of this project, change the name of `flow_example.json` to
 ### Demo Floasis NFT resoruce storage path
 - should be unique for each deployer, even tho the FLOASISNFT contract here is only being used as a demo contract for creating NFTs on emulator and testnet
 - your setup step will be to change the path in that contract
-
-### Create FLOW Accounts
-I highly recommend you have both testnet and mainnet Flow accounts.
-
-Create a testnet account:
-1. With the [Flow CLI](https://developers.flow.com/tools/flow-cli) installed on your computer
-    - generate keys: `flow keys generate --network=testnet --sig-algo "ECDSA_P256"`
-    - temporarily keep the private and public keys so you can use them in the following steps
-2. Create and fund your testnet account with with flow via testnet faucet: https://testnet-faucet.onflow.org/
-    - in the faucet, copy/paste in your public key
-    - if not already set, make sure Signature Algorithm to be ECDSA_P256, and Hash Algorithm to be SHA3_256
-    - follow the steps to create the Flow account, and once done make note of the account address that it gives you. Example: 0x75327e876546b2d1
-    - click on the 'View Account' link on the page once you've successfully created an account. This should open up the testnet version of flow-view-source and show that your account has 1000 $FLOW in it.
-3. Save your address, public and private keys in whatever cold-storage or other secure method you like
-
-Create a deployer mainnet account:
-I recommend creating and keeping a fresh mainnet account as your deployer account. Jacob Tucker made a great video called '[How to create a Non-Custodial account on Flow MainNet](https://www.youtube.com/watch?v=vXui7uO4cIQ&t) to do just that. It uses [Flow Port](https://port.onflow.org/). Be sure to save your address, public and private keys securely using your preferred method.
-
-Create a test user account for both testnet and mainnet:
-To do this you can use [Lilico wallet](https://lilico.app/), as it gives you easy access to your public and private keys and can toggle between testnet and mainnet. Given this is a test user account, I wouldn't recommend storing any significant funds or assets in this account. Follow their steps for installing their browswer extension [here](https://lilico.app/download). After you installed it, follow their steps to 'Create A New Wallet' and save all credentials using your preferred secure backup method. That's it for now, when you set up flow.json you'll circle back to use some of these credentials.
 
 ### Set up flow.json
 Credentials for your Flow accounts will live in flow.json. This repo contains a 'flow_example.json' file in the root directory. Change its name to be 'flow.json'. Note, in the '.gitignore' file in this project, 'flow.json' is added to excluded it from version control as it contains private keys. You should back up the flow.json file securely outside of this project directory. Here are the steps for setting flow.json up:
