@@ -184,6 +184,8 @@ In the root of this project, find the '.env.example' file and change it to just 
 
 - update all env vars where appropriate
 
+- add your web3 storage API key
+
 ### Set up constants.ts
 This is a file where we keep some more data that establishes your unique project variables.
 - open the 'constants.ts' file (lib -> constants.js) and update the data relevant to your app like title
