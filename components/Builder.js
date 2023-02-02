@@ -43,8 +43,7 @@ import { useTransaction } from "../contexts/TransactionContext";
 import { getLayerName, replaceCDCImports, getItemsNFTContractIdentifier } from "../lib/helpers";
 import { getNFTCompositesData, getFloasisNFTData } from "../flow/scripts";
 import GET_FLOASISITEMS_COLLECTION_DATA from "../scripts/FLOASISItems/get_collection_data.cdc";
-import COMPOSITE_MULTIPLE_LAYERS_TESTNET from "../transactions/FLOASISNFT/composite_multiple_layers_testnet.cdc";
-import COMPOSITE_MULTIPLE_LAYERS_MAINNET from "../transactions/FLOASISNFT/composite_multiple_layers_mainnet.cdc";
+import COMPOSITE_MULTIPLE_LAYERS from "../transactions/FLOASISNFT/composite_multiple_layers.cdc";
 import CHANGE_SELECT_FLOAIS_NFT_COLORS from "../transactions/FLOASISNFT/change_select_floasis_nft_colors.cdc";
 import CHANGE_SELECT_FLOASIS_ITEMS_NFT_COLORS from "../transactions/FLOASISItems/change_select_floasis_items_nft_colors.cdc";
 import REMOVE_COMPOSITE from "../transactions/FLOASISNFT/remove_composite.cdc";
@@ -279,19 +278,19 @@ export function Builder() {
 
         const floasisNFTID = floasisNFTs[selectedFloasisNFTIdx].id;
 
-        // get the string identifiers for the NFTs that make up the composite
-        const nftIdentifiers = [];
+        // get the project type for the NFTs layer for the composite
+        const projectTypes = [];
 
-        // get the IDs for the NFTs that make up the composite
+        // get the IDs for the NFTs layer for the composite
         const nftIDs = [];
 
         // iterate over the local composites to create the ordered arrays of
         // identifiers and IDs
         localComposites[selectedFloasisNFTIdx].layers.forEach((layer) => {
-            nftIdentifiers.push(
+            projectTypes.push(
                 layer.type === FLOASIS_PROJECT_TYPE
-                    ? floasisNFTs[layer.indexInParent].identifier
-                    : itemsNFTs[layer.indexInParent].identifier
+                    ? FLOASIS_PROJECT_TYPE
+                    : ITEMS_PROJECT_TYPE
             );
             nftIDs.push(
                 layer.type === FLOASIS_PROJECT_TYPE
@@ -301,19 +300,13 @@ export function Builder() {
         });
 
         try {
-
-            let txCode;
-            if (process.env.NEXT_PUBLIC_FLOW_ENV === "testnet") {
-                txCode = replaceCDCImports(COMPOSITE_MULTIPLE_LAYERS_TESTNET);
-            } else {
-                txCode = replaceCDCImports(COMPOSITE_MULTIPLE_LAYERS_MAINNET);
-            }
+            const txCode = replaceCDCImports(COMPOSITE_MULTIPLE_LAYERS)
 
             const transactionId = await fcl.mutate({
                 cadence: txCode,
                 args: (arg, t) => [
                     arg(floasisNFTID, t.UInt64),
-                    arg(nftIdentifiers, t.Array(t.String)),
+                    arg(projectTypes, t.Array(t.String)),
                     arg(nftIDs, t.Array(t.UInt64)),
                     arg(ON_CHAIN_COMPOSITES_GROUP_NAME, t.String),
                     arg(newCompositeName, t.String),

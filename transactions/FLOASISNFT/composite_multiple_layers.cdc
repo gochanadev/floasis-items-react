@@ -4,7 +4,7 @@ import FLOASISNFT from "../../contracts/FLOASISNFT.cdc"
 import FLOASISItems from "../../contracts/FLOASISItems.cdc"
 import IaNFTAnalogs from "../../contracts/IaNFTAnalogs.cdc"
 
-transaction(floasisNFTID: UInt64, typeIDs: [String], ids: [UInt64], compositeGroupName: String, compositeName: String) {
+transaction(floasisNFTID: UInt64, projectTypes: [String], ids: [UInt64], compositeGroupName: String, compositeName: String) {
 
     let userFLOASISNFTCollection: &FLOASISNFT.Collection
     let userFLOASISNFT: &FLOASISNFT.NFT{NonFungibleToken.INFT, FLOASISNFT.NFTPrivate, FLOASISNFT.NFTPublic, MetadataViews.Resolver}
@@ -28,9 +28,9 @@ transaction(floasisNFTID: UInt64, typeIDs: [String], ids: [UInt64], compositeGro
 
         self.orderedGElements = []
 
-        for typeID in typeIDs {
-            switch typeID {
-                case "A.1e6c796ede473684.FLOASISNFT.NFT":
+        for projectType in projectTypes {
+            switch projectType {
+                case "FLOASIS":
 
                     let floasisNFTCollection = acct.borrow<&FLOASISNFT.Collection{FLOASISNFT.FLOASISNFTCollectionPublic, NonFungibleToken.CollectionPublic}>(
                         from: FLOASISNFT.CollectionStoragePath
@@ -41,7 +41,7 @@ transaction(floasisNFTID: UInt64, typeIDs: [String], ids: [UInt64], compositeGro
                     if floasisNFT != nil {
                         self.orderedGElements.appendAll(floasisNFT.getBase().children)
                     }
-                case "A.2b4cf0c82163d4e1.FLOASISItems.NFT":
+                case "ITEMS":
 
                     let floasisItemsNFTCollection = acct.borrow<&FLOASISItems.Collection{FLOASISItems.FLOASISItemsCollectionPublic, NonFungibleToken.CollectionPublic}>(
                         from: FLOASISItems.CollectionStoragePath
@@ -76,4 +76,3 @@ transaction(floasisNFTID: UInt64, typeIDs: [String], ids: [UInt64], compositeGro
         )
     }
 }
- 
