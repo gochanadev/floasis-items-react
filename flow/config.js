@@ -13,11 +13,11 @@ if (process.env.NEXT_PUBLIC_FLOW_ENV === "testnet") {
         "0xNonFungibleToken": "0x631e88ae7f1d7c20",
         "0xMetadataViews": "0x631e88ae7f1d7c20",
         "0xFlowToken": "0x7e60df042a9c0868",
-        "0xIaNFTAnalogs": process.env.NEXT_PUBLIC_FLOASIS_OFFICIAL_PROJECT_ADDRESS_TESTNET,
-        "0xFLOASISNFT": process.env.NEXT_PUBLIC_FLOASIS_OFFICIAL_PROJECT_ADDRESS_TESTNET,
-        "0xFLOASISItemsStore": process.env.NEXT_PUBLIC_FLOASIS_ITEMS_ADDRESS_TESTNET, // fcl has an error if this alias is created after '0xFLOASISItems', so keep this one first
-        "0xFLOASISItems": process.env.NEXT_PUBLIC_FLOASIS_ITEMS_ADDRESS_TESTNET,
-        "0xFLOASISPrimitives": process.env.NEXT_PUBLIC_FLOASIS_OFFICIAL_PROJECT_ADDRESS_TESTNET,
+        "0xIaNFTAnalogs": process.env.NEXT_PUBLIC_FLOASIS_TESTNET_ACCOUNT,
+        "0xFLOASISNFT": process.env.NEXT_PUBLIC_FLOASIS_TESTNET_ACCOUNT,
+        "0xFLOASISItemsStore": process.env.NEXT_PUBLIC_FLOASIS_ITEMS_TESTNET_ACCOUNT, // fcl has an error if this alias is created after '0xFLOASISItems', so keep this one first
+        "0xFLOASISItems": process.env.NEXT_PUBLIC_FLOASIS_ITEMS_TESTNET_ACCOUNT,
+        "0xFLOASISPrimitives": process.env.NEXT_PUBLIC_FLOASIS_TESTNET_ACCOUNT,
     });
 
 } else {

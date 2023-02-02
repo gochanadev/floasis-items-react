@@ -28,12 +28,12 @@ func PrepareInventory(
 	cadence.Array,
 	cadence.Array) {
 
-	err := godotenv.Load(".env.local")
+	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatal("Error in inventory_prep.go when loading .env.local file")
+		log.Fatal("Error in inventory_prep.go when loading .env file")
 	}
-	web3_storage_api_key := os.Getenv("WEB3_STORAGE_API_KEY")
-	c, _ := w3s.NewClient(w3s.WithToken(web3_storage_api_key))
+	WEB3_STORAGE_IPFS_API_KEY := os.Getenv("WEB3_STORAGE_IPFS_API_KEY")
+	c, _ := w3s.NewClient(w3s.WithToken(WEB3_STORAGE_IPFS_API_KEY))
 
 	csvData, err := helpers.ReadCsvFile(inventoryCSVPath)
 	if err != nil {

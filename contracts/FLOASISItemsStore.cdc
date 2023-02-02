@@ -350,7 +350,10 @@ pub contract FLOASISItemsStore {
 
         self.totalInventoryItemSupply = 0
 
-        self.FLOASISItemsStoreAdminPath = /storage/floasisItemsStoreAdmin
+        let deployerAddress: String = self.account.address.toString()
+        let storeAdminResourcePathIdentifier: String = "floasisItemsStoreAdmin"
+
+        self.FLOASISItemsStoreAdminPath = StoragePath(identifier: storeAdminResourcePathIdentifier.concat(deployerAddress))!
 
         let storeAdmin <- create StoreAdmin()
 

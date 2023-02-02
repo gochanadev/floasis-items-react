@@ -70,7 +70,7 @@ FLOASIS Items is meant to be as simple as possible yet still be a *real* Flow bl
 
 - add data specific to your project (like the project name) to:
     - `flow.json`
-    - `.env.local`
+    - `.env`
     - `FLOASISItems.cdc`
     - `FLOASISItemsStore.cdc`
     - `composite_multiple_layers_testnet.cdc`
@@ -119,7 +119,7 @@ Create a test user account for both testnet and mainnet:
 To use and manually test your FLOASIS Items deployment, you're going to need a Flow account that you can log in using a wallet provider in the UI. One easy way we can do this is to use [Lilico wallet](https://lilico.app/). Lilico gives you easy access to your public and private keys, and you can toggle between testnet and mainnet easily. Given this is a test user account, I wouldn't recommend storing any significant funds or assets in this account when on mainnet. Follow the steps for installing their browswer extension [here](https://lilico.app/download). After you installed it, follow their steps to 'Create A New Wallet' and save all credentials using your preferred secure backup method. 
 
 ### Set Up `flow.json`
-In the root directory of this project, change the name of `flow_example.json` to be just `flow.json`. In VS Code, you'll notice that once you do that the file name has been changed the file name in the left-side "Explorer" section will become grey instead of white. This indicates that it is not included in git version control. Once you complete this file and `.env.local` you should back them up securely outside of the repo using your preferred method.
+In the root directory of this project, change the name of `flow_example.json` to be just `flow.json`. In VS Code, you'll notice that once you do that the file name has been changed the file name in the left-side "Explorer" section will become grey instead of white. This indicates that it is not included in git version control. Once you complete this file and `.env` you should back them up securely outside of the repo using your preferred method.
 
 In your `flow.json`, replace thew following with the corresponding values you got from creating your testnet and mainnet deployer accounts:
 - YOUR-TESTNET-DEPLOYER-ACCOUNT
@@ -207,6 +207,12 @@ also update the collection metadata text in the contract for each deployer
 - you'll notice that the web app is similar to @Andrea's Flow quickstart for Next.js. 
 - add instructions for pulling from upstream
 - also update the composite_multiple_layers transaction hard-coded identifiers
+- note, flow.json will use env vars with the 'NEXT_PUBLIC' prefix, and while you may think that they're only for next.js, we do it for simplicity. The prefix is disregarded by the Flow cli so no problemo.
+- add below notes in .env section about ui data
+# We store some variables for personalizing the UI here. They should be different
+# for all community project who deploy FLOASIS Items.
+# Change them to suit your preferences for UI messaging text and color scheme.
+# All values here are used in 'lib -> constants.js'
 
 ### Deploy to testnet
 `flow project deploy --network=testnet`

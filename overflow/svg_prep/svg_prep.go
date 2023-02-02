@@ -116,18 +116,18 @@ func getRectAttributesStruct(ianft_deployer_address string, x string, y string, 
 func GetSvgStruct(svgString string, flowNetwork string) cadence.Struct {
 	// fmt.Println("META DAT STRING FROM GET SNVG STRUC:", metaDataString)
 
-	err := godotenv.Load(".env.local")
+	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatal("Error in svg_prep.go when loading .env.local file")
+		log.Fatal("Error in svg_prep.go when loading .env file")
 	}
 
 	var ianft_deployer_address string
 
 	if flowNetwork == "testnet" {
-		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_OFFICIAL_PROJECT_ADDRESS_TESTNET")
+		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_TESTNET_ACCOUNT")
 		ianft_deployer_address = full_deployer_address[2:]
 	} else {
-		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_OFFICIAL_PROJECT_ADDRESS_MAINNET")
+		full_deployer_address := os.Getenv("NEXT_PUBLIC_FLOASIS_MAINNET_ACCOUNT")
 		ianft_deployer_address = full_deployer_address[2:]
 	}
 
