@@ -36,8 +36,6 @@ import { useTransaction } from "../contexts/TransactionContext";
 import { replaceCDCImports } from "../lib/helpers";
 import GET_ALL_ACTIVE_INVENTORY_DATA from "../scripts/FLOASISItemsStore/get_all_active_inventory.cdc";
 import BUY_NFTS from "../transactions/FLOASISItems/batch_buy_nfts.cdc";
-import INITIALIZE_FLOASIS_NFT from "../transactions/FLOASISNFT/initialize_account.cdc"
-import INITIALIZE_FLOASIS_ITEMS_NFT from "../transactions/FLOASISItems/initialize_account.cdc"
 import { getFloasisNFTData, getNFTCompositesData } from "../flow/scripts";
 import {
     FCL_LIMIT,
@@ -327,62 +325,7 @@ export function Store() {
         });
     };
 
-    // PROCESS FLOW TX FOR USER TO SELF INITIALIZE WITH FLOASIS NFT
-    const handleInitializeFloasisItemsNFT = async () => {
-        initTransactionState();
-            
-            try {
-                const transactionCode = replaceCDCImports(INITIALIZE_FLOASIS_ITEMS_NFT);
-    
-                const transactionId = await fcl.mutate({
-                    cadence: transactionCode,
-                    payer: fcl.authz,
-                    proposer: fcl.authz,
-                    authorizations: [fcl.authz],
-                    limit: FCL_LIMIT,
-                });
-
-                setTxId(transactionId);
-                fcl.tx(transactionId).subscribe((res) => {
-                    console.log("res:", res);
-                    setTransactionStatus(res.status);
-                });
-        
-            } catch (e) {
-                console.log("Error when initializing user:", e);
-            }
-
-    }
-
-
-    // PROCESS FLOW TX FOR USER TO SELF INITIALIZE WITH FLOASIS NFT
-    const handleInitializeFloasisNFT = async () => {
-        initTransactionState();
-            
-            try {
-                const transactionCode = replaceCDCImports(INITIALIZE_FLOASIS_NFT);
-    
-                const transactionId = await fcl.mutate({
-                    cadence: transactionCode,
-                    payer: fcl.authz,
-                    proposer: fcl.authz,
-                    authorizations: [fcl.authz],
-                    limit: FCL_LIMIT,
-                });
-
-                setTxId(transactionId);
-                fcl.tx(transactionId).subscribe((res) => {
-                    console.log("res:", res);
-                    setTransactionStatus(res.status);
-                });
-        
-            } catch (e) {
-                console.log("Error when initializing user:", e);
-            }
-
-    }
-
-    // PROCESS FLOW TX TO BUY AN ACCESSORY
+   // PROCESS FLOW TX TO BUY AN ACCESSORY
     const handleBuy = async () => {
         initTransactionState();
 
@@ -452,9 +395,6 @@ export function Store() {
                 <h1>{ITEMS_STORE_NAME}</h1>
                 <h2>Accessories Store!</h2>
             </div>
-
-            <button onClick={handleInitializeFloasisNFT}>Initialize FLOASIS NFT</button>
-            <button onClick={handleInitializeFloasisItemsNFT}>Initialize FLOASIS Items NFT</button>
 
             <div className="grid">
                 {/* GRID COLUMN A: LEFT-SIDE (ON DESKTOP), BOTTOM (ON MOBILE) */}

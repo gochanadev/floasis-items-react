@@ -1,18 +1,18 @@
 import NonFungibleToken from "../../contracts/core/NonFungibleToken.cdc"
+import MetadataViews from "../../contracts/core/MetadataViews.cdc"
 import FLOASISNFT from "../../contracts/FLOASISNFT.cdc"
 
 transaction(nFTID: UInt64, gElemIndices: [UInt64], colors: [String]) {
 
-    let userNFTCollection: &FLOASISNFT.Collection
-    let userNFT: &FLOASISNFT.NFT
+    let userNFT: &FLOASISNFT.NFT{NonFungibleToken.INFT, FLOASISNFT.NFTPrivate, FLOASISNFT.NFTPublic, MetadataViews.Resolver}
 
     prepare(acct: AuthAccount) {
 
 
-        self.userNFTCollection = acct.borrow<&FLOASISNFT.Collection>(from: FLOASISNFT.CollectionStoragePath)
+        let userNFTCollection = acct.borrow<&FLOASISNFT.Collection>(from: FLOASISNFT.CollectionStoragePath)
             ?? panic("Could not borrow the FLOASISNFT Collection")
 
-        self.userNFT = self.userNFTCollection.borrowFLOASISNFT(id: nFTID)
+        self.userNFT = userNFTCollection.borrowFLOASISNFTPrivate(id: nFTID)
             ?? panic("No such ID in that collection")
         
     } execute {
